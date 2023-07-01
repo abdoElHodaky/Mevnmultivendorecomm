@@ -1,0 +1,25 @@
+{
+  "name": "multi-vendor-store",
+  "version": "1.0.0",
+  "description": "multi-vendor store",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "keywords": [
+    "nodejs",
+    "expressjs",
+    "handlebars",
+    "vuejs",
+    "mongodb"
+  ],
+  "author": "andrew zachary",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
