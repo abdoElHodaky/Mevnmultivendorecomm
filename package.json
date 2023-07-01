@@ -1,18 +1,19 @@
 {
-  "name": "multi-vendor-store",
+  "name": "multi-vendor-ecommerce",
   "version": "1.0.0",
-  "description": "multi-vendor store",
+  "description": "multi-vendor ecommerce",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon server.js"
   },
   "keywords": [
     "nodejs",
     "expressjs",
     "handlebars",
     "vuejs",
-    "mongodb"
+    "mongodb",
+    "ecommerce"
   ],
   "author": "andrew zachary",
   "license": "MIT",
