@@ -1,6 +1,5 @@
 # Multi Vendor Ecommerce
 ## Latest Updates:
-- Create a new node/expressjs project.
-- Used ES6 import/export to gain some performance.
-- Create app routers and a loader for them.
-- Install nodemon for auto-reloading any changes while developing.
+✅Serve static files using the express.static built-in middleware
+✅Setup express-handlebars and render home/about views, create header/footer partials
+✅Package the server inside multi-vendor-ecommerce-project

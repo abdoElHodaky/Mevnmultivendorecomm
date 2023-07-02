@@ -1,0 +1,27 @@
+{
+  "name": "multi-vendor-ecommerce-server",
+  "version": "1.0.0",
+  "description": "multi-vendor ecommerce server",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "nodejs",
+    "expressjs",
+    "handlebars",
+    "vuejs",
+    "mongodb",
+    "ecommerce"
+  ],
+  "author": "andrew zachary",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-handlebars": "^7.0.7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}

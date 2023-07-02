@@ -1,27 +1,11 @@
 {
-  "name": "multi-vendor-ecommerce",
-  "version": "1.0.0",
-  "description": "multi-vendor ecommerce",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "dev": "nodemon server.js"
-  },
-  "keywords": [
-    "nodejs",
-    "expressjs",
-    "handlebars",
-    "vuejs",
-    "mongodb",
-    "ecommerce"
-  ],
-  "author": "andrew zachary",
-  "license": "MIT",
-  "dependencies": {
-    "express": "^4.18.2",
-    "express-handlebars": "^7.0.7"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.22"
-  }
+    "name": "multi-vendor-ecommerce-project",
+    "version": "1.0.0",
+    "description": "multi-vendor ecommerce project",
+    "scripts": {
+      "install-server": "npm install --prefix server",
+      "dev": "npm run dev --prefix server"
+    },
+    "author": "andrew zachary",
+    "license": "MIT"
 }
