@@ -2,10 +2,10 @@
   "name": "multi-vendor-ecommerce-server",
   "version": "1.0.0",
   "description": "multi-vendor ecommerce server",
-  "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js"
   },
   "keywords": [
     "nodejs",

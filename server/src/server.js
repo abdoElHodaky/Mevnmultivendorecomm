@@ -1,8 +1,8 @@
 // core
-import app from './src/app.js';
+import app from './app.js';
 
 // init
-import routersLoader from './src/routers/index.js';
+import routersLoader from './routers/index.js';
 
 // parts
 routersLoader(app);
