@@ -5,13 +5,16 @@
   "scripts": {
     "install-server": "npm install --prefix server",
     "install-client": "npm install --prefix client",
-    "install": "npm run install-server && npm run install-client",
+    "install-website": "npm install --prefix website",
+    "install": "npm run install-server && npm run install-client && npm run install-website",
     "dev-server": "npm run dev --prefix server",
     "dev-client": "npm run dev --prefix client",
-    "dev": "npm run dev-server & npm run dev-client",
-    "build-client": "npm run build --prefix client",
+    "dev-website": "npm run dev --prefix website",
+    "dev": "npm run dev-server & npm run dev-client & npm run dev-website",
     "start-server": "npm run start --prefix server",
-    "deploy": "npm run build-client & npm run start-server"
+    "build-client": "npm run build --prefix client",
+    "build-website": "npm run build --prefix website",
+    "deploy": "npm run build-website & npm run build-client & npm run start-server"
   },
   "author": "andrew zachary",
   "license": "MIT"
