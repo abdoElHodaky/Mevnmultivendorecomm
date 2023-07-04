@@ -1,3 +1,6 @@
+// includes
+import './includes/dotenv.js';
+
 // core
 import app from './app.js';
 
