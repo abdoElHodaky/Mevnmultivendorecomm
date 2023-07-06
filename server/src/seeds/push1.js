@@ -1,5 +1,6 @@
 import Product from "../models/product.js";
 import { faker } from '@faker-js/faker';
+import slugify from '@sindresorhus/slugify';
 
 const up = async () => {
 
@@ -7,12 +8,15 @@ const up = async () => {
 
         const canSeed = await Product.find();
         if(canSeed.length > 0) return;
-        console.log(canSeed.length);
 
         const products = Array.from({length: 100}).map( _ => {
+
+            const name = faker.commerce.productName();
+            const slug = slugify(name);
             
             return {
-                name: faker.commerce.productName(),
+                name,
+                slug,
                 features: [
                     {text: faker.lorem.words(4)},
                     {text: faker.lorem.words(4)},

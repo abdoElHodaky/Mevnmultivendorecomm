@@ -1,5 +1,5 @@
 # Multi Vendor Ecommerce
-The purpose of this project is to learn more about Nodejs and MongoDB and understand more about web technologies and how they are working.
+The purpose of this project is to learn more about Nodejs and MongoDB, understand more about web technologies and hit the core.
 ## Latest Updates:
-- Setup website dir and config vite, now **JS** and **CSS** files will be served in both development and production modes.
-- Install dotenv and include it.
+- Create products Ctrl/getAllProducts. 
+- Create products page and render all products.

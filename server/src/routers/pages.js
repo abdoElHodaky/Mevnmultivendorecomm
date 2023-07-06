@@ -1,7 +1,10 @@
 import { Router } from 'express';
 
+import { getAllProducts } from '../ctrls/products.js';
+
 const router = Router();
 
+// home page
 router.get('/', (_, res) => {
     res.render('index', {
         title: 'welcome',
@@ -9,6 +12,10 @@ router.get('/', (_, res) => {
     });
 });
 
+// products page
+router.get('/products', getAllProducts);
+
+// about page
 router.get('/about', (_, res) => {
     res.render('about', {
         title: 'about',

@@ -1,0 +1,36 @@
+<ul>
+    {{#each products}}
+        <li>
+            
+            <ul>
+                <li>
+                    <img src="{{this.url}}" alt="">
+                </li>
+                <li>
+                    <a href="/products/{{this.slug}}">{{this.name}}</a>
+                </li>
+                <li>
+                    <p>{{this.avgRating.amount}}</p>
+                </li>
+                <li>
+                    {{#each features}}
+                        <p>{{text}}</p>
+                    {{/each}}
+                </li>
+                <li>
+                    <p>$ {{this.price}}</p>
+                </li>
+                <li>
+                    <p>{{this.desc}}</p>
+                </li>
+                <li>
+                    <p>{{instock}}</p>
+                </li>
+                <li>
+                    <p>{{freeShipping}}</p>
+                </li>
+            </ul>
+
+        </li>
+    {{/each}}
+</ul>

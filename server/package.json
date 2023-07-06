@@ -18,6 +18,7 @@
   "author": "andrew zachary",
   "license": "MIT",
   "dependencies": {
+    "@sindresorhus/slugify": "^2.2.1",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-handlebars": "^7.0.7",

@@ -18,6 +18,20 @@ const productSchema = new mongoose.Schema(
             lowercase: true,
             trim: true
         },
+        slug: {
+            type: String,
+            required: true,
+            maxLength: 255,
+            lowercase: true,
+            trim: true
+        },
+        url: {
+            type: String,
+            maxLength: 255,
+            lowercase: true,
+            trim: true,
+            default: '/product.jpeg'
+        },
         features: {
             type: [productFeatureSchema],
             validate: [
