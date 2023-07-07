@@ -1,35 +1,47 @@
-<ul>
+<ul class="text-4xl grid sm:grid-cols-2 md:grid-cols-3 gap-10 p-4">
     {{#each products}}
-        <li>
-            
-            <ul>
-                <li>
-                    <img src="{{this.url}}" alt="">
-                </li>
-                <li>
-                    <a href="/products/{{this.slug}}">{{this.name}}</a>
-                </li>
-                <li>
-                    <p>{{this.avgRating.amount}}</p>
-                </li>
-                <li>
-                    {{#each features}}
-                        <p>{{text}}</p>
-                    {{/each}}
-                </li>
-                <li>
-                    <p>$ {{this.price}}</p>
-                </li>
-                <li>
-                    <p>{{this.desc}}</p>
-                </li>
-                <li>
-                    <p>{{instock}}</p>
-                </li>
-                <li>
-                    <p>{{freeShipping}}</p>
-                </li>
-            </ul>
+        <li class="border border-black rounded-xl">
+
+            <div class="p-4">
+
+                <ul>
+                    <li>
+                        <img class="w-full" src="{{this.url}}" alt="">
+                    </li>
+                    <li>
+                        <a class="inline-block text-black font-bold capitalize mt-4" href="/products/{{this.slug}}">{{this.name}}</a>
+                    </li>
+                    <li>
+                        {{#if instock}}
+                            <p class="flex items-center mt-4"><span class="!font-regular font-bold capitalize">instock</span><img class="px-2" src="/website/checkmark.svg" alt=""></p>
+                        {{^}}
+                            <p class="font-regular line-through mt-4">instock</p>
+                        {{/if}}
+                    </li>
+                    <li>
+                        <p class="mt-4">{{this.avgRating.amount}}</p>
+                    </li>
+                    <li>
+                        <p class="text-6xl font-bold mt-4">$ {{this.price}}</p>
+                    </li>
+                    <li>
+                        {{#each features}}
+                            <p class="text-2xl font-bold capitalize p-4 my-4 border border-black">{{text}}</p>
+                        {{/each}}
+                    </li>
+                    <li>
+                        <p class="mt-4 leading-2">{{this.desc}}</p>
+                    </li>
+                    <li>
+                        {{#if freeShipping}}
+                            <p class="flex items-center mt-4"><span class="font-regular font-bold capitalize">shipping</span><img class="px-2" src="/website/free-shipping.svg" alt=""></p>
+                        {{^}}
+                            <p class="font-regular line-through mt-4">{{freeShipping}}</p>
+                        {{/if}}
+                    </li>
+                </ul>
+
+            </div>
 
         </li>
     {{/each}}

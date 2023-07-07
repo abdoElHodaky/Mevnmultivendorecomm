@@ -1,7 +1,17 @@
 {
-  "name": "multi-vendor-ecommerce-project",
+  "name": "multi-vendor-ecommerce",
   "version": "1.0.0",
-  "description": "multi-vendor ecommerce project",
+  "private": true,
+  "keywords": [
+    "nodejs",
+    "expressjs",
+    "handlebars",
+    "vuejs",
+    "tailwind",
+    "mongodb",
+    "ecommerce",
+    "multi-vendor"
+  ],
   "scripts": {
     "install-server": "npm install --prefix server",
     "install-client": "npm install --prefix client",

@@ -1,22 +1,12 @@
 {
   "name": "multi-vendor-ecommerce-server",
   "version": "1.0.0",
-  "description": "multi-vendor ecommerce server",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js"
   },
-  "keywords": [
-    "nodejs",
-    "expressjs",
-    "handlebars",
-    "vuejs",
-    "mongodb",
-    "ecommerce"
-  ],
-  "author": "andrew zachary",
-  "license": "MIT",
   "dependencies": {
     "@sindresorhus/slugify": "^2.2.1",
     "dotenv": "^16.3.1",
