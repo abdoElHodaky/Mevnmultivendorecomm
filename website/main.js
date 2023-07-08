@@ -1,3 +1,5 @@
 import './style.scss';
 
-console.log('test 2');
+import pagesloader from './src/loader.js';
+
+pagesloader();
