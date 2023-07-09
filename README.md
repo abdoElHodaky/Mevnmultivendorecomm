@@ -3,3 +3,4 @@ The purpose of this project is to learn more about Nodejs and MongoDB, understan
 ## Latest Updates:
 - Create products Ctrl/getAllProducts. 
 - Create products page and render all products.
+- Create paginator for products page.

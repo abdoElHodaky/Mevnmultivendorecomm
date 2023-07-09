@@ -52,9 +52,11 @@
 <!-- products list -->
 
 <!-- products paginator -->
-<div class="w-full bg-white fixed bottom-0 flex items-center justify-center">
-    <div class="bg-black text-white font-bold">
-        <a class="text-4xl capitalize inline-block p-4" href="/products?page={{pagination.prevPage}}">prev</a>
+<div class="w-full bg-white fixed bottom-0 flex items-center justify-center py-4">
+    <div id="prev-page-link" class="font-bold">
+        <a class="text-4xl capitalize inline-block" href="/products?page={{pagination.prevPage}}">
+            <img src="/website/arrow-prev.svg" alt="">
+        </a>
     </div>
     <ul 
         id="num-pages" 
@@ -62,8 +64,10 @@
         data-current-page="{{pagination.page}}" 
         data-num-pages="{{pagination.numberOfPages}}"
     ></ul>
-    <div class="bg-black text-white font-bold">
-        <a class="text-4xl capitalize inline-block p-4" href="/products?page={{pagination.nextPage}}">next</a>
+    <div id="next-page-link" class="font-bold scale-[-1]">
+        <a class="text-4xl capitalize inline-block" href="/products?page={{pagination.nextPage}}">
+            <img src="/website/arrow-prev.svg" alt="">
+        </a>
     </div>
 </div>
 <!-- products paginator -->
