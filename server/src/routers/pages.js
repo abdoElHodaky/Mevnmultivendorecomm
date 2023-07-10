@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { getAllProducts } from '../ctrls/products.js';
+import { getAllProducts, getProduct } from '../ctrls/products.js';
 
 const router = Router();
 
@@ -12,8 +12,9 @@ router.get('/', (_, res) => {
     });
 });
 
-// products page
+// products pages
 router.get('/products', getAllProducts);
+router.get('/products/:slug', getProduct);
 
 // about page
 router.get('/about', (_, res) => {

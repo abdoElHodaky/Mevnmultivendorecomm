@@ -8,7 +8,7 @@ const getAllProducts = async (req, res) => {
     const collection = await Product.find().skip(skip).limit(limit).lean();
     
     const count = await Product.count();
-    const numberOfPages = count / limit;
+    const numberOfPages = Math.ceil(count / limit);
     const prevPage = Math.max(page - 1, 1);
     const nextPage = Math.min(page + 1, count);
 
@@ -21,4 +21,16 @@ const getAllProducts = async (req, res) => {
     });
 };
 
-export { getAllProducts };
+const getProduct = async (req, res) => {
+
+    const product = await Product.findOne({slug: req.params.slug}).lean();
+
+    return res.render('product', {
+        title: req.params.slug,
+        bodyClass: 'product',
+        product,
+        layout: 'main'
+    });
+}
+
+export { getAllProducts, getProduct };
