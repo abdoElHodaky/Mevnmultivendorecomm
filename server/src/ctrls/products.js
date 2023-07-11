@@ -25,6 +25,8 @@ const getProduct = async (req, res) => {
 
     const product = await Product.findOne({slug: req.params.slug}).lean();
 
+    if(!product) return res.render('404', { layout: 'main' });
+
     return res.render('product', {
         title: req.params.slug,
         bodyClass: 'product',

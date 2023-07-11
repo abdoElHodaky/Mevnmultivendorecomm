@@ -6,7 +6,7 @@ const router = Router();
 
 // home page
 router.get('/', (_, res) => {
-    res.render('index', {
+    return res.render('index', {
         title: 'welcome',
         layout: 'main'
     });
@@ -18,8 +18,15 @@ router.get('/products/:slug', getProduct);
 
 // about page
 router.get('/about', (_, res) => {
-    res.render('about', {
+    return res.render('about', {
         title: 'about',
+        layout: 'main'
+    });
+});
+
+// 404
+router.all('*', (_, res)=>{
+    return res.render('404', {
         layout: 'main'
     });
 });

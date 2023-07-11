@@ -1,5 +1,5 @@
 <!-- products list -->
-<ul class="text-4xl grid sm:grid-cols-2 md:grid-cols-3 gap-10 p-4 pb-[8rem]">
+<ul class="text-4xl grid sm:grid-cols-2 md:grid-cols-3 gap-2 lg:gap-8 p-4 pb-[8rem]">
     {{#each products}}
         <li class="border border-black rounded-xl">
 
@@ -7,7 +7,7 @@
 
                 <ul>
                     <li>
-                        <img class="w-full" src="{{this.url}}" alt="">
+                        <img class="w-full" src="/website/{{this.thumbnail}}" alt="">
                     </li>
                     <li>
                         <a class="inline-block text-black font-bold capitalize mt-4" href="/products/{{this.slug}}">{{this.name}}</a>
@@ -24,13 +24,6 @@
                     </li>
                     <li>
                         <p class="text-6xl font-bold mt-4">$ {{this.price}}</p>
-                    </li>
-                    <li>
-                        <div class="mt-12">
-                            {{#each features}}
-                                <p class="text-2xl font-bold capitalize p-4 my-4 border border-black">{{text}}</p>
-                            {{/each}}
-                        </div>
                     </li>
                     <li>
                         <p class="mt-8 leading-normal">{{this.desc}}</p>

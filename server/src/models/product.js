@@ -25,12 +25,12 @@ const productSchema = new mongoose.Schema(
             lowercase: true,
             trim: true
         },
-        url: {
+        thumbnail: {
             type: String,
             maxLength: 255,
             lowercase: true,
             trim: true,
-            default: '/product.jpeg'
+            default: '225x225.svg'
         },
         features: {
             type: [productFeatureSchema],
