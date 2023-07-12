@@ -4,3 +4,4 @@ The purpose of this project is to learn more about Nodejs and MongoDB, understan
 - Create products Ctrl/getAllProducts. 
 - Create products page and render all products.
 - Create paginator for products page.
+- Create single product page and CTRL/getProduct with a new route /product/:slug.
