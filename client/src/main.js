@@ -2,6 +2,8 @@ import { createApp } from 'vue';
 
 // global styles
 import './style.scss';
+import 'primevue/resources/primevue.min.css';
+import 'primevue/resources/themes/md-dark-indigo/theme.css';
 import 'primeicons/primeicons.css';
 
 // router
