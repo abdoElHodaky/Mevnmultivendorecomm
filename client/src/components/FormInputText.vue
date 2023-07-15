@@ -1,16 +1,22 @@
 <script setup>
+import { useField } from "vee-validate";
+import { toRef } from "vue";
 
-defineProps(['label', 'modelValue']);
-defineEmits(['update:modelValue']);
+const props = defineProps(['name', 'label']);
+const name = toRef(props, 'name');
+
+const { value, errorMessage, handleChange, handleBlur } = useField(name);
 
 </script>
 <template>
     <div class="relative mt-8 mb-20">
         <input
-            :value="modelValue"
-            @input="$emit('update:modelValue', $event.target.value)"
             type="text"
-            id="floating_outlined" 
+            :id="name"
+            :name="name"
+            :value="value"
+            @input="handleChange"
+            @blur="handleBlur"
             class="appearance-none w-full block
             bg-transparent
             py-2.5 px-0 
@@ -18,11 +24,12 @@ defineEmits(['update:modelValue']);
             border-0 border-b-2 border-secondary
             focus:outline-none focus:ring-0 focus:border-white peer" placeholder=" " />
         <label
-            for="floating_outlined"
+            :for="name"
             class="absolute top-3 -z-10
             text-4xl text-secondary capitalize
             duration-300 transform -translate-y-10 scale-75 origin-[0]
             peer-focus:left-0 peer-focus:text-white peer-focus:scale-75 peer-focus:-translate-y-10
             peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0">{{ label }}</label>
+        <div class="text-3xl text-red-500 mt-2"> {{ errorMessage }} </div>
     </div>
 </template>

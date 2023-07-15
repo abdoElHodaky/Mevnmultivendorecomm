@@ -3,5 +3,5 @@ defineProps(['title']);
 </script>
 
 <template>
-<p class="text-6xl capitalize font-bold">{{ title }}</p>
+<h1 class="text-6xl capitalize font-bold">{{ title }}</h1>
 </template>

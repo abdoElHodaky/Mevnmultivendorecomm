@@ -11,8 +11,10 @@
   "dependencies": {
     "primeicons": "^6.0.1",
     "primevue": "^3.30.0",
+    "vee-validate": "^4.10.6",
     "vue": "^3.2.47",
-    "vue-router": "^4.2.4"
+    "vue-router": "^4.2.4",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.1.0",
