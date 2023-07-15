@@ -2,12 +2,10 @@
 import { useFieldArray, useForm } from "vee-validate";
 import { object, string, array } from "yup";
 
-import Page from "../../layouts/Page.vue";
 import PageHeader from "../../components/PageHeader.vue";
 import FormInputText from "../../components/FormInputText.vue";
 import SolidBtn from "../../components/SolidBtn.vue";
-import BigIconBtn from "../../components/BigIconBtn.vue";
-import SmallIconBtn from "../../components/SmallIconBtn.vue";
+import IconBtn from "../../components/IconBtn.vue";
 
 const initialValues = {
     name: '',
@@ -35,31 +33,26 @@ const createNewProduct = handleSubmit((values) => {
 });
 
 </script>
-<template>
-    <Page>
-        <div class="flex items-center mb-12">
-            <BigIconBtn icon="pi pi-arrow-left" @click="$router.push('/')" />
-            <PageHeader title="create new product" class="px-4" />
-        </div>
-        <form class="py-4" @submit.prevent="createNewProduct" action="#">
-            <FormInputText name="name" label="name" />
-            <FormInputText name="description" label="description" />
+<template>    
+    <PageHeader title="create new product" />
+    <form class="py-4" @submit.prevent="createNewProduct" action="#">
+        <FormInputText name="name" label="name" />
+        <FormInputText name="description" label="description" />
 
-            <div id="features-box">
-                <div class="flex items-center mb-12">
-                    <SmallIconBtn icon="pi pi-plus" @click="push({text: ''})" />
-                    <PageHeader title="Features" class="px-4 !text-[2.25rem]" />
-                </div>
-                <ul>
-                    <li class="flex items-center -mt-[2rem]" v-for="(field, idx) in fields" :key="field.key">
-                        <FormInputText class="w-full mx-4" :name="`features[${idx}].text`" label="text" />
-                        <SmallIconBtn icon="pi pi-times" @click="remove(idx)" :disabled="fields.length < 2" />
-                    </li>
-                </ul>
+        <div id="features-box">
+            <div class="flex items-center mb-12">
+                <IconBtn size="small" icon="pi pi-plus" @click="push({text: ''})" />
+                <PageHeader title="Features" class="px-4 !text-[2.25rem]" />
             </div>
+            <ul>
+                <li class="flex items-center -mt-[2rem]" v-for="(field, idx) in fields" :key="field.key">
+                    <FormInputText class="w-full mx-4" :name="`features[${idx}].text`" label="text" />
+                    <IconBtn size="small" icon="pi pi-times" @click="remove(idx)" :disabled="fields.length < 2" />
+                </li>
+            </ul>
+        </div>
 
-            <FormInputText name="price" label="price" />
-            <SolidBtn type="submit" label="create" :disabled="Object.keys(errors).length > 0" />
-        </form>
-    </Page>
+        <FormInputText name="price" label="price" />
+        <SolidBtn type="submit" label="create" :disabled="Object.keys(errors).length > 0" />
+    </form>
 </template>
