@@ -36,9 +36,9 @@ const productSchema = new mongoose.Schema(
             type: [productFeatureSchema],
             validate: [
                 function(features) {
-                    return features.length >= 3
+                    return features.length >= 1
                 },
-                "min features number is 3"
+                "min features number is 1"
             ]
         },
         desc: {

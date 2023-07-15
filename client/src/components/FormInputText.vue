@@ -5,18 +5,18 @@ import { toRef } from "vue";
 const props = defineProps(['name', 'label']);
 const name = toRef(props, 'name');
 
-const { value, errorMessage, handleChange, handleBlur } = useField(name);
+const { value, errorMessage, handleChange, setTouched, validate } = useField(name);
 
 </script>
 <template>
-    <div class="relative mt-8 mb-20">
+    <div class="relative mt-6 mb-12">
         <input
             type="text"
             :id="name"
             :name="name"
             :value="value"
             @input="handleChange"
-            @blur="handleBlur"
+            @blur="() => {setTouched(true);validate();}"
             class="appearance-none w-full block
             bg-transparent
             py-2.5 px-0 
