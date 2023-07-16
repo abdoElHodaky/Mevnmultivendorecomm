@@ -8,8 +8,8 @@ import routersLoader from './routers/index.js';
 import { up } from './seeds/push1.js';
 
 // init
-routersLoader(app);
 dbConnect();
+routersLoader(app);
 if(process.env.MODE === 'development') up();
 
 // start server
