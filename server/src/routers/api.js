@@ -1,9 +1,10 @@
 import { Router } from 'express';
 
+import { createNewProduct } from '../ctrls/api/products.js';
+
 const router = Router();
 
-router.get('/', (_, res) => {
-    res.send('api');
-});
+// products
+router.post('/products', createNewProduct);
 
 export default router;

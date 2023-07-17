@@ -3,7 +3,7 @@ import websiteRouter from "./website.js";
 
 const routersLoader = (app) => {
     // api
-    app.use('/api', apiRouter);
+    app.use('/api/v1', apiRouter);
     // website
     app.use('/', websiteRouter);
 };

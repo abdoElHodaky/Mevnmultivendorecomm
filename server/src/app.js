@@ -10,6 +10,7 @@ const __dirname = dirname(__filename);
 
 // create an express app and customize it
 const app = express();
+app.use(express.json());
 app.use(express.static(join(__dirname, '../public')));
 app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');

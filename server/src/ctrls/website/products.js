@@ -1,5 +1,5 @@
-import Product from "../models/product.js";
-import AsyncMiddleware from "../middleware/AsyncMiddleware.js";
+import Product from "../../models/product.js";
+import AsyncMiddleware from "../../middleware/AsyncMiddleware.js";
 
 const renderAllProducts = AsyncMiddleware(async (req, res) => {
 
