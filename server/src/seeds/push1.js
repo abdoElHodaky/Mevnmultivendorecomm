@@ -1,6 +1,6 @@
 import Product from "../models/product.js";
-import { faker } from '@faker-js/faker';
-import slugify from '@sindresorhus/slugify';
+import { faker } from "@faker-js/faker";
+import slugify from "@sindresorhus/slugify";
 
 const up = async () => {
 

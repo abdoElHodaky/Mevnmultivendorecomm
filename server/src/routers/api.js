@@ -1,6 +1,6 @@
-import { Router } from 'express';
+import { Router } from "express";
 
-import { createNewProduct } from '../ctrls/api/products.js';
+import { createNewProduct } from "../ctrls/api/products.js";
 
 const router = Router();
 

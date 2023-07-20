@@ -81,6 +81,17 @@ const productSchema = new mongoose.Schema({
     }
 });
 
+productSchema.pre(/^save|findOneAndUpdate/g, function(next) {
+
+    if(this.getUpdate && this.getUpdate().name) {
+        this.getUpdate().slug = this.getUpdate().name.trim().toLowerCase().split(' ').join('-');
+    } else if(this.name) {
+        this.slug = this.name.trim().toLowerCase().split(' ').join('-');
+    }
+
+    next();
+});
+
 const Product = mongoose.model('Product', productSchema);
 
 export default Product;

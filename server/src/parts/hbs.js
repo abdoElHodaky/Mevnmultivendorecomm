@@ -1,6 +1,6 @@
-import { create } from 'express-handlebars';
+import { create } from "express-handlebars";
 
-import manifist from '../../public/website/manifest.json' assert { type: 'json' };
+import manifist from "../../public/website/manifest.json" assert { type: 'json' };
 
 let jsFileUrl = 'http://localhost:3000/website/main.js';
 let cssFileUrl = '';

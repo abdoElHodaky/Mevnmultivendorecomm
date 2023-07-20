@@ -1,5 +1,5 @@
-import './style.scss';
+import "./style.scss";
 
-import pagesloader from './src/loader.js';
+import pagesloader from "./src/loader.js";
 
 pagesloader();

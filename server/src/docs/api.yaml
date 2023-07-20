@@ -1,0 +1,101 @@
+openapi: 3.0.0
+servers:
+  - url: 'http://localhost:8400'
+info:
+  description: Node/expressjs REST API.
+  version: "1.0.0"
+  title: Multi Vendor eCommerce API
+  contact:
+    name: andrew zachary
+    url: 'https://github.com/andrew-zachary'
+  license:
+    name: Licensed Under MIT
+    url: 'https://spdx.org/licenses/MIT.html'
+tags:
+  - name: Products
+    description: Router for Product Model
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        name:
+          type: string
+          description: product name
+        thumbnail:
+          type: string
+          description: product thumbnail name
+        features:
+          type: array
+          items:
+            type: object
+            properties:
+              text:
+                type: string
+                description: product's single feature description
+        description:
+          type: string
+          description: product description
+        instock:
+          type: boolean
+          description: product instock flag
+        freeShipping:
+          type: boolean
+          description: product free shipping flag
+        lang:
+          type: string
+          enum:
+            - en
+            - ar
+          description: the product language
+paths:
+  /api/v1/products:
+    post:
+      description: create new product
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - type: object
+                  properties:
+                    price:
+                      type: number
+                      description: product price
+                - $ref: "#/components/schemas/Product"
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      _id:
+                        type: string
+                        description: product id
+                      slug:
+                        type: string
+                        description: product slug
+                      avgRating:
+                        type: object
+                        properties:
+                          amount:
+                            type: number
+                            default: 4.5
+                            description: product avg rating
+                          numOfRating:
+                            type: number
+                            default: 0
+                            description: product's number of ratings
+                      price:
+                        type: object
+                        properties:
+                          $numberDecimal:
+                            type: number
+                            description: product price(toFixed(2))
+                  - $ref: "#/components/schemas/Product"

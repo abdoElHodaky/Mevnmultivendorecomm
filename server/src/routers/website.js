@@ -1,6 +1,6 @@
-import { Router } from 'express';
+import { Router } from "express";
 
-import { renderAllProducts, renderProduct } from '../ctrls/website/products.js';
+import { renderAllProducts, renderProduct } from "../ctrls/website/products.js";
 
 const router = Router();
 

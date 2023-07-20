@@ -1,7 +1,7 @@
 import PrimeVue from "primevue/config";
 
 import Button from "primevue/button";
-import Sidebar from 'primevue/sidebar';
+import Sidebar from "primevue/sidebar";
 
 export default {
     install(app) {
