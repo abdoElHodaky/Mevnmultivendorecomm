@@ -7,6 +7,10 @@ import FormInputText from "../../components/FormInputText.vue";
 import SolidBtn from "../../components/SolidBtn.vue";
 import IconBtn from "../../components/IconBtn.vue";
 
+import { useConfirm } from "primevue/useconfirm";
+
+const confirm = useConfirm();
+
 const initialValues = {
     name: '',
     description: '',
@@ -29,11 +33,21 @@ const { handleSubmit, errors } = useForm({ initialValues, validationSchema });
 const { remove, push, fields } = useFieldArray('features');
 
 const createNewProduct = handleSubmit((values) => {
-    window.alert(JSON.stringify(values, null, 4));
+    confirm.require({
+        message: 'Create new product?',
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        acceptLabel: 'ok',
+        rejectLabel: 'cancel',
+        accept: () => {
+            window.alert(JSON.stringify(values, null, 4));
+        },
+        reject: () => {}
+    });
 });
 
 </script>
-<template>    
+<template>
     <PageHeader title="create new product" />
     <form class="py-4" @submit.prevent="createNewProduct" action="#">
         <FormInputText name="name" label="name" />
