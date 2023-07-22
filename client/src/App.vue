@@ -10,14 +10,14 @@ import Nav from "./layouts/Nav.vue";
             <router-view></router-view>
 
             <ConfirmDialog :draggable="false" :pt="{
-                root: { class: '!bg-white' },
-                header: { class: '!bg-none' },
+                root: { class: '!bg-primary' },
+                header: { class: '!bg-transparent' },
                 headerTitle: { class: '!text-6xl' },
                 closeButton: { class: '!h-[3rem] !w-[3rem] !bg-secondary hover:opacity-80 !p-2 !shadow-btn' },
                 closeButtonIcon: { class: '!h-[1.5rem] !w-[1.5rem] !text-black' },
-                content: { class: '!py-8'},
+                content: { class: '!py-8 !bg-transparent'},
                 message: { class: '!text-4xl' },
-                icon: { class: '!text-4xl' },
+                icon: { class: 'icon-padding !text-4xl' },
                 acceptButton: { 
                     root: { class: '!bg-secondary hover:opacity-80 w-full shadow-btn' },
                     label: { class: 'text-primary text-2xl font-bold uppercase' }
@@ -25,7 +25,8 @@ import Nav from "./layouts/Nav.vue";
                 rejectButton: {
                     root: { class: '!bg-secondary hover:opacity-80 w-full shadow-btn' },
                     label: { class: 'text-primary text-2xl font-bold uppercase' }
-                }
+                },
+                footer: { class: '!bg-transparent' }
             }">
             </ConfirmDialog>
 

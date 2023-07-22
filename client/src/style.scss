@@ -5,3 +5,19 @@
 html { font-size: 62.5%; }
 
 html, body, #app { height: 100%; }
+
+// mixins
+@mixin withRtl($property, $ltr-value, $rtl-value) {
+    & {
+      #{$property}: $ltr-value;
+    }
+  
+    .is-rtl & {
+      #{$property}: $rtl-value;
+    }
+}
+
+// icon padding
+.icon-padding {
+    @include withRtl(padding, 0 1rem 0 0, 0 0 0 1rem);
+}

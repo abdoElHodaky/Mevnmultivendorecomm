@@ -1,15 +1,14 @@
 <script setup>
 import { useFieldArray, useForm } from "vee-validate";
 import { object, string, array } from "yup";
+import { useConfirm } from "primevue/useconfirm";
 
 import PageHeader from "../../components/PageHeader.vue";
 import FormInputText from "../../components/FormInputText.vue";
 import SolidBtn from "../../components/SolidBtn.vue";
 import IconBtn from "../../components/IconBtn.vue";
 
-import { useConfirm } from "primevue/useconfirm";
-
-const confirm = useConfirm();
+import useBaseFetch from "../../utils/fetch.js";
 
 const initialValues = {
     name: '',
@@ -29,6 +28,8 @@ const validationSchema = object({
     price: string().required("* product's price is required")
 });
 
+const confirm = useConfirm();
+const fetching = useBaseFetch('products');
 const { handleSubmit, errors } = useForm({ initialValues, validationSchema });
 const { remove, push, fields } = useFieldArray('features');
 
@@ -40,7 +41,7 @@ const createNewProduct = handleSubmit((values) => {
         acceptLabel: 'ok',
         rejectLabel: 'cancel',
         accept: () => {
-            window.alert(JSON.stringify(values, null, 4));
+            fetching.post(values).execute();
         },
         reject: () => {}
     });
