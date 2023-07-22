@@ -1,8 +1,9 @@
 <script setup>
 import Nav from "./layouts/Nav.vue";
+import LoadingScreen from "./components/LoadingScreen.vue";
 </script>
 <template>
-    <div id="page" class="w-full h-full max-w-screen-md mx-auto grid items-center p-2">
+    <div id="page" class="relative w-full h-full max-w-screen-md mx-auto grid items-center p-2">
         <div id="page-box" class="flex flex-col">
 
             <Nav />
@@ -27,8 +28,9 @@ import Nav from "./layouts/Nav.vue";
                     label: { class: 'text-primary text-2xl font-bold uppercase' }
                 },
                 footer: { class: '!bg-transparent' }
-            }">
-            </ConfirmDialog>
+            }" />
+
+            <LoadingScreen />
 
         </div>
     </div>
