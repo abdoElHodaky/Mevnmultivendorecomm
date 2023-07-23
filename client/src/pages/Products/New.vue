@@ -2,6 +2,7 @@
 import { useFieldArray, useForm } from "vee-validate";
 import { object, string, array } from "yup";
 import { useConfirm } from "primevue/useconfirm";
+import { useToast } from 'primevue/usetoast';
 
 import PageHeader from "../../components/PageHeader.vue";
 import FormInputText from "../../components/FormInputText.vue";
@@ -9,6 +10,7 @@ import SolidBtn from "../../components/SolidBtn.vue";
 import IconBtn from "../../components/IconBtn.vue";
 
 import useBaseFetch from "../../utils/fetch.js";
+import { toggleLoadingScreen } from "../../utils/togglers";
 
 const initialValues = {
     name: '',
@@ -28,10 +30,23 @@ const validationSchema = object({
     price: string().required("* product's price is required")
 });
 
-const confirm = useConfirm();
-const fetching = useBaseFetch('products');
 const { handleSubmit, errors } = useForm({ initialValues, validationSchema });
 const { remove, push, fields } = useFieldArray('features');
+const toast = useToast();
+const confirm = useConfirm();
+const fetching = useBaseFetch('products', {
+    beforeFetch: () => {
+        toggleLoadingScreen();
+    },
+    afterFetch: () => {
+        toggleLoadingScreen();
+        toast.add({ severity: 'success', summary: 'success', detail: 'New Product was created', life: 3000});
+    },
+    onFetchError: () => {
+        toggleLoadingScreen();
+        toast.add({ severity: 'error', summary: 'error', detail: 'error has happened', life: 3000});
+    }
+});
 
 const createNewProduct = handleSubmit((values) => {
     confirm.require({

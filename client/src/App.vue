@@ -32,6 +32,17 @@ import LoadingScreen from "./components/LoadingScreen.vue";
 
             <LoadingScreen />
 
+            <Toast :pt="{
+                root: { class: '!w-full !top-0 !right-0 p-[1rem]' },
+                message: { class: '!w-full !max-w-screen-md !mx-auto !flex !flex-col !items-end' },
+                container: { class: '!bg-secondary' },
+                summary: { class: '!text-4xl !text-white' },
+                detail: { class: '!text-2xl !text-white !font-bold' },
+                icon: { class: '!h-[3rem] !w-[3rem] !text-white' },
+                button: { class: '!h-[3rem] !w-[3rem] !bg-primary !shadow-[0px_0px_10px_0.5px_#252424]' },
+                buttonIcon: { class: '!text-secondary !h-[1.5rem] !w-[1.5rem]' },
+            }" />
+
         </div>
     </div>
 </template>
