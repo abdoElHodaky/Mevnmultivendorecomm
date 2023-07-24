@@ -22,11 +22,11 @@ dbConnect();
 // and seed some data for developing
 if(process.env.MODE === 'development') up();
 
-// 3- load all routes
-routersLoader(app);
-
-// 4- load api docs
+// 3- load api docs
 loadDocs(app);
+
+// 4- load all routes
+routersLoader(app);
 
 // 5- global error ctrl
 app.use(globalErrors);

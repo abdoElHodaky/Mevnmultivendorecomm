@@ -14,8 +14,25 @@ info:
 tags:
   - name: Products
     description: Router for Product Model
+  - name: Users
+    description: Router for User Model
 components:
   schemas:
+    User:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: user's first name
+        lastName:
+          type: string
+          description: user's last name
+        email:
+          type: string
+          description: user's email
+        password:
+          type: string
+          description: user's password
     Product:
       type: object
       properties:
@@ -99,3 +116,70 @@ paths:
                             type: number
                             description: product price(toFixed(2))
                   - $ref: "#/components/schemas/Product"
+  /api/v1/users:
+    post:
+      description: signup new user
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/User"
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  firstName:
+                    type: string
+                    description: user's first name
+                  lastName:
+                    type: string
+                    description: user's last name
+                  email:
+                    type: object
+                    properties:
+                      address:
+                        type: string
+                        description: user's email address
+                      verified:
+                        type: boolean
+                        default: false
+                        description: is user's email verified
+                  accountStatus:
+                    type: string
+                    enum:
+                      - active
+                      - inactive
+                  avatar:
+                    type: string
+                    description: user's avatar image-url
+                  currentBalance:
+                    type: string
+                    description: user's current balance
+                  appPreferences:
+                    type: object
+                    properties:
+                      mode:
+                        type: string
+                        enum:
+                          - light
+                          - dark
+                      lang:
+                        type: string
+                        enum:
+                          - en
+                          - ar
+                  _id:
+                    type: string
+                    description: user's id
+                  createdAt:
+                    type: string
+                    description: the date-time for user's account
+      
