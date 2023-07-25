@@ -18,7 +18,7 @@ tags:
     description: Router for User Model
 components:
   schemas:
-    User:
+    Returned user props:
       type: object
       properties:
         firstName:
@@ -28,12 +28,46 @@ components:
           type: string
           description: user's last name
         email:
+          type: object
+          properties:
+            address:
+              type: string
+              description: user's email address
+            verified:
+              type: boolean
+              default: false
+              description: is user's email verified
+        accountStatus:
           type: string
-          description: user's email
-        password:
+          enum:
+            - active
+            - inactive
+        avatar:
           type: string
-          description: user's password
-    Product:
+          description: user's avatar image-url
+        currentBalance:
+          type: string
+          description: user's current balance
+        appPreferences:
+          type: object
+          properties:
+            mode:
+              type: string
+              enum:
+                - light
+                - dark
+            lang:
+              type: string
+              enum:
+                - en
+                - ar
+        _id:
+          type: string
+          description: user's id
+        createdAt:
+          type: string
+          description: the date-time for user's account
+    Common product props:
       type: object
       properties:
         name:
@@ -82,7 +116,7 @@ paths:
                     price:
                       type: number
                       description: product price
-                - $ref: "#/components/schemas/Product"
+                - $ref: "#/components/schemas/Common product props"
       responses:
         200:
           description: ok
@@ -115,8 +149,8 @@ paths:
                           $numberDecimal:
                             type: number
                             description: product price(toFixed(2))
-                  - $ref: "#/components/schemas/Product"
-  /api/v1/users:
+                  - $ref: "#/components/schemas/Common product props"
+  /api/v1/users/signup:
     post:
       description: signup new user
       tags:
@@ -126,8 +160,20 @@ paths:
         content:
           application/json:
             schema:
-              allOf:
-                - $ref: "#/components/schemas/User"
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  description: user's first name
+                lastName:
+                  type: string
+                  description: user's last name
+                email:
+                  type: string
+                  description: user's email
+                password:
+                  type: string
+                  description: user's password
       responses:
         200:
           description: ok
@@ -136,50 +182,43 @@ paths:
               schema:
                 type: object
                 properties:
-                  firstName:
-                    type: string
-                    description: user's first name
-                  lastName:
-                    type: string
-                    description: user's last name
-                  email:
+                  data:
                     type: object
-                    properties:
-                      address:
-                        type: string
-                        description: user's email address
-                      verified:
-                        type: boolean
-                        default: false
-                        description: is user's email verified
-                  accountStatus:
+                    allOf:
+                      - $ref: '#/components/schemas/Returned user props'
+                  token:
                     type: string
-                    enum:
-                      - active
-                      - inactive
-                  avatar:
-                    type: string
-                    description: user's avatar image-url
-                  currentBalance:
-                    type: string
-                    description: user's current balance
-                  appPreferences:
+                    description: jwt token
+  /api/v1/users/signin:
+    post:
+      description: signin new user
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: user's email
+                password:
+                  type: string
+                  description: user's password
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
                     type: object
-                    properties:
-                      mode:
-                        type: string
-                        enum:
-                          - light
-                          - dark
-                      lang:
-                        type: string
-                        enum:
-                          - en
-                          - ar
-                  _id:
+                    allOf:
+                      - $ref: '#/components/schemas/Returned user props'
+                  token:
                     type: string
-                    description: user's id
-                  createdAt:
-                    type: string
-                    description: the date-time for user's account
-      
+                    description: jwt token
