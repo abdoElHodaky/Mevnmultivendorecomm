@@ -3,9 +3,10 @@ import bcryptjs from "bcryptjs";
 
 import User from "../../models/user.js";
 import AsyncMiddleware from "../../middleware/AsyncMiddleware.js";
-import inputsValidation from "../../utils/inputsValidation.js";
-import { createToken } from "../../utils/jwtAuth.js";
 import AppError from "../../parts/AppError.js";
+import inputsValidation from "../../utils/inputsValidation.js";
+import { createAccessToken, createRefreshToken } from "../../utils/jwtTokens.js";
+import { createSession } from "../../utils/sessionToken.js";
 
 const signUpSchema = object({
     firstName: string().required('user_fname_required'),
@@ -32,9 +33,19 @@ const signUp = AsyncMiddleware(async(req, res, next) => {
 
     const newUser = await user.save();
 
-    const token = createToken(newUser._id);
+    const sessionToken = await createSession(newUser._id, req.ip, req.headers['user-agent']);
+    const accesstoken = createAccessToken(sessionToken, newUser._id);
+    const refreshtoken = createRefreshToken(sessionToken);
 
-    res.status(200).send({ data: {
+    res.status(200).cookie('access_token', accesstoken, {
+        'path': '/',
+        'domain': 'localhost',
+        'httpOnly': true,
+    }).cookie('refresh_token', refreshtoken, {
+        'path': '/',
+        'domain': 'localhost',
+        'httpOnly': true,
+    }).send({ data: {
         firstName: newUser.firstName,
         lastName: newUser.lastName,
         email: newUser.email,
@@ -44,7 +55,7 @@ const signUp = AsyncMiddleware(async(req, res, next) => {
         appPreferences: newUser.appPreferences,
         _id: newUser._id,
         createdAt: newUser.createdAt,
-    }, token });
+    }});
 
 });
 
@@ -58,9 +69,19 @@ const signIn = AsyncMiddleware(async(req, res, next) => {
     const compareResult = await bcryptjs.compare(req.body.password, user.password);
     if(!compareResult) return next(new AppError({message: 'wrong_email_password'}, 400));
 
-    const token = createToken(user._id);
+    const sessionToken = await createSession(user._id, req.ip, req.headers['user-agent']);
+    const accesstoken = createAccessToken(sessionToken, user._id);
+    const refreshtoken = createRefreshToken(sessionToken);
 
-    res.status(200).send({ data: {
+    res.status(200).cookie('access_token', accesstoken, {
+        'path': '/',
+        'domain': 'localhost',
+        'httpOnly': true,
+    }).cookie('refresh_token', refreshtoken, {
+        'path': '/',
+        'domain': 'localhost',
+        'httpOnly': true,
+    }).send({ data: {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
@@ -70,7 +91,7 @@ const signIn = AsyncMiddleware(async(req, res, next) => {
         appPreferences: user.appPreferences,
         _id: user._id,
         createdAt: user.createdAt,
-    }, token });
+    }});
 
 });
 
