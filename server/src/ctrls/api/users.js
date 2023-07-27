@@ -1,7 +1,9 @@
 import { object, string } from "yup";
 import bcryptjs from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 import User from "../../models/user.js";
+import Session from "../../models/session.js";
 import AsyncMiddleware from "../../middleware/AsyncMiddleware.js";
 import AppError from "../../parts/AppError.js";
 import inputsValidation from "../../utils/inputsValidation.js";
@@ -95,4 +97,43 @@ const signIn = AsyncMiddleware(async(req, res, next) => {
 
 });
 
-export { signUp, signIn };
+const profile = AsyncMiddleware(async(req, res, next) => {
+
+    if(req?.cookies?.access_token) {
+
+        const { userId } = jwt.verify(req.cookies.access_token, process.env.JWT_SECRET);
+
+        const user = await User.findById(userId).select('-password');
+
+        return res.status(200).send(user);
+    }
+
+    if(req?.cookies?.refresh_token) {
+
+        const { sessionToken } = jwt.verify(req.cookies.refresh_token, process.env.JWT_SECRET);
+
+        const currentSession = await Session.findOne({token: sessionToken});
+
+        const user = await User.findById(currentSession.userId).select('-password');
+
+        // recreate tokens
+        const sessionTokenx = await createSession(user._id, req.ip, req.headers['user-agent']);
+        const accesstoken = createAccessToken(sessionTokenx, user._id);
+        const refreshtoken = createRefreshToken(sessionTokenx);
+    
+        res.status(200).cookie('access_token', accesstoken, {
+            'path': '/',
+            'domain': 'localhost',
+            'httpOnly': true,
+        }).cookie('refresh_token', refreshtoken, {
+            'path': '/',
+            'domain': 'localhost',
+            'httpOnly': true,
+        }).send(user);
+    }
+
+    res.status(401).send('user_not_loggedin');
+
+});
+
+export { signUp, signIn, profile };
