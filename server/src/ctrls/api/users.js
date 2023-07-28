@@ -1,13 +1,16 @@
 import { object, string } from "yup";
 import bcryptjs from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 import User from "../../models/user.js";
+import Session from "../../models/session.js";
 import AsyncMiddleware from "../../middleware/AsyncMiddleware.js";
 import AppError from "../../parts/AppError.js";
 import inputsValidation from "../../utils/inputsValidation.js";
 import { createAccessToken, createRefreshToken } from "../../utils/jwtTokens.js";
 import { createSession } from "../../utils/sessionToken.js";
-import sendRes from "../../utils/sendRes.js";
+import authedResponse from "../../utils/authedResponse.js";
+import { refreshTokenExpireTime } from "../../utils/cookieTimers.js";
 
 const signUpSchema = object({
     firstName: string().required('user_fname_required'),
@@ -30,9 +33,7 @@ const signUp = AsyncMiddleware(async(req, res, next) => {
 
     await inputsValidation(signUpSchema, req.body, next);
 
-    const user = new User({...req.body, email: { address: req.body.email }});
-
-    const newUser = await user.save();
+    const newUser = await User.create({...req.body, email: { address: req.body.email }});
 
     const sessionToken = await createSession(newUser._id, req.ip, req.headers['user-agent']);
     const accesstoken = createAccessToken(sessionToken, newUser._id);
@@ -46,7 +47,8 @@ const signUp = AsyncMiddleware(async(req, res, next) => {
         'path': '/',
         'domain': 'localhost',
         'httpOnly': true,
-    }).send({ data: {
+        'expires': refreshTokenExpireTime()
+    }).send({
         firstName: newUser.firstName,
         lastName: newUser.lastName,
         email: newUser.email,
@@ -56,7 +58,7 @@ const signUp = AsyncMiddleware(async(req, res, next) => {
         appPreferences: newUser.appPreferences,
         _id: newUser._id,
         createdAt: newUser.createdAt,
-    }});
+    });
 
 });
 
@@ -77,12 +79,13 @@ const signIn = AsyncMiddleware(async(req, res, next) => {
     res.status(200).cookie('access_token', accesstoken, {
         'path': '/',
         'domain': 'localhost',
-        'httpOnly': true,
+        'httpOnly': true
     }).cookie('refresh_token', refreshtoken, {
         'path': '/',
         'domain': 'localhost',
         'httpOnly': true,
-    }).send({ data: {
+        'expires': refreshTokenExpireTime()
+    }).send({
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
@@ -92,10 +95,30 @@ const signIn = AsyncMiddleware(async(req, res, next) => {
         appPreferences: user.appPreferences,
         _id: user._id,
         createdAt: user.createdAt,
-    }});
+    });
 
 });
 
-const profile = AsyncMiddleware(async(req, res) => sendRes.withRefreshToken(req, res));
+const profile = AsyncMiddleware(async(req, res) => authedResponse.withRefreshToken(req, res, req.user));
 
-export { signUp, signIn, profile };
+const logout = AsyncMiddleware(async(req, res, next) => {
+
+    if(req?.cookies?.access_token) {
+
+        const { sessionToken } = jwt.verify(req.cookies.access_token, process.env.JWT_SECRET);
+
+        await Session.findOneAndDelete({token: sessionToken});
+
+    } else if(req?.cookies?.refresh_token) {
+
+        const { sessionToken } = jwt.verify(req.cookies.refresh_token, process.env.JWT_SECRET);
+
+        await Session.findOneAndDelete({token: sessionToken});
+
+    }
+
+    res.clearCookie('access_token').clearCookie('refresh_token').status(200).send('logged_out');
+
+});
+
+export { signUp, signIn, profile, logout };

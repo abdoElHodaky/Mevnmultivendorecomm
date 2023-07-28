@@ -14,6 +14,7 @@ const isAuth = AsyncMiddleware(async (req, res, next) => {
         const { userId } = jwt.verify(req.cookies.access_token, process.env.JWT_SECRET);
 
         const user = await User.findById(userId).select('-password');
+        if(!user) return next(new AppError({message: 'not_logged_in'}, 401));
 
         req.user = user;
 
@@ -28,11 +29,13 @@ const isAuth = AsyncMiddleware(async (req, res, next) => {
         
         // get user and recreate tokens
         const user = await User.findById(oldSession.userId).select('-password');
+        if(!user) return next(new AppError({message: 'not_logged_in'}, 401));
+        
         const newSessionToken = await createSession(user._id, req.ip, req.headers['user-agent']);
         const accessToken = createAccessToken(newSessionToken, user._id);
         const refreshToken = createRefreshToken(newSessionToken);
         
-        req.withRefreshTokens = true;
+        req.withNewTokens = true;
         req.user = user;
         req.accessToken = accessToken;
         req.refreshToken = refreshToken;
@@ -40,7 +43,7 @@ const isAuth = AsyncMiddleware(async (req, res, next) => {
         return next();
     }
 
-    return next(new AppError({message: 'not_loggedin'}, 401));
+    return next(new AppError({message: 'not_logged_in'}, 401));
 
 });
 

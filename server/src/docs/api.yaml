@@ -17,6 +17,15 @@ tags:
   - name: Users
     description: Router for User Model
 components:
+  securitySchemes:
+    access_token:
+      type: apiKey
+      in: cookie
+      name: access_token
+    refresh_token:
+      type: apiKey
+      in: cookie
+      name: refresh_token
   schemas:
     Returned user props:
       type: object
@@ -177,18 +186,18 @@ paths:
       responses:
         200:
           description: ok
+          headers:
+            Set-Cookie:
+              description: set both access_token and refresh_token
+              schema:
+                type: string
+                example: access_token=123; Path=/; HttpOnly
           content:
             application/json:
               schema:
                 type: object
-                properties:
-                  data:
-                    type: object
-                    allOf:
-                      - $ref: '#/components/schemas/Returned user props'
-                  token:
-                    type: string
-                    description: jwt token
+                allOf:
+                  - $ref: '#/components/schemas/Returned user props'
   /api/v1/users/signin:
     post:
       description: signin new user
@@ -210,15 +219,33 @@ paths:
       responses:
         200:
           description: ok
+          headers:
+            Set-Cookie:
+              description: set both access_token and refresh_token
+              schema:
+                type: string
+                example: access_token=123; Path=/; HttpOnly
           content:
             application/json:
               schema:
                 type: object
-                properties:
-                  data:
-                    type: object
-                    allOf:
-                      - $ref: '#/components/schemas/Returned user props'
-                  token:
-                    type: string
-                    description: jwt token
+                allOf:
+                  - $ref: '#/components/schemas/Returned user props'
+  /api/v1/users/profile:
+    get:
+      description: get logged in user profile
+      security:
+        - access_token: []
+        - refresh_token: []
+      tags:
+        - Users
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                  - $ref: '#/components/schemas/Returned user props'
+    

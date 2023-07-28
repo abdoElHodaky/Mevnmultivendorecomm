@@ -22,7 +22,7 @@ const sessionSchema = new mongoose.Schema({
     userAgent: {
         type: String,
         required: true,
-        maxLength: 50,
+        maxLength: 255,
         lowercase: true,
         trim: true
     },

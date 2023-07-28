@@ -1,5 +1,5 @@
 # Multi Vendor Ecommerce
-The purpose of this project is to learn more about Nodejs and MongoDB, dive deeper into web technologies and hit the core.
+The purpose of this project is to learn more about Nodejs and MongoDB, dive deeper into web technologies and hit the core through **MEVN** stack web apps.
 
 Breaking the project into three major parts will make it easier to focus on each task individually:
 
@@ -12,7 +12,10 @@ Breaking the project into three major parts will make it easier to focus on each
 ## Technical Details
 - vuejs - vue-router - vee-validate - primevue - vueuse - yup
 - expressjs - handlebars - mongoose - swagger-ui-express
-## Latest Updates
+## Latest Update
+- (server) Generate jwt tokens and wrap them with access_token and refresh_token httpOnly cookies.
+- (server) Create routes for signup/signin/profile/logout.
+- (server) Create a user model.
 - (client) Setup and style primevue-toast.
 - (client) Create loading-screen component and singleton togglers.
 - (client) Init createFetch using vueuse.

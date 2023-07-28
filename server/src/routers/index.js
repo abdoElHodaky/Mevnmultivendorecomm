@@ -1,9 +1,3 @@
-/**
- * 
- * All guarded routes must use sendRes.withRefreshToken(req, res)
- * 
- */
-
 import apiRouter from "./api.js";
 import websiteRouter from "./website.js";
 
