@@ -2,7 +2,7 @@
 import { useFieldArray, useForm } from "vee-validate";
 import { object, string, array } from "yup";
 import { useConfirm } from "primevue/useconfirm";
-import { useToast } from 'primevue/usetoast';
+import { useToast } from "primevue/usetoast";
 
 import PageHeader from "../../components/PageHeader.vue";
 import FormInputText from "../../components/FormInputText.vue";
