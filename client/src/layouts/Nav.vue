@@ -27,11 +27,15 @@ const navigateTo = (path) => {
                     </div>
 
                     <div class="mb-12">
+                        <a href="#" class="text-5xl hover:text-secondary font-bold capitalize block mb-4" @click="navigateTo('/products')">products</a>
+                    </div>
+
+                    <div class="mb-12">
                         <h2 class="text-3xl font-bold capitalize block mb-6">
-                            products
+                            Account
                         </h2>
-                        <a href="#" class="text-5xl hover:text-secondary font-bold capitalize block ml-4 mb-4" @click="navigateTo('/products/list')">list</a>
-                        <a href="#" class="text-5xl hover:text-secondary font-bold capitalize block ml-4 mb-4" @click="navigateTo('/products/new')">new</a>
+                        <a href="#" class="text-5xl hover:text-secondary font-bold capitalize block ml-4 mb-4" @click="navigateTo('/signin')">sign in</a>
+                        <a href="#" class="text-5xl hover:text-secondary font-bold capitalize block ml-4 mb-4" @click="navigateTo('/signup')">sign up</a>
                     </div>
                     
                 </div>

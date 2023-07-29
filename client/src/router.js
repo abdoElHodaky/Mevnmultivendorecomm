@@ -1,23 +1,23 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import Home from "./pages/Home.vue";
+import ProductsList from "./pages/ProductsList.vue";
 import Signup from "./pages/Signup.vue";
 import Signin from "./pages/Signin.vue";
 
-import ProductsHome from "./pages/Products/Home.vue";
-import ProductsNew from "./pages/Products/New.vue";
-import ProductsList from "./pages/Products/List.vue";
+import Dashboard from "./pages/Dashboard/Home.vue";
+import NewProduct from "./pages/Dashboard/NewProduct.vue";
 
 const routes = [
     { path: '/', component: Home },
     { path: '/signup', component: Signup },
-    { path: '/Signin', component: Signin },
+    { path: '/signin', component: Signin },
+    { path: '/products', component: ProductsList },
     {
-        path: '/products',
-        component: ProductsHome,
+        path: '/dashboard',
+        component: Dashboard,
         children: [
-            { path: '/products/list', component: ProductsList },
-            { path: '/products/new', component: ProductsNew }
+            { path: '/dashboard/new', component: NewProduct }
         ]
     }
 ];
