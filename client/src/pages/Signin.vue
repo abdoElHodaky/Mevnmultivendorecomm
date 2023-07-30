@@ -10,6 +10,8 @@ import SolidBtn from "../components/SolidBtn.vue";
 import useBaseFetch from "../utils/fetch.js";
 import { toggleLoadingScreen } from "../utils/togglers.js";
 
+import useUserStore from "../stores/user.js";
+
 const initialValues = {
     email: '',
     password: '',
@@ -22,23 +24,26 @@ const validationSchema = object({
     password: string().required("* user's password is required"),
 });
 
+const userStore = useUserStore();
 const toast = useToast();
 const { handleSubmit, errors } = useForm({ initialValues, validationSchema });
 const fetching = useBaseFetch('users/signin', {
     beforeFetch: () => {
         toggleLoadingScreen();
     },
-    afterFetch: () => {
+    afterFetch: (ctx) => {
         toggleLoadingScreen();
+        userStore.logUserIn(ctx.data);
+        toast.add({ severity: 'success', summary: 'welcome', detail: ctx.data.firstName, life: 3000 });
     },
     onFetchError: () => {
         toggleLoadingScreen();
-        toast.add({ severity: 'error', summary: 'error', detail: 'error has happened', life: 3000});
+        toast.add({ severity: 'error', summary: 'error', detail: 'error has happened', life: 3000 });
     }
 });
 
 const signin = handleSubmit((values) => {
-    fetching.post(values).execute();
+    fetching.post(values).json().execute();
 });
 </script>
 <template>

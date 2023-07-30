@@ -8,11 +8,13 @@ const withRefreshToken = (req, res, data) => {
             'path': '/',
             'domain': 'localhost',
             'httpOnly': true,
+            'sameSite': 'Lax'
         }).cookie('refresh_token', req.refreshToken, {
             'path': '/',
             'domain': 'localhost',
             'httpOnly': true,
-            'expires': refreshTokenExpireTime()
+            'expires': refreshTokenExpireTime(),
+            'sameSite': 'Lax'
         }).send(data);
 
     } else if(req.route.path.includes('profile') && req?.cookies?.refresh_token) {
@@ -23,7 +25,8 @@ const withRefreshToken = (req, res, data) => {
             'path': '/',
             'domain': 'localhost',
             'httpOnly': true,
-            'expires': refreshTokenExpireTime()
+            'expires': refreshTokenExpireTime(),
+            'sameSite': 'Lax'
         }).send(data);
 
     } else {

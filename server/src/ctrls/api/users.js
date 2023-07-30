@@ -43,11 +43,13 @@ const signUp = AsyncMiddleware(async(req, res, next) => {
         'path': '/',
         'domain': 'localhost',
         'httpOnly': true,
+        'sameSite': 'Lax'
     }).cookie('refresh_token', refreshtoken, {
         'path': '/',
         'domain': 'localhost',
         'httpOnly': true,
-        'expires': refreshTokenExpireTime()
+        'expires': refreshTokenExpireTime(),
+        'sameSite': 'Lax'
     }).send({
         firstName: newUser.firstName,
         lastName: newUser.lastName,
@@ -79,12 +81,14 @@ const signIn = AsyncMiddleware(async(req, res, next) => {
     res.status(200).cookie('access_token', accesstoken, {
         'path': '/',
         'domain': 'localhost',
-        'httpOnly': true
+        'httpOnly': true,
+        'sameSite': 'Lax'
     }).cookie('refresh_token', refreshtoken, {
         'path': '/',
         'domain': 'localhost',
         'httpOnly': true,
-        'expires': refreshTokenExpireTime()
+        'expires': refreshTokenExpireTime(),
+        'sameSite': 'Lax'
     }).send({
         firstName: user.firstName,
         lastName: user.lastName,
