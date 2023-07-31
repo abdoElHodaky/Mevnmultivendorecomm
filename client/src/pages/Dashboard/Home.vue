@@ -23,9 +23,9 @@ const fetching = useBaseFetch('users/profile', {
 });
 
 onBeforeMount(() => {
-    if(userStore.authed === null) fetching.get().json().execute();
-    else if(!userStore.authed) router.push({name: 'sign-in'});
-})
+    if(userStore.authed === 'pending') fetching.get().json().execute();
+    else if(userStore.authed === 'unauthed') router.push({name: 'sign-in'});
+});
 </script>
 <template>
     <router-view></router-view>

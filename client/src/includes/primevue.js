@@ -7,6 +7,7 @@ import ConfirmationService from 'primevue/confirmationservice';
 import ProgressSpinner from 'primevue/progressspinner';
 import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
+import Avatar from 'primevue/avatar';
 
 export default {
     install(app) {
@@ -18,6 +19,7 @@ export default {
         app.component('ConfirmDialog', ConfirmDialog);
         app.component('ProgressSpinner', ProgressSpinner);
         app.component('Toast', Toast);
+        app.component('Avatar', Avatar);
         
         app.use(ConfirmationService);
         app.use(ToastService);
