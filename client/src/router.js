@@ -9,15 +9,16 @@ import Dashboard from "./pages/Dashboard/Home.vue";
 import NewProduct from "./pages/Dashboard/NewProduct.vue";
 
 const routes = [
-    { path: '/', component: Home },
-    { path: '/signup', component: Signup },
-    { path: '/signin', component: Signin },
-    { path: '/products', component: ProductsList },
+    { path: '/', component: Home, name: 'home' },
+    { path: '/signup', component: Signup, name: 'sign-up' },
+    { path: '/signin', component: Signin, name: 'sign-in' },
+    { path: '/products', component: ProductsList, name: 'product-list' },
     {
         path: '/dashboard',
         component: Dashboard,
+        name: 'dashboard',
         children: [
-            { path: '/dashboard/new', component: NewProduct }
+            { path: '/dashboard/new', component: NewProduct, name: 'add-new-product' }
         ]
     }
 ];

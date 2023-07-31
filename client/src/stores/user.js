@@ -6,13 +6,13 @@ const useUserStore = defineStore('user', () => {
 
     const router = useRouter();
 
-    const authed = ref(false);
+    const authed = ref(null);
     const user = ref(null);
 
     const logUserIn = (userData) => {
         authed.value = true;
-        router.push('/dashboard');
-        user.value = userData
+        if(!router.currentRoute.value.path.includes('dashboard')) router.push('/dashboard');
+        user.value = userData;
     };
 
     const logUserOut = () => {
