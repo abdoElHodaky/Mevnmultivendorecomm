@@ -9,10 +9,16 @@ Breaking the project into three major parts will make it easier to focus on each
     Using handlebars to render products on web pages for users and visitors.
 - ### Server
     Express.js web server that operates both SPA and the website also will store data within a MongoDB database.
+## .env
+- MODE=
+- JWT_SECRET=
+- COOKIE_SIGNATURE=
 ## Technical Details
 - vuejs - vue-router - vee-validate - primevue - vueuse - yup
 - expressjs - handlebars - mongoose - swagger-ui-express
 ## Latest Update
+- (client) Install pinia and create user store.
+- (client) Create sign in/up forms with validation and submit them to the API /users/signup - /users/signin endpoints.
 - (server) Generate jwt tokens and wrap them with access_token and refresh_token httpOnly cookies.
 - (server) Create routes for signup/signin/profile/logout.
 - (server) Create a user model.
