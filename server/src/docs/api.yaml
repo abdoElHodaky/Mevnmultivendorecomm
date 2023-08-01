@@ -112,6 +112,9 @@ paths:
   /api/v1/products:
     post:
       description: create new product
+      security:
+        - access_token: []
+        - refresh_token: []
       tags:
         - Products
       requestBody:

@@ -1,6 +1,6 @@
 /**
  * 
- * All guarded routes by Auth middleware must use authedResponse.withRefreshToken(req, res)
+ * All guarded routes by Auth middleware must response with authedResponse.withRefreshToken(req, res)
  * 
  */
 
@@ -14,7 +14,7 @@ import isAuth from "../middleware/Auth.js";
 const router = Router();
 
 // products
-router.post('/products', createNewProduct);
+router.post('/products', isAuth, createNewProduct);
 
 // users
 router.post('/users/signup', signUp);

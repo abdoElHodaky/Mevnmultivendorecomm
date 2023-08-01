@@ -3,6 +3,7 @@ import { object, string, array } from "yup";
 import Product from "../../models/product.js";
 import AsyncMiddleware from "../../middleware/AsyncMiddleware.js";
 import inputsValidation from "../../utils/inputsValidation.js";
+import authedResponse from "../../utils/authedResponse.js";
 
 const newProductSchema = object({
     name: string().required("product_name_required"),
@@ -19,11 +20,11 @@ const createNewProduct = AsyncMiddleware(async(req, res, next) => {
 
     await inputsValidation(newProductSchema, req.body, next);
 
-    const product = new Product(req.body);
+    const product = new Product({userId: req.user._id, ...req.body});
 
     const newProduct = await product.save();
 
-    res.status(200).send(newProduct);
+    return authedResponse.withRefreshToken(req, res, newProduct);
 
 });
 
