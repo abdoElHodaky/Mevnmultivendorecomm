@@ -162,6 +162,32 @@ paths:
                             type: number
                             description: product price(toFixed(2))
                   - $ref: "#/components/schemas/Common product props"
+  /api/v1/products/collection:
+    get:
+      description: get all the products for the authed user
+      security:
+        - access_token: []
+        - refresh_token: []
+      tags:
+        - Products
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - type: object
+                      properties:
+                        price:
+                          type: object
+                          properties:
+                            $numberDecimal:
+                              type: number
+                              description: product price(toFixed(2))
+                    - $ref: "#/components/schemas/Common product props" 
   /api/v1/users/signup:
     post:
       description: signup new user

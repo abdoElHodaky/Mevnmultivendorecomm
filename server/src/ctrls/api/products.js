@@ -4,6 +4,7 @@ import Product from "../../models/product.js";
 import AsyncMiddleware from "../../middleware/AsyncMiddleware.js";
 import inputsValidation from "../../utils/inputsValidation.js";
 import authedResponse from "../../utils/authedResponse.js";
+import doPagination from "../../utils/doPagination.js";
 
 const newProductSchema = object({
     name: string().required("product_name_required"),
@@ -14,6 +15,27 @@ const newProductSchema = object({
         })
     ).min(1),
     price: string().required("product_price_required")
+});
+
+const updateProductSchema = object({
+    name: string(),
+    description: string(),
+    features: array().of(
+        object().shape({
+            text: string()
+        })
+    ).min(1),
+    price: string()
+});
+
+const collection = AsyncMiddleware(async(req, res, next) => {
+
+    const { skip, limit } = doPagination(req.query.page, req.query.limit);
+
+    const products = await Product.find().skip(skip).limit(limit);
+
+    return authedResponse.withRefreshToken(req, res, products);
+
 });
 
 const createNewProduct = AsyncMiddleware(async(req, res, next) => {
@@ -28,4 +50,4 @@ const createNewProduct = AsyncMiddleware(async(req, res, next) => {
 
 });
 
-export { createNewProduct };
+export { createNewProduct, collection };

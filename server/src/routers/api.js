@@ -6,7 +6,7 @@
 
 import { Router } from "express";
 
-import { createNewProduct } from "../ctrls/api/products.js";
+import { createNewProduct, collection } from "../ctrls/api/products.js";
 import { signUp, signIn, profile, logout } from "../ctrls/api/users.js";
 
 import isAuth from "../middleware/Auth.js";
@@ -14,6 +14,7 @@ import isAuth from "../middleware/Auth.js";
 const router = Router();
 
 // products
+router.get('/products/collection', isAuth, collection);
 router.post('/products', isAuth, createNewProduct);
 
 // users
