@@ -187,7 +187,67 @@ paths:
                             $numberDecimal:
                               type: number
                               description: product price(toFixed(2))
-                    - $ref: "#/components/schemas/Common product props" 
+                    - $ref: "#/components/schemas/Common product props"
+  /api/v1/products/{id}:
+    patch:
+      description: update a single product within authed user collection
+      security:
+        - access_token: []
+        - refresh_token: []
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: a product id
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - type: object
+                  properties:
+                    price:
+                      type: number
+                      description: product price
+                - $ref: "#/components/schemas/Common product props"
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      _id:
+                        type: string
+                        description: product id
+                      slug:
+                        type: string
+                        description: product slug
+                      avgRating:
+                        type: object
+                        properties:
+                          amount:
+                            type: number
+                            default: 4.5
+                            description: product avg rating
+                          numOfRating:
+                            type: number
+                            default: 0
+                            description: product's number of ratings
+                      price:
+                        type: object
+                        properties:
+                          $numberDecimal:
+                            type: number
+                            description: product price(toFixed(2))
+                  - $ref: "#/components/schemas/Common product props"
   /api/v1/users/signup:
     post:
       description: signup new user

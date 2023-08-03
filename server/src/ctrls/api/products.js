@@ -5,6 +5,7 @@ import AsyncMiddleware from "../../middleware/AsyncMiddleware.js";
 import inputsValidation from "../../utils/inputsValidation.js";
 import authedResponse from "../../utils/authedResponse.js";
 import doPagination from "../../utils/doPagination.js";
+import AppError from "../../parts/AppError.js";
 
 const newProductSchema = object({
     name: string().required("product_name_required"),
@@ -32,7 +33,7 @@ const collection = AsyncMiddleware(async(req, res, next) => {
 
     const { skip, limit } = doPagination(req.query.page, req.query.limit);
 
-    const products = await Product.find().skip(skip).limit(limit);
+    const products = await Product.find({userId: req.user._id}).skip(skip).limit(limit);
 
     return authedResponse.withRefreshToken(req, res, products);
 
@@ -50,4 +51,18 @@ const createNewProduct = AsyncMiddleware(async(req, res, next) => {
 
 });
 
-export { createNewProduct, collection };
+const updateProduct = AsyncMiddleware(async(req, res, next) => {
+
+    if(Object.keys(req.body).length === 0) return next(new AppError({message: 'at_least_one_attribute'}, 400));
+
+    await inputsValidation(updateProductSchema, req.body, next);
+    
+    const product = await Product.findOneAndUpdate({ _id: req.params.id, userId: req.user._id }, {...req.body}, {new: true});
+
+    if(!product) return next(new AppError({message: 'product_not_found'}, 404));
+
+    return authedResponse.withRefreshToken(req, res, product);
+
+});
+
+export { createNewProduct, collection, updateProduct };
