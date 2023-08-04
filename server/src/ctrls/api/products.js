@@ -65,4 +65,14 @@ const updateProduct = AsyncMiddleware(async(req, res, next) => {
 
 });
 
-export { createNewProduct, collection, updateProduct };
+const deleteProduct = AsyncMiddleware(async(req, res, next) => {
+
+    const product = await Product.findOneAndDelete({ _id: req.params.id, userId: req.user._id });
+
+    if(!product) return next(new AppError({message: 'product_not_found'}, 404));
+
+    return authedResponse.withRefreshToken(req, res, product);
+
+});
+
+export { createNewProduct, collection, updateProduct, deleteProduct };
