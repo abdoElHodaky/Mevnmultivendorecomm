@@ -17,6 +17,8 @@ Breaking the project into three major parts will make it easier to focus on each
 - vuejs - vue-router - vee-validate - primevue - vueuse - yup
 - expressjs - handlebars - mongoose - swagger-ui-express
 ## Latest Update
+- (server) Full CRUD for the products owned by authed user and protect all routes by Auth middleware.
+- (server) Create 1 to Many relation between User and Product models.
 - (client) Install pinia and create user store.
 - (client) Create sign in/up forms with validation and submit them to the API /users/signup - /users/signin endpoints.
 - (server) Generate jwt tokens and wrap them with access_token and refresh_token httpOnly cookies.
