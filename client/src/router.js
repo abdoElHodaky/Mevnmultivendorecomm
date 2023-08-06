@@ -6,6 +6,7 @@ import Signup from "./pages/Signup.vue";
 import Signin from "./pages/Signin.vue";
 
 import Dashboard from "./pages/Dashboard/Home.vue";
+import Links from "./pages/Dashboard/Links.vue";
 import NewProduct from "./pages/Dashboard/NewProduct.vue";
 
 const routes = [
@@ -18,6 +19,7 @@ const routes = [
         component: Dashboard,
         name: 'dashboard',
         children: [
+            { path: '/dashboard/', component: Links, name: 'links' },
             { path: '/dashboard/new', component: NewProduct, name: 'add-new-product' }
         ]
     }

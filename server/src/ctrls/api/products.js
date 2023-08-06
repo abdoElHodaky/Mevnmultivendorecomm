@@ -16,7 +16,7 @@ const newProductSchema = object({
         })
     ).min(1),
     price: string().required("product_price_required")
-});
+}).noUnknown(true).strict(true);
 
 const updateProductSchema = object({
     name: string(),
@@ -27,7 +27,7 @@ const updateProductSchema = object({
         })
     ).min(1),
     price: string()
-});
+}).noUnknown(true).strict(true);
 
 const collection = AsyncMiddleware(async(req, res, next) => {
 

@@ -8,6 +8,7 @@ import ProgressSpinner from 'primevue/progressspinner';
 import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
 import Avatar from 'primevue/avatar';
+import Fieldset from 'primevue/fieldset';
 
 export default {
     install(app) {
@@ -20,6 +21,7 @@ export default {
         app.component('ProgressSpinner', ProgressSpinner);
         app.component('Toast', Toast);
         app.component('Avatar', Avatar);
+        app.component('Fieldset', Fieldset);
         
         app.use(ConfirmationService);
         app.use(ToastService);
