@@ -9,7 +9,14 @@ const router = useRouter();
 
 <template>
 <FieldSetBlock>
-    <LabelIconBtn label="New" icon="pi pi-plus" @click="router.push({name: 'add-new-product'})"></LabelIconBtn>
+    <ul>
+        <li class="mb-4">
+            <LabelIconBtn label="new" icon="pi pi-plus" @click="router.push({name: 'add-new-product'})"></LabelIconBtn>
+        </li>
+        <li>
+            <LabelIconBtn label="collection" icon="pi pi-database" @click="router.push({name: 'collection'})"></LabelIconBtn>
+        </li>
+    </ul>
 </FieldSetBlock>
 </template>
 

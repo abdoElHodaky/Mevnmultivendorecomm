@@ -9,6 +9,7 @@ import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
 import Avatar from 'primevue/avatar';
 import Fieldset from 'primevue/fieldset';
+import Divider from 'primevue/divider';
 
 export default {
     install(app) {
@@ -22,6 +23,7 @@ export default {
         app.component('Toast', Toast);
         app.component('Avatar', Avatar);
         app.component('Fieldset', Fieldset);
+        app.component('Divider', Divider);
         
         app.use(ConfirmationService);
         app.use(ToastService);
