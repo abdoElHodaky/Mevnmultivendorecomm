@@ -1,30 +1,22 @@
 <script setup>
 import { onBeforeMount, ref, watch } from 'vue';
 import { useScroll } from '@vueuse/core';
+
 import useBaseFetch from '../../utils/fetch.js';
+import useProductStore from '../../stores/product.js';
 
 const url = ref('products/collection?page=1&limit=10');
-const collection = ref([]);
-const page = ref(1);
-const hasMore = ref(true);
 
+const productStore = useProductStore();
 const { arrivedState } = useScroll(window, { offset: { bottom:200 } });
 const fetch = useBaseFetch(url, {
-    afterFetch: (ctx) => {
-        if(ctx.data.length > 0) {
-            collection.value = collection.value.concat(ctx.data);
-        } else {
-            hasMore.value = false;
-        }
-    },
+    afterFetch: (ctx) => productStore.productsReceived(ctx.data),
     refetch: true
 });
 
 watch(arrivedState, arrivedState => {
-    console.log(fetch.isFetching);
-    if(arrivedState.bottom && hasMore.value && !fetch.isFetching.value) {
-        page.value += 1;
-        url.value = `products/collection?page=${page.value}&limit=10`;
+    if(arrivedState.bottom && productStore.hasMore && !fetch.isFetching.value) {
+        url.value = `products/collection?page=${productStore.page}&limit=10`;
     }
 });
 
@@ -34,7 +26,7 @@ onBeforeMount(() => {
 </script>
 <template>
     <ul>
-        <li v-for="item in collection" :key="item._id" class="pt-[1.25rem] px-2 hover:bg-primary-up hover:cursor-pointer">
+        <li v-for="item in productStore.collection" :key="item._id" class="pt-[1.25rem] px-2 hover:bg-primary-up hover:cursor-pointer">
             <div class="flex flex-col sm:flex-row items-center">
                 <div class="mb-4 sm:mb-0">
                     <img :src="`/${item.thumbnail}`" alt="" class="w-[20rem] h-[20rem] sm:w-[10rem] sm:h-[10rem] right-left-margin-1" />
@@ -50,7 +42,7 @@ onBeforeMount(() => {
             </div>
             <Divider />
         </li>
-        <li v-if="hasMore" class="text-center py-4 overflow-hidden">
+        <li v-if="productStore.hasMore" class="text-center py-4 overflow-hidden">
             <ProgressSpinner :pt="{ circle: { class: '!stroke-secondary' } }" />
         </li>
     </ul>
