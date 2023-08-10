@@ -1,9 +1,12 @@
 <script setup>
-import { onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
-import { useScroll } from '@vueuse/core';
+import { onBeforeMount, ref, watch } from "vue";
+import { useScroll } from "@vueuse/core";
 
-import useBaseFetch from '../../utils/fetch.js';
-import useProductStore from '../../stores/product.js';
+import useBaseFetch from "../../utils/fetch.js";
+
+import useProductStore from "../../stores/product.js";
+
+import CollectionSingleItem from "../../components/CollectionSingleItem.vue";
 
 const productStore = useProductStore();
 const { arrivedState } = useScroll(window, { offset: { bottom:200 } });
@@ -29,22 +32,7 @@ onBeforeMount(() => {
 </script>
 <template>
     <ul>
-        <li v-for="item in productStore.collection" :key="item._id" class="pt-[1.25rem] px-2 hover:bg-primary-up">
-            <div class="flex flex-col sm:flex-row items-center">
-                <div class="mb-4 sm:mb-0">
-                    <img :src="`/${item.thumbnail}`" alt="" class="w-[20rem] h-[20rem] sm:w-[10rem] sm:h-[10rem] right-left-margin-1" />
-                </div>
-                <div>
-                    <h1 class="text-6xl capitalize font-bold mb-4">
-                        {{ item.name }}
-                    </h1>
-                    <h3 class="text-3xl">
-                        {{ item.description }}
-                    </h3>
-                </div>
-            </div>
-            <Divider />
-        </li>
+        <CollectionSingleItem v-for="item in productStore.collection" :item="item" :key="item._id" />
         <li v-if="productStore.hasMore" class="text-center py-4 overflow-hidden">
             <ProgressSpinner :pt="{ circle: { class: '!stroke-secondary' } }" />
         </li>

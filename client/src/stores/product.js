@@ -20,7 +20,11 @@ const useProductStore = defineStore('product', () => {
         page.value += 1;
     };
 
-    return { collection, page, hasMore, productsReceived, doPaginate };
+    const productRemoved = (product) => {
+        collection.value = collection.value.filter( item => item._id !== product._id);
+    }
+
+    return { collection, page, hasMore, productsReceived, doPaginate, productRemoved };
 });
 
 export default useProductStore;
