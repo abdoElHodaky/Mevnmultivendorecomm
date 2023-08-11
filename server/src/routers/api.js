@@ -6,7 +6,7 @@
 
 import { Router } from "express";
 
-import { createNewProduct, collection, updateProduct, deleteProduct } from "../ctrls/api/products.js";
+import { collection, createNewProduct, getProduct, updateProduct, deleteProduct } from "../ctrls/api/products.js";
 import { signUp, signIn, profile, logout } from "../ctrls/api/users.js";
 
 import isAuth from "../middleware/Auth.js";
@@ -16,6 +16,7 @@ const router = Router();
 // products
 router.get('/products/collection', isAuth, collection);
 router.post('/products', isAuth, createNewProduct);
+router.get('/products/:id', isAuth, getProduct);
 router.patch('/products/:id', isAuth, updateProduct);
 router.delete('/products/:id', isAuth, deleteProduct);
 

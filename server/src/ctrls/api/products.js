@@ -51,6 +51,16 @@ const createNewProduct = AsyncMiddleware(async(req, res, next) => {
 
 });
 
+const getProduct = AsyncMiddleware(async(req, res, next) => {
+
+    const product = await Product.findOne({_id: req.params.id});
+
+    if(!product) return next(new AppError({message: 'product_not_found'}, 404));
+
+    return authedResponse.withRefreshToken(req, res, product);
+
+});
+
 const updateProduct = AsyncMiddleware(async(req, res, next) => {
 
     if(Object.keys(req.body).length === 0) return next(new AppError({message: 'at_least_one_attribute'}, 400));
@@ -75,4 +85,4 @@ const deleteProduct = AsyncMiddleware(async(req, res, next) => {
 
 });
 
-export { createNewProduct, collection, updateProduct, deleteProduct };
+export { createNewProduct, collection, getProduct, updateProduct, deleteProduct };
