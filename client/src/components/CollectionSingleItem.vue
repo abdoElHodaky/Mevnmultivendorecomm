@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+import { useRouter } from 'vue-router';
 
 import useProductStore from '../stores/product';
 
@@ -15,6 +16,7 @@ const { item } = defineProps(['item']);
 const confirm = useConfirm();
 const toast = useToast();
 const productStore = useProductStore();
+const router = useRouter();
 
 const url = ref(`products/id`);
 const fetch = useBaseFetch(url, {
@@ -60,8 +62,9 @@ const deleteProduct = (id) => {
                 </h3>
             </div>
         </div>
-        <div class="flex justify-end">
-            <IconBtn size="big" icon="pi pi-trash" @click="deleteProduct(item._id)" />
+        <div class="flex justify-center mt-8 sm:justify-end">
+            <IconBtn size="big" icon="pi pi-trash" @click="deleteProduct(item._id)" class="right-left-margin-1" />
+            <IconBtn size="big" icon="pi pi-file-edit" @click="router.push({name: 'product', query: {id: item._id}})" />
         </div>
         <Divider />
     </li>

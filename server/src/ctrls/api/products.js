@@ -33,7 +33,7 @@ const collection = AsyncMiddleware(async(req, res, next) => {
 
     const { skip, limit } = doPagination(req.query.page, req.query.limit);
 
-    const products = await Product.find({userId: req.user._id}).skip(skip).limit(limit);
+    const products = await Product.find({userId: req.user._id}).skip(skip).limit(limit).sort({_id: -1});
 
     return authedResponse.withRefreshToken(req, res, products);
 

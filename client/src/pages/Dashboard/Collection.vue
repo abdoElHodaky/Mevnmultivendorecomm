@@ -19,7 +19,7 @@ const fetch = useBaseFetch(url, {
 watch(arrivedState, arrivedState => {
     if(arrivedState.bottom && productStore.hasMore && !fetch.isFetching.value) {
         productStore.doPaginate();
-        url.value = `products/collection?page=${productStore.page}&limit=10`;
+        url.value = `products/collection?page=${productStore.page}&limit=${productStore.itemsPerPage}`;
         fetch.get().json().execute();
     }
 });

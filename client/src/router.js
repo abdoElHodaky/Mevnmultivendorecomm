@@ -7,7 +7,7 @@ import Signin from "./pages/Signin.vue";
 
 import Dashboard from "./pages/Dashboard/Home.vue";
 import Links from "./pages/Dashboard/Links.vue";
-import NewProduct from "./pages/Dashboard/NewProduct.vue";
+import Product from "./pages/Dashboard/Product.vue";
 import Collection from "./pages/Dashboard/Collection.vue";
 
 const routes = [
@@ -21,7 +21,7 @@ const routes = [
         name: 'dashboard',
         children: [
             { path: '/dashboard/', component: Links, name: 'links' },
-            { path: '/dashboard/new', component: NewProduct, name: 'add-new-product' },
+            { path: '/dashboard/product', component: Product, name: 'product' },
             { path: '/dashboard/collection', component: Collection, name: 'collection' }
         ]
     }
