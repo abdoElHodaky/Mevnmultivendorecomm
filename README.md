@@ -17,7 +17,7 @@ Breaking the project into three major parts will make it easier to focus on each
 - vuejs - vue-router - vee-validate - primevue - vueuse - yup
 - expressjs - handlebars - mongoose - swagger-ui-express
 ## Latest Update
-- (client) Authed users can do Full CRUD and browse their products collection throw infinite scroll list.
+- (client) Authed users can do full CRUD and browse their products collection through an infinite scroll list.
 - (server) Full CRUD for the products owned by authed user and protect all routes by Auth middleware.
 - (server) Create 1 to Many relation between User and Product models.
 - (client) Install pinia and create user store.

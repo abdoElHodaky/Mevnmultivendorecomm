@@ -10,6 +10,10 @@ import Links from "./pages/Dashboard/Links.vue";
 import Product from "./pages/Dashboard/Product.vue";
 import Collection from "./pages/Dashboard/Collection.vue";
 
+import useUserStore from "./stores/user.js";
+
+import useBaseFetch from "./utils/fetch.js";
+
 const routes = [
     { path: '/', component: Home, name: 'home' },
     { path: '/signup', component: Signup, name: 'sign-up' },
@@ -19,6 +23,7 @@ const routes = [
         path: '/dashboard',
         component: Dashboard,
         name: 'dashboard',
+        meta: { mustAuth:true },
         children: [
             { path: '/dashboard/', component: Links, name: 'links' },
             { path: '/dashboard/product', component: Product, name: 'product' },
@@ -30,6 +35,28 @@ const routes = [
 const router = createRouter({
     history: createWebHistory('/store'),
     routes
+});
+
+router.beforeEach((to) => {
+
+    const userStore = useUserStore();
+
+    if(userStore.authed === 'pending') {
+
+        const fetchProfile = useBaseFetch('users/profile', {
+            afterFetch: (ctx) => {
+                userStore.logUserIn(ctx.data);
+            },
+            onFetchError: () => {
+                userStore.logUserOut();
+            }
+        });
+        fetchProfile.get().json().execute();
+
+    } else if(userStore.authed === 'unauthed' && to.meta.mustAuth) {
+
+        return {name: 'home'};
+    }
 });
 
 export default router;
