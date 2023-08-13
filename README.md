@@ -4,9 +4,9 @@ The purpose of this project is to learn more about Nodejs and MongoDB, dive deep
 Breaking the project into three major parts will make it easier to focus on each task individually:
 
 - ### Client
-    A single-page web application built with Vue.js that allows users (sellers and buyers) to manage products through a dashboard.
+    A single-page web application built with Vue.js that allows users (sellers) to manage their products through a dashboard.
 - ### Website
-    Using handlebars to render products on web pages for users and visitors.
+    Using handlebars to render products on web pages for users and visitors, also to offer a shopping cart for users (buyers).
 - ### Server
     Express.js web server that operates both SPA and the website also will store data within a MongoDB database.
 ## .env
@@ -17,6 +17,7 @@ Breaking the project into three major parts will make it easier to focus on each
 - vuejs - vue-router - vee-validate - primevue - vueuse - yup
 - expressjs - handlebars - mongoose - swagger-ui-express
 ## Latest Update
+- (client) Authed users can do Full CRUD and browse their products collection throw infinite scroll list.
 - (server) Full CRUD for the products owned by authed user and protect all routes by Auth middleware.
 - (server) Create 1 to Many relation between User and Product models.
 - (client) Install pinia and create user store.
