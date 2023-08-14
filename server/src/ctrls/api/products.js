@@ -2,9 +2,11 @@ import { object, string, array } from "yup";
 
 import Product from "../../models/product.js";
 import AsyncMiddleware from "../../middleware/AsyncMiddleware.js";
+
 import inputsValidation from "../../utils/inputsValidation.js";
 import authedResponse from "../../utils/authedResponse.js";
 import doPagination from "../../utils/doPagination.js";
+
 import AppError from "../../parts/AppError.js";
 
 const newProductSchema = object({
@@ -85,4 +87,15 @@ const deleteProduct = AsyncMiddleware(async(req, res, next) => {
 
 });
 
-export { createNewProduct, collection, getProduct, updateProduct, deleteProduct };
+const uploadProductImage = AsyncMiddleware(async(req, res, next) => {
+
+    return authedResponse.withRefreshToken(req, res, req.file.filename);
+
+});
+
+export { createNewProduct, 
+    collection, 
+    getProduct, 
+    updateProduct, 
+    deleteProduct, 
+    uploadProductImage };

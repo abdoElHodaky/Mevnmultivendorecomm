@@ -6,10 +6,19 @@
 
 import { Router } from "express";
 
-import { collection, createNewProduct, getProduct, updateProduct, deleteProduct } from "../ctrls/api/products.js";
+import { 
+    collection, 
+    createNewProduct, 
+    getProduct, 
+    updateProduct, 
+    deleteProduct,
+    uploadProductImage } from "../ctrls/api/products.js";
+    
 import { signUp, signIn, profile, logout } from "../ctrls/api/users.js";
 
 import isAuth from "../middleware/Auth.js";
+
+import { productImageUploader } from "../utils/imageUpload.js";
 
 const router = Router();
 
@@ -19,6 +28,7 @@ router.post('/products', isAuth, createNewProduct);
 router.get('/products/:id', isAuth, getProduct);
 router.patch('/products/:id', isAuth, updateProduct);
 router.delete('/products/:id', isAuth, deleteProduct);
+router.post('/products/images', isAuth, productImageUploader, uploadProductImage);
 
 // users
 router.post('/users/signup', signUp);

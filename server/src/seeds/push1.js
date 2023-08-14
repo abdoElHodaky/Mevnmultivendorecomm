@@ -23,7 +23,7 @@ const up = async () => {
                     {text: faker.lorem.words(4)},
                     {text: faker.lorem.words(4)}
                 ],
-                desc: faker.commerce.productDescription(),
+                description: faker.commerce.productDescription(),
                 price: faker.commerce.price({min: 100, max: 100000, dec: 2}),
                 lang: 'en'
             }
