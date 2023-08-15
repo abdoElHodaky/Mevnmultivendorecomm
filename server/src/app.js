@@ -1,13 +1,10 @@
 import express from "express";
-import { fileURLToPath } from "url";
-import { dirname, join } from "path";
 import cookieParser from "cookie-parser";
+
+import { __dirname, join } from "./utils/paths.js";
 
 // handlebars view engine
 import hbs from "./parts/hbs.js";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 // create an express app and customize it
 const app = express();
