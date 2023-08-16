@@ -363,6 +363,15 @@ paths:
         - refresh_token: []
       tags:
         - Products
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                product:
+                  type: string
+                  format: binary
       responses:
         200:
           description: ok

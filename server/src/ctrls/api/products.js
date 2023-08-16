@@ -1,6 +1,8 @@
 import { object, string, array } from "yup";
 
 import Product from "../../models/product.js";
+import ProductImage from "../../models/productImage.js";
+
 import AsyncMiddleware from "../../middleware/AsyncMiddleware.js";
 
 import inputsValidation from "../../utils/inputsValidation.js";
@@ -88,6 +90,10 @@ const deleteProduct = AsyncMiddleware(async(req, res, next) => {
 });
 
 const uploadProductImage = AsyncMiddleware(async(req, res, next) => {
+
+    const productImage = new ProductImage({userId: req.user._id, name: req.file.filename});
+
+    await productImage.save();
 
     return authedResponse.withRefreshToken(req, res, req.file.filename);
 
