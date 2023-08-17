@@ -1,4 +1,5 @@
 import { object, string, array } from "yup";
+import { readdir, stat, unlink } from 'fs';
 
 import Product from "../../models/product.js";
 import ProductImage from "../../models/productImage.js";
@@ -8,6 +9,7 @@ import AsyncMiddleware from "../../middleware/AsyncMiddleware.js";
 import inputsValidation from "../../utils/inputsValidation.js";
 import authedResponse from "../../utils/authedResponse.js";
 import doPagination from "../../utils/doPagination.js";
+import { __dirname, join } from "../../utils/paths.js";
 
 import AppError from "../../parts/AppError.js";
 
@@ -99,9 +101,31 @@ const uploadProductImage = AsyncMiddleware(async(req, res, next) => {
 
 });
 
+const deleteProductImage = AsyncMiddleware(async(req, res, next) => {
+
+    const productImage = await ProductImage.findOneAndDelete({ _id: req.params.id, userId: req.user._id});
+
+    if(!productImage) return next(new AppError({message: 'product_image_not_found'}, 404));
+
+    const workingDir = join(__dirname, `../../public/common/images/${req.user.firstName}`);
+
+    readdir(workingDir, (errs, files) => {
+        
+        files.forEach( file => {
+
+            const filePath = join(workingDir, file);
+
+            if(file === productImage.name) unlink(filePath, ()=>{});
+        });
+    });
+
+    return authedResponse.withRefreshToken(req, res, productImage.name);
+});
+
 export { createNewProduct, 
     collection, 
     getProduct, 
     updateProduct, 
     deleteProduct, 
-    uploadProductImage };
+    uploadProductImage,
+    deleteProductImage };

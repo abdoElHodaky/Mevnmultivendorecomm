@@ -27,6 +27,8 @@ const isAuth = AsyncMiddleware(async (req, res, next) => {
 
         const oldSession = await Session.findOneAndDelete({token: sessionToken});
         
+        if(!oldSession) return next(new AppError({message: 'not_logged_in'}, 401));
+        
         // get user and recreate tokens
         const user = await User.findById(oldSession.userId).select('-password');
         if(!user) return next(new AppError({message: 'not_logged_in'}, 401));
