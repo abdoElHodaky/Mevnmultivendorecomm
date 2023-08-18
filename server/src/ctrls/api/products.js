@@ -42,7 +42,6 @@ const collection = AsyncMiddleware(async(req, res, next) => {
     const products = await Product.find({userId: req.user._id}).skip(skip).limit(limit).sort({_id: -1});
 
     return authedResponse.withRefreshToken(req, res, products);
-
 });
 
 const createNewProduct = AsyncMiddleware(async(req, res, next) => {
@@ -54,7 +53,6 @@ const createNewProduct = AsyncMiddleware(async(req, res, next) => {
     const newProduct = await product.save();
 
     return authedResponse.withRefreshToken(req, res, newProduct);
-
 });
 
 const getProduct = AsyncMiddleware(async(req, res, next) => {
@@ -64,7 +62,6 @@ const getProduct = AsyncMiddleware(async(req, res, next) => {
     if(!product) return next(new AppError({message: 'product_not_found'}, 404));
 
     return authedResponse.withRefreshToken(req, res, product);
-
 });
 
 const updateProduct = AsyncMiddleware(async(req, res, next) => {
@@ -78,7 +75,6 @@ const updateProduct = AsyncMiddleware(async(req, res, next) => {
     if(!product) return next(new AppError({message: 'product_not_found'}, 404));
 
     return authedResponse.withRefreshToken(req, res, product);
-
 });
 
 const deleteProduct = AsyncMiddleware(async(req, res, next) => {
@@ -88,17 +84,19 @@ const deleteProduct = AsyncMiddleware(async(req, res, next) => {
     if(!product) return next(new AppError({message: 'product_not_found'}, 404));
 
     return authedResponse.withRefreshToken(req, res, product);
-
 });
 
 const uploadProductImage = AsyncMiddleware(async(req, res, next) => {
 
-    const productImage = new ProductImage({userId: req.user._id, name: req.file.filename});
+    const productImage = new ProductImage({
+        userId: req.user._id, 
+        name: req.file.filename, 
+        description: req.body.description
+    });
 
     await productImage.save();
 
     return authedResponse.withRefreshToken(req, res, req.file.filename);
-
 });
 
 const deleteProductImage = AsyncMiddleware(async(req, res, next) => {

@@ -17,6 +17,13 @@ const productImageSchema = new mongoose.Schema({
         maxLength: 255,
         lowercase: true,
         trim: true
+    },
+    description: {
+        type: String,
+        maxLength: 255,
+        lowercase: true,
+        trim: true,
+        default: ""
     }
 });
 
