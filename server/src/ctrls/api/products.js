@@ -86,6 +86,15 @@ const deleteProduct = AsyncMiddleware(async(req, res, next) => {
     return authedResponse.withRefreshToken(req, res, product);
 });
 
+const productsImagesCollection = AsyncMiddleware(async(req, res, next) => {
+
+    const { skip, limit } = doPagination(req.query.page, req.query.limit);
+
+    const collection = await ProductImage.find({userId: req.user._id}).skip(skip).limit(limit).sort({_id: -1});
+    
+    return authedResponse.withRefreshToken(req, res, collection);
+});
+
 const uploadProductImage = AsyncMiddleware(async(req, res, next) => {
 
     const productImage = new ProductImage({
@@ -124,6 +133,7 @@ export { createNewProduct,
     collection, 
     getProduct, 
     updateProduct, 
-    deleteProduct, 
+    deleteProduct,
+    productsImagesCollection,
     uploadProductImage,
     deleteProductImage };

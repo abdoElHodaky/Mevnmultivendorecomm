@@ -12,6 +12,7 @@ import {
     getProduct, 
     updateProduct, 
     deleteProduct,
+    productsImagesCollection,
     uploadProductImage,
     deleteProductImage } from "../ctrls/api/products.js";
     
@@ -29,6 +30,7 @@ router.post('/products', isAuth, createNewProduct);
 router.get('/products/:id', isAuth, getProduct);
 router.patch('/products/:id', isAuth, updateProduct);
 router.delete('/products/:id', isAuth, deleteProduct);
+router.get('/products/collection/images', isAuth, productsImagesCollection);
 router.post('/products/images', isAuth, productImageUploader, uploadProductImage);
 router.delete('/products/images/:id', isAuth, deleteProductImage);
 
