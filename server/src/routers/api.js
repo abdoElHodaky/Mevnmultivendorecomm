@@ -14,6 +14,7 @@ import {
     deleteProduct,
     productsImagesCollection,
     uploadProductImage,
+    updateProductImage,
     deleteProductImage } from "../ctrls/api/products.js";
     
 import { signUp, signIn, profile, logout } from "../ctrls/api/users.js";
@@ -32,6 +33,7 @@ router.patch('/products/:id', isAuth, updateProduct);
 router.delete('/products/:id', isAuth, deleteProduct);
 router.get('/products/collection/images', isAuth, productsImagesCollection);
 router.post('/products/images', isAuth, productImageUploader, uploadProductImage);
+router.patch('/products/images/:id', isAuth, updateProductImage);
 router.delete('/products/images/:id', isAuth, deleteProductImage);
 
 // users

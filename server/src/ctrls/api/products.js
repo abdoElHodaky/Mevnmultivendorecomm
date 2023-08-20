@@ -1,5 +1,5 @@
-import { object, string, array } from "yup";
-import { readdir, stat, unlink } from 'fs';
+import { object, string, number, array } from "yup";
+import { readdir, unlink } from 'fs';
 
 import Product from "../../models/product.js";
 import ProductImage from "../../models/productImage.js";
@@ -21,7 +21,7 @@ const newProductSchema = object({
             text: string().required("feature_description_required")
         })
     ).min(1),
-    price: string().required("product_price_required")
+    price: number().required("product_price_required")
 }).noUnknown(true).strict(true);
 
 const updateProductSchema = object({
@@ -32,8 +32,13 @@ const updateProductSchema = object({
             text: string()
         })
     ).min(1),
-    price: string()
+    price: number()
 }).noUnknown(true).strict(true);
+
+const updateProductImageSchema = object({
+    productId: string(),
+    description: string()
+});
 
 const collection = AsyncMiddleware(async(req, res, next) => {
 
@@ -103,9 +108,27 @@ const uploadProductImage = AsyncMiddleware(async(req, res, next) => {
         description: req.body.description
     });
 
-    await productImage.save();
+    const uploadedProductImage = await productImage.save();
 
-    return authedResponse.withRefreshToken(req, res, req.file.filename);
+    return authedResponse.withRefreshToken(req, res, uploadedProductImage);
+});
+
+const updateProductImage = AsyncMiddleware(async(req, res, next) => {
+
+    if(Object.keys(req.body).length === 0) return next(new AppError({message: 'at_least_one_attribute'}, 400));
+    
+    await inputsValidation(updateProductImageSchema, req.body, next);
+
+    if(req.body.productId) {
+
+        const product = await Product.findOne({ _id: req.body.productId, userId: req.user._id});
+
+        if(!product) return next(new AppError({message: 'product_not_found'}, 404));
+    }
+
+    const productImage = await ProductImage.findOneAndUpdate({ _id: req.params.id, userId: req.user._id }, {...req.body}, {new: true});
+
+    return authedResponse.withRefreshToken(req, res, productImage);
 });
 
 const deleteProductImage = AsyncMiddleware(async(req, res, next) => {
@@ -126,7 +149,7 @@ const deleteProductImage = AsyncMiddleware(async(req, res, next) => {
         });
     });
 
-    return authedResponse.withRefreshToken(req, res, productImage.name);
+    return authedResponse.withRefreshToken(req, res, productImage);
 });
 
 export { createNewProduct, 
@@ -136,4 +159,5 @@ export { createNewProduct,
     deleteProduct,
     productsImagesCollection,
     uploadProductImage,
+    updateProductImage,
     deleteProductImage };
