@@ -102,10 +102,14 @@ const productsImagesCollection = AsyncMiddleware(async(req, res, next) => {
 
 const uploadProductImage = AsyncMiddleware(async(req, res, next) => {
 
+    if(!req.file) return next(new AppError({message: 'image_is_required'}));
+
+    await inputsValidation(updateProductImageSchema, req.body, next);
+
     const productImage = new ProductImage({
         userId: req.user._id, 
         name: req.file.filename, 
-        description: req.body.description
+        description: req.body.description || ""
     });
 
     const uploadedProductImage = await productImage.save();
