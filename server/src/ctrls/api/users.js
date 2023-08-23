@@ -119,6 +119,9 @@ const logout = AsyncMiddleware(async(req, res, next) => {
 
         await Session.findOneAndDelete({token: sessionToken});
 
+    } else {
+
+        return res.status(401).send('not_logged_in');
     }
 
     res.clearCookie('access_token').clearCookie('refresh_token').status(200).send('logged_out');

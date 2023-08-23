@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard/Home.vue";
 import Links from "./pages/Dashboard/Links.vue";
 import Product from "./pages/Dashboard/Product.vue";
 import Collection from "./pages/Dashboard/Collection.vue";
+import Gallery from "./pages/Dashboard/Gallery.vue";
 
 import useUserStore from "./stores/user.js";
 
@@ -27,7 +28,8 @@ const routes = [
         children: [
             { path: '/dashboard/', component: Links, name: 'links' },
             { path: '/dashboard/product', component: Product, name: 'product' },
-            { path: '/dashboard/collection', component: Collection, name: 'collection' }
+            { path: '/dashboard/collection', component: Collection, name: 'collection' },
+            { path: '/dashboard/gallery', component: Gallery, name: 'gallery' }
         ]
     }
 ];
