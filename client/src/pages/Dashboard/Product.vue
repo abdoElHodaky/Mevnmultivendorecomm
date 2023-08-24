@@ -156,6 +156,6 @@ const submitting = handleSubmit((values) => {
         </div>
 
         <FormInputText name="price" label="price" />
-        <SolidBtn type="submit" :label="productId ? 'update':'create'" :disabled="Object.keys(errors).length > 0" />
+        <SolidBtn type="submit" :label="productId ? 'update':'create'" :disabled="Object.keys(errors).length > 0" size="big" />
     </form>
 </template>

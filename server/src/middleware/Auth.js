@@ -25,7 +25,7 @@ const isAuth = AsyncMiddleware(async (req, res, next) => {
         
         const { sessionToken } = jwt.verify(req.cookies.refresh_token, process.env.JWT_SECRET);
 
-        const oldSession = await Session.findOneAndDelete({token: sessionToken});
+        const oldSession = await Session.findOne({token: sessionToken});
         
         if(!oldSession) return next(new AppError({message: 'not_logged_in'}, 401));
         

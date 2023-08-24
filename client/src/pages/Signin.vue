@@ -53,7 +53,7 @@ const signin = handleSubmit((values) => {
         <FormInputText name="email" label="email" />
         <FormInputText name="password" label="password" />
 
-        <SolidBtn type="submit" label="sign in" :disabled="Object.keys(errors).length > 0" />
+        <SolidBtn type="submit" label="sign in" :disabled="Object.keys(errors).length > 0" size="big" />
 
     </form>
 </template>

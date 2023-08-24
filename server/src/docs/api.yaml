@@ -415,7 +415,7 @@ paths:
             schema:
               type: object
               properties:
-                product:
+                product (required):
                   type: string
                   format: binary
                 description:
