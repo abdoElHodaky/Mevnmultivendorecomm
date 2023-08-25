@@ -10,7 +10,6 @@ import ToastService from 'primevue/toastservice';
 import Avatar from 'primevue/avatar';
 import Fieldset from 'primevue/fieldset';
 import Divider from 'primevue/divider';
-import FileUpload from 'primevue/fileupload';
 
 export default {
     install(app) {
@@ -25,7 +24,6 @@ export default {
         app.component('Avatar', Avatar);
         app.component('Fieldset', Fieldset);
         app.component('Divider', Divider);
-        app.component('FileUpload', FileUpload);
         
         app.use(ConfirmationService);
         app.use(ToastService);

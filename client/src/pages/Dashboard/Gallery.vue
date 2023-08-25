@@ -1,37 +1,65 @@
 <script setup>
 import { ref } from "vue";
+import { useToast } from "primevue/usetoast";
 
 import SolidBtn from "../../components/SolidBtn.vue";
+import LabelIconBtn from "../../components/LabelIconBtn.vue";
+
+import useBaseFetch from "../../utils/fetch.js";
+import { toggleLoadingScreen } from "../../utils/togglers";
+
+const toast = useToast();
 
 const tempObjectURL = ref('');
-const previewImg = ref(null);
-const inputFile = ref(null);
+const previewImgBox = ref(null);
+const imageFileInput = ref(null);
+const descriptionTextInput = ref('');
 
-const preview = ({files}) => {
+const preview = (e) => {
 
-    tempObjectURL.value = URL.createObjectURL(files[0]);
-    previewImg.value.src = tempObjectURL.value;
+    tempObjectURL.value = URL.createObjectURL(e.target.files[0]);
+    previewImgBox.value.src = tempObjectURL.value;
 };
 
 const removeTempObject = () => {
     
     URL.revokeObjectURL(tempObjectURL.value);
-    inputFile.value.clear();
-    previewImg.value.src = '';
+    previewImgBox.value.src = '';
     tempObjectURL.value = '';
 };
+
+const submitForm = (e) => {
+
+    const form = new FormData(e.currentTarget);
+    fetching.post(form).execute();
+};
+
+const fetching = useBaseFetch('products/images', {
+    beforeFetch: () => {
+        toggleLoadingScreen();
+    },
+    afterFetch: () => {
+        toggleLoadingScreen();
+        toast.add({ severity: 'success', summary: 'success', detail: 'image was uploaded', life: 3000 });
+        removeTempObject();
+    },
+    onFetchError: () => {
+        toggleLoadingScreen();
+        toast.add({ severity: 'error', summary: 'error', detail: 'error has happened', life: 3000 });
+    }
+});
 </script>
 <template>
     <div>
-        <form action="#" enctype="multipart/form-data">
+        <form action="#" enctype="multipart/form-data" @submit.prevent="submitForm">
 
             <div v-show="tempObjectURL.length > 0">
                 <p>
-                    <img class="mx-auto" ref="previewImg" src="" alt="">
+                    <img class="mx-auto" ref="previewImgBox" src="" alt="">
                 </p>
                 <p class="relative mt-12 mb-12">
                     <input 
-                        ref="description" 
+                        ref="descriptionTextInput" 
                         type="text" 
                         name="description" 
                         id="description"
@@ -50,21 +78,11 @@ const removeTempObject = () => {
                         peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0">description</label>
                 </p>
                 <SolidBtn type="button" @click="removeTempObject" label="cancel" size="small" />
-                <SolidBtn class="mt-4" type="button" label="upload" size="small" />
+                <SolidBtn class="mt-4" type="submit" label="upload" size="small" />
             </div>
             <div v-show="tempObjectURL.length === 0">
-                <FileUpload
-                    :pt="{
-                        choosebutton: { class: '!bg-secondary hover:opacity-80 w-full shadow-btn justify-center' },
-                        label: { class: 'text-primary text-3xl font-bold uppercase !flex-none' },
-                        uploadicon: { class: '!w-[1.5rem] !h-[1.5rem]' },
-                    }"
-                    chooseLabel="upload"
-                    ref="inputFile" 
-                    mode="basic" 
-                    name="product" 
-                    id="product" 
-                    @select="preview" />
+                <LabelIconBtn label="upload" icon="pi pi-upload" @click="() => imageFileInput.click()"></LabelIconBtn>
+                <input ref="imageFileInput" type="file" id="product" name="product" class="hidden" @change="preview">
             </div>
 
         </form>
