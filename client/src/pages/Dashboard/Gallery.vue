@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { useToast } from "primevue/usetoast";
 
 import SolidBtn from "../../components/SolidBtn.vue";
-import LabelIconBtn from "../../components/LabelIconBtn.vue";
+import FormInputFile from "../../components/FormInputFile.vue";
 
 import useBaseFetch from "../../utils/fetch.js";
 import { toggleLoadingScreen } from "../../utils/togglers";
@@ -12,7 +12,7 @@ const toast = useToast();
 
 const tempObjectURL = ref('');
 const previewImgBox = ref(null);
-const imageFileInput = ref(null);
+
 const descriptionTextInput = ref('');
 
 const preview = (e) => {
@@ -81,8 +81,7 @@ const fetching = useBaseFetch('products/images', {
                 <SolidBtn class="mt-4" type="submit" label="upload" size="small" />
             </div>
             <div v-show="tempObjectURL.length === 0">
-                <LabelIconBtn label="upload" icon="pi pi-upload" @click="() => imageFileInput.click()"></LabelIconBtn>
-                <input ref="imageFileInput" type="file" id="product" name="product" class="hidden" @change="preview">
+                <FormInputFile id="product" label="upload" @uploaded="preview" />
             </div>
 
         </form>
