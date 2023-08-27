@@ -15,7 +15,7 @@ import cors from "cors";
 // --- start-init --------------------------------------------------------- //
 
 // 1- cors for developing (before-all-routes)
-if(process.env.MODE === 'development') app.use(cors({credentials: true, origin: true}));
+if(process.env.MODE === 'development') app.use(cors({credentials: true, origin: true, exposedHeaders: ['Content-Length']}));
 
 // 2- connect to mongo database
 dbConnect();
