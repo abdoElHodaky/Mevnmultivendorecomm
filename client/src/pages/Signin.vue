@@ -51,7 +51,7 @@ const signin = handleSubmit((values) => {
     <form class="py-4" @submit.prevent="signin" action="#">
 
         <FormInputText name="email" label="email" />
-        <FormInputText name="password" label="password" />
+        <FormInputText type="password" name="password" label="password" />
 
         <SolidBtn type="submit" label="sign in" :disabled="Object.keys(errors).length > 0" size="big" />
 

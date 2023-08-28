@@ -137,7 +137,7 @@ const submitting = handleSubmit((values) => {
 
 </script>
 <template>
-    <PageHeader title="create new product" />
+    <PageHeader :title="productId ? 'edit' : 'create new product'" />
     <form class="py-4" @submit.prevent="submitting" action="#">
         <FormInputText name="name" label="name" />
         <FormInputText name="description" label="description" />

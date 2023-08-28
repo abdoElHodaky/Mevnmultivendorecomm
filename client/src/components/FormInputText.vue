@@ -2,7 +2,20 @@
 import { useField } from "vee-validate";
 import { toRef } from "vue";
 
-const props = defineProps(['name', 'label']);
+const props = defineProps({
+    name: {
+        type: String,
+        default: ''
+    },
+    label: {
+        type: String,
+        default: ''
+    },
+    type: {
+        type: String,
+        default: 'text'
+    }
+});
 const name = toRef(props, 'name');
 
 const { value, errorMessage, handleChange, setTouched, validate } = useField(name);
@@ -11,7 +24,7 @@ const { value, errorMessage, handleChange, setTouched, validate } = useField(nam
 <template>
     <div class="relative mt-6 mb-12">
         <input
-            type="text"
+            :type="type"
             :id="name"
             :name="name"
             :value="value"

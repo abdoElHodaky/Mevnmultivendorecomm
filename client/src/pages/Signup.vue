@@ -59,8 +59,8 @@ const signup = handleSubmit((values) => {
         <FormInputText name="firstName" label="first name" />
         <FormInputText name="lastName" label="last name" />
         <FormInputText name="email" label="email" />
-        <FormInputText name="password" label="password" />
-        <FormInputText name="confirm_password" label="confirm password" />
+        <FormInputText type="password" name="password" label="password" />
+        <FormInputText type="password" name="confirm_password" label="confirm password" />
 
         <SolidBtn type="submit" label="sign up" :disabled="Object.keys(errors).length > 0" size="big" />
 
