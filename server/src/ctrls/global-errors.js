@@ -5,7 +5,7 @@ const globalErrors = (err, req, res, next) => {
 
     if(err.overload) {
 
-        yupValidation(err, res);
+        return yupValidation(err, res);
     } else if(err.message.includes('Cast to ObjectId')) {
 
         return res.status(err.status).send({errMsg: 'valid_id_required'});

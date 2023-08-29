@@ -19,6 +19,8 @@ const useProductStore = defineStore('product', () => {
     const doPaginate = () => {
 
         page.value += 1;
+
+        return page;
     };
 
     const productInserted = () => {

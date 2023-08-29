@@ -31,7 +31,8 @@ const signInSchema = object({
 
 const signUp = AsyncMiddleware(async(req, res, next) => {
 
-    await inputsValidation(signUpSchema, req.body, next);
+    const valid = await inputsValidation(signUpSchema, req.body, next);
+    if(!valid) return;
 
     const newUser = await User.create({...req.body, email: { address: req.body.email }});
 
@@ -66,7 +67,8 @@ const signUp = AsyncMiddleware(async(req, res, next) => {
 
 const signIn = AsyncMiddleware(async(req, res, next) => {
 
-    await inputsValidation(signInSchema, req.body, next);
+    const valid = await inputsValidation(signInSchema, req.body, next);
+    if(!valid) return;
 
     const user = await User.findOne({'email.address': req.body.email});
     if(!user) return next(new AppError({message: 'wrong_email_password'}, 400));

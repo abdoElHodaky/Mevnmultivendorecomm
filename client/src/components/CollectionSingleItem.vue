@@ -1,13 +1,11 @@
 <script setup>
-import { ref } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import { useRouter } from 'vue-router';
 
 import useProductStore from '../stores/product';
 
-import useBaseFetch from '../utils/fetch';
-import { toggleLoadingScreen } from '../utils/togglers';
+import APIClient from '../utils/apiClient.js';
 
 import IconBtn from './IconBtn.vue';
 
@@ -18,30 +16,28 @@ const toast = useToast();
 const productStore = useProductStore();
 const router = useRouter();
 
-const url = ref(`products/id`);
-const fetch = useBaseFetch(url, {
-    beforeFetch: () => toggleLoadingScreen(),
-    afterFetch: (ctx) => {
-        toggleLoadingScreen();
-        toast.add({ severity: 'success', summary: 'success', detail: 'Product was deleted', life: 3000});
-        productStore.productRemoved(ctx.data);
-    },
-    onFetchError: () => {
-        toggleLoadingScreen();
-        toast.add({ severity: 'error', summary: 'error', detail: 'error has happened', life: 3000});
-    }
-});
-
 const deleteProduct = (id) => {
+
+    const apiClient = new APIClient(`products/${id}`);
+
     confirm.require({
         message: 'Delete this product?',
         header: 'Confirm',
         icon: 'pi pi-exclamation-triangle',
         acceptLabel: 'ok',
         rejectLabel: 'cancel',
-        accept: () => {
-            url.value = `products/${id}`;
-            fetch.delete().json().execute();
+        accept: async () => {
+
+            try {
+
+                const res = await apiClient.delete({withLoadingScreen:true});
+                toast.add({ severity: 'success', summary: 'success', detail: 'Product was deleted', life: 3000});
+                productStore.productRemoved(res.data);
+
+            } catch {
+
+                toast.add({ severity: 'error', summary: 'error', detail: 'error has happened', life: 3000});
+            }
         },
         reject: () => {}
     });

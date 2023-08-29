@@ -1,8 +1,6 @@
 <script setup>
 import { onBeforeMount, ref, watch } from "vue";
-import { useScroll } from "@vueuse/core";
-
-import useBaseFetch from "../../utils/fetch.js";
+import { useFetch, useScroll } from "@vueuse/core";
 
 import useProductStore from "../../stores/product.js";
 
@@ -11,15 +9,17 @@ import CollectionSingleItem from "../../components/CollectionSingleItem.vue";
 const productStore = useProductStore();
 const { arrivedState } = useScroll(window, { offset: { bottom:200 } });
 
-const url = ref(`products/collection?page=${productStore.page}&limit=10`);
-const fetch = useBaseFetch(url, {
+const url = ref(`http://localhost:8400/api/v1/products/collection?page=${productStore.page}&limit=10`);
+const fetch = useFetch(url, {
+    immediate: false,
+    beforeFetch: ({options}) => { options.credentials = 'include'; return { options }; },
     afterFetch: (ctx) => productStore.productsReceived(ctx.data)
 });
 
 watch(arrivedState, arrivedState => {
     if(arrivedState.bottom && productStore.hasMore && !fetch.isFetching.value) {
         productStore.doPaginate();
-        url.value = `products/collection?page=${productStore.page}&limit=${productStore.itemsPerPage}`;
+        url.value = `http://localhost:8400/api/v1/products/collection?page=${productStore.page}&limit=${productStore.itemsPerPage}`;
         fetch.get().json().execute();
     }
 });

@@ -7,7 +7,7 @@ import FormInputFile from "../../components/FormInputFile.vue";
 
 import APIClient from "../../utils/apiClient.js";
 
-const uploadImage = new APIClient('/products/images');
+const apiClient = new APIClient('/products/images');
 
 const toast = useToast();
 
@@ -22,8 +22,6 @@ const preview = (e) => {
     imageFileInput.value = e.target.files[0];
     tempObjectURL.value = URL.createObjectURL(e.target.files[0]);
     previewImgBox.value.src = tempObjectURL.value;
-
-    console.log(tempObjectURL.value.length);
 };
 
 const removeTempObject = () => {
@@ -41,7 +39,7 @@ const submitForm = async () => {
 
         form.append('product', imageFileInput.value);
 
-        await uploadImage.post(form, {
+        await apiClient.post(form, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             },
@@ -52,7 +50,9 @@ const submitForm = async () => {
                 console.log('onUploadProgress', percentCompleted);
             }
         })
+
         toast.add({ severity: 'success', summary: 'success', detail: 'Image was uploaded', life: 3000});
+        
         removeTempObject();
 
     } catch {

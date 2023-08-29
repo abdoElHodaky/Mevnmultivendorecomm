@@ -51,7 +51,8 @@ const collection = AsyncMiddleware(async(req, res, next) => {
 
 const createNewProduct = AsyncMiddleware(async(req, res, next) => {
 
-    await inputsValidation(newProductSchema, req.body, next);
+    const valid = await inputsValidation(newProductSchema, req.body, next);
+    if(!valid) return;
 
     const product = new Product({userId: req.user._id, ...req.body});
 
@@ -73,7 +74,8 @@ const updateProduct = AsyncMiddleware(async(req, res, next) => {
 
     if(Object.keys(req.body).length === 0) return next(new AppError({message: 'at_least_one_attribute'}, 400));
 
-    await inputsValidation(updateProductSchema, req.body, next);
+    const valid = await inputsValidation(updateProductSchema, req.body, next);
+    if(!valid) return;
     
     const product = await Product.findOneAndUpdate({ _id: req.params.id, userId: req.user._id }, {...req.body}, {new: true});
 
@@ -104,7 +106,8 @@ const uploadProductImage = AsyncMiddleware(async(req, res, next) => {
 
     if(!req.file) return next(new AppError({message: 'image_is_required'}));
 
-    await inputsValidation(updateProductImageSchema, req.body, next);
+    const valid = await inputsValidation(updateProductImageSchema, req.body, next);
+    if(!valid) return;
 
     const productImage = new ProductImage({
         userId: req.user._id, 
@@ -121,7 +124,8 @@ const updateProductImage = AsyncMiddleware(async(req, res, next) => {
 
     if(Object.keys(req.body).length === 0) return next(new AppError({message: 'at_least_one_attribute'}, 400));
     
-    await inputsValidation(updateProductImageSchema, req.body, next);
+    const valid = await inputsValidation(updateProductImageSchema, req.body, next);
+    if(!valid) return;
 
     if(req.body.productId) {
 

@@ -7,10 +7,11 @@ import PageHeader from "../components/PageHeader.vue";
 import FormInputText from "../components/FormInputText.vue";
 import SolidBtn from "../components/SolidBtn.vue";
 
-import useBaseFetch from "../utils/fetch.js";
-import { toggleLoadingScreen } from "../utils/togglers.js";
+import APIClient from "../utils/apiClient.js";
 
 import useUserStore from "../stores/user.js";
+
+const apiClient = new APIClient('users/signup');
 
 const initialValues = {
     firstName: '',
@@ -33,23 +34,19 @@ const validationSchema = object({
 const userStore = useUserStore();
 const toast = useToast();
 const { handleSubmit, errors } = useForm({ initialValues, validationSchema });
-const fetching = useBaseFetch('users/signup', {
-    beforeFetch: () => {
-        toggleLoadingScreen();
-    },
-    afterFetch: (ctx) => {
-        toggleLoadingScreen();
-        userStore.logUserIn(ctx.data);
-        toast.add({ severity: 'success', summary: 'welcome', detail: ctx.data.firstName, life: 3000});
-    },
-    onFetchError: () => {
-        toggleLoadingScreen();
+
+const signup = handleSubmit(async (values) => {
+
+    try {
+
+        const res = await apiClient.post(values, { withLoadingScreen:true });
+        userStore.logUserIn(res.data);
+        toast.add({ severity: 'success', summary: 'welcome', detail: res.data.firstName, life: 3000});
+
+    } catch {
+
         toast.add({ severity: 'error', summary: 'error', detail: 'error has happened', life: 3000});
     }
-});
-
-const signup = handleSubmit((values) => {
-    fetching.post(values).json().execute();
 });
 </script>
 <template>

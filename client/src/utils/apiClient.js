@@ -37,9 +37,24 @@ class APIClient {
         this.endpoint = endpoint;
     }
 
+    async get(config = {}) {
+
+        return await axiosIns.get(this.endpoint, config);
+    }
+
     async post(data, config = {}) {
 
         return await axiosIns.post(this.endpoint, data, config);
+    }
+
+    async patch(data, config = {}) {
+
+        return await axiosIns.patch(this.endpoint, data, config);
+    }
+
+    async delete(config = {}) {
+
+        return await axiosIns.delete(this.endpoint, config);
     }
 }
 

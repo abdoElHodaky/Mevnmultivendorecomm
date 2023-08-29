@@ -11,8 +11,7 @@ import FormInputText from "../../components/FormInputText.vue";
 import SolidBtn from "../../components/SolidBtn.vue";
 import IconBtn from "../../components/IconBtn.vue";
 
-import useBaseFetch from "../../utils/fetch.js";
-import { toggleLoadingScreen } from "../../utils/togglers.js";
+import APIClient from "../../utils/apiClient.js";
 
 import useProductStore from "../../stores/product";
 
@@ -49,60 +48,28 @@ onBeforeMount(() => {
     if(productId) {
 
         // select this product and update the form with the new values
-        const getProduct = useBaseFetch(`products/${productId}`, {
-            beforeFetch: () => {
-                toggleLoadingScreen();
-            },
-            afterFetch: (ctx) => {
-                toggleLoadingScreen();
-                resetForm({ 
-                    values: {
-                        name: ctx.data.name,
-                        description: ctx.data.description,
-                        features: ctx.data.features,
-                        price: ctx.data.price.$numberDecimal
-                    } 
-                });
-            },
-            onFetchError: () => {
-                toggleLoadingScreen();
-            }
-        });
-    
-        getProduct.get().json().execute();
-    }
+        const apiClient = new APIClient(`products/${productId}`);
 
-});
+        const req = async () => {
 
-const postingFetch = useBaseFetch('products', {
-    beforeFetch: () => {
-        toggleLoadingScreen();
-    },
-    afterFetch: () => {
-        toggleLoadingScreen();
-        toast.add({ severity: 'success', summary: 'success', detail: 'New Product was created', life: 3000});
-        productStore.productInserted();
-    },
-    onFetchError: () => {
-        toggleLoadingScreen();
-        toast.add({ severity: 'error', summary: 'error', detail: 'error has happened', life: 3000});
+            const res = await apiClient.get({withLoadingScreen:true});
+            resetForm({ 
+                values: {
+                    name: res.data.name,
+                    description: res.data.description,
+                    features: res.data.features,
+                    price: res.data.price.$numberDecimal
+                } 
+            });
+        }
+
+        req();
     }
 });
 
-const updatingFetch = useBaseFetch(`products/${productId}`, {
-    beforeFetch: () => {
-        toggleLoadingScreen();
-    },
-    afterFetch: (ctx) => {
-        toggleLoadingScreen();
-        toast.add({ severity: 'success', summary: 'success', detail: 'Product was updated', life: 3000});
-        productStore.productUpdated(ctx.data);
-    },
-    onFetchError: () => {
-        toggleLoadingScreen();
-        toast.add({ severity: 'error', summary: 'error', detail: 'error has happened', life: 3000});
-    }
-});
+const createProduct = new APIClient('products');
+
+const updateProduct = new APIClient(`products/${productId}`);
 
 const submitting = handleSubmit((values) => {
 
@@ -114,8 +81,20 @@ const submitting = handleSubmit((values) => {
             icon: 'pi pi-exclamation-triangle',
             acceptLabel: 'update',
             rejectLabel: 'cancel',
-            accept: () => {
-                updatingFetch.patch(values).json().execute();
+            accept: async () => {
+
+                try {
+
+                    const res = await updateProduct.patch({
+                        ...values, price: parseFloat(values.price)
+                    }, {withLoadingScreen:true});
+                    toast.add({ severity: 'success', summary: 'success', detail: 'Product was updated', life: 3000});
+                    productStore.productUpdated(res.data);
+
+                } catch {
+
+                    toast.add({ severity: 'error', summary: 'error', detail: 'error has happened', life: 3000});
+                }
             },
             reject: () => {}
         });
@@ -127,8 +106,20 @@ const submitting = handleSubmit((values) => {
             icon: 'pi pi-exclamation-triangle',
             acceptLabel: 'ok',
             rejectLabel: 'cancel',
-            accept: () => {
-                postingFetch.post(values).execute();
+            accept: async () => {
+
+                try {
+
+                    await createProduct.post({
+                        ...values, price: parseFloat(values.price)
+                    }, {withLoadingScreen:true});
+                    toast.add({ severity: 'success', summary: 'success', detail: 'New Product was created', life: 3000});
+                    productStore.productInserted();
+
+                } catch {
+
+                    toast.add({ severity: 'error', summary: 'error', detail: 'error has happened', life: 3000});
+                }
             },
             reject: () => {}
         });

@@ -1,21 +1,31 @@
 <script setup>
-import { toggleLoadingScreen } from '../utils/togglers.js';
-import useBaseFetch from '../utils/fetch.js';
+import { useToast } from "primevue/usetoast";
+
+import APIClient from '../utils/apiClient.js';
+
 import useUserStore from '../stores/user.js';
 
-const userStore = useUserStore();
-const fetching = useBaseFetch('users/logout', {
-    beforeFetch: ()=>{
-        toggleLoadingScreen
-    },
-    afterFetch: () => {
-        userStore.logUserOut();
-    }
-});
+const apiClient = new APIClient('users/logout');
 
-const loggingOut = () => {
-    fetching.get().execute();
-}
+const userStore = useUserStore();
+const toast = useToast();
+
+const loggingOut = async () => {
+
+    try{
+
+        await apiClient.get({withLoadingScreen:true});
+        userStore.logUserOut();
+        toast.add({ severity: 'success', summary: 'success', detail: 'logged out', life: 3000});
+
+    } catch(err) {
+
+        console.log(err);
+
+        toast.add({ severity: 'error', summary: 'error', detail: 'error has happened', life: 3000});
+    }
+
+};
 
 </script>
 <template>

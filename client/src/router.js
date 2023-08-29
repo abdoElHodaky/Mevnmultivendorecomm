@@ -13,7 +13,7 @@ import Gallery from "./pages/Dashboard/Gallery.vue";
 
 import useUserStore from "./stores/user.js";
 
-import useBaseFetch from "./utils/fetch.js";
+import APIClient from "./utils/apiClient.js";
 
 const routes = [
     { path: '/', component: Home, name: 'home' },
@@ -39,26 +39,30 @@ const router = createRouter({
     routes
 });
 
-router.beforeEach((to) => {
+const apiClient = new APIClient('users/profile');
+const fetchProfile = async (to) => {
 
     const userStore = useUserStore();
 
     if(userStore.authed === 'pending') {
 
-        const fetchProfile = useBaseFetch('users/profile', {
-            afterFetch: (ctx) => {
-                userStore.logUserIn(ctx.data);
-            },
-            onFetchError: () => {
-                userStore.logUserOut();
-            }
-        });
-        fetchProfile.get().json().execute();
+        try {
 
+            const res = await apiClient.get();
+            userStore.logUserIn(res.data);
+    
+        } catch {
+    
+            userStore.logUserOut();
+        }
+        
+    
     } else if(userStore.authed === 'unauthed' && to.meta.mustAuth) {
 
         return {name: 'home'};
     }
-});
+};
+
+router.beforeEach((to) => fetchProfile(to));
 
 export default router;
