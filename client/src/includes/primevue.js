@@ -2,6 +2,7 @@ import PrimeVue from "primevue/config";
 
 import Button from "primevue/button";
 import Sidebar from "primevue/sidebar";
+import Dialog from 'primevue/dialog';
 import ConfirmDialog from 'primevue/confirmdialog';
 import ConfirmationService from 'primevue/confirmationservice';
 import ProgressSpinner from 'primevue/progressspinner';
@@ -24,6 +25,7 @@ export default {
         app.component('Avatar', Avatar);
         app.component('Fieldset', Fieldset);
         app.component('Divider', Divider);
+        app.component('Dialog', Dialog);
         
         app.use(ConfirmationService);
         app.use(ToastService);
