@@ -1,15 +1,16 @@
 <script setup>
 import { ref } from 'vue';
 
-import GalleryImageUploader from '../../components/GalleryImageUploader.vue';
-import IconBtn from '../../components/IconBtn.vue';
+import GalleryImageUploader from "../../components/GalleryImageUploader.vue";
+import IconBtn from "../../components/IconBtn.vue";
+import GalleryImagesList from "../../components/GalleryImagesList.vue";
 
 const showHide = ref(false);
 
 </script>
 <template>
-    <h2 class="text-4xl text-center font-bold capitalize">gallery is empty</h2>
-    <IconBtn class="self-end mb-8" size="big" icon="pi pi-plus" @click="showHide = true" />
+    <GalleryImagesList />
+    <IconBtn class="self-end mb-10 !fixed bottom-0" size="big" icon="pi pi-plus" @click="showHide = true" />
     <Dialog 
         modal 
         :visible="showHide" 

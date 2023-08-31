@@ -10,9 +10,9 @@ import hbs from "./parts/hbs.js";
 const app = express();
 app.use(cookieParser( process.env.COOKIE_SIGNATURE ));
 app.use(express.json());
-app.use(express.static(join(__dirname, '../public')));
+app.use(express.static(join(__dirname, '../../public')));
 app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');
-app.set('views', join(__dirname, './views'));
+app.set('views', join(__dirname, '../views'));
 
 export default app;

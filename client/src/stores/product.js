@@ -3,36 +3,59 @@ import { defineStore } from "pinia";
 
 const useProductStore = defineStore('product', () => {
 
-    const collection = ref([]);
-    const page = ref(1);
     const itemsPerPage = 10;
-    const hasMore = ref(true);
+
+    const productsCollection = ref([]);
+    const productsPage = ref(1);
+    const hasMoreProducts = ref(true);
+
+    const productsImagesCollection = ref([]);
+    const productsImagesPage = ref(1);
+    const hasMoreProductsImages = ref(true);
+
+    const productsImagesReceived = (images) => {        
+
+        // check if there are more items
+        hasMoreProductsImages.value = images.length >= itemsPerPage;
+
+        productsImagesCollection.value = productsImagesCollection.value.concat(images);
+    };
 
     const productsReceived = (products) => {        
 
         // check if there are more items
-        hasMore.value = products.length >= itemsPerPage;
+        hasMoreProducts.value = products.length >= itemsPerPage;
 
-        collection.value = collection.value.concat(products);
+        productsCollection.value = productsCollection.value.concat(products);
     };
 
-    const doPaginate = () => {
+    const paginateProductsImages = () => {
 
-        page.value += 1;
+        productsImagesPage.value += 1;
 
-        return page;
+        return productsImagesPage;
     };
 
-    const productInserted = () => {
+    const paginateProducts = () => {
 
-        collection.value = [];
-        page.value = 1;
-        hasMore.value = true;
+        productsPage.value += 1;
+
+        return productsPage;
+    };
+
+    const productImageInserted = (newImage) => {
+
+        productsImagesCollection.value = [newImage, ...productsImagesCollection.value];
+    };
+
+    const productInserted = (newProduct) => {
+
+        productsCollection.value = [newProduct, ...productsCollection.value];
     };
 
     const productUpdated = (product) => {
 
-        collection.value = collection.value.map( (item) => {
+        productsCollection.value = productsCollection.value.map( (item) => {
 
             if(item._id === product._id) return product;
 
@@ -41,16 +64,22 @@ const useProductStore = defineStore('product', () => {
     };
 
     const productRemoved = (product) => {
-        collection.value = collection.value.filter( item => item._id !== product._id);
+        productsCollection.value = productsCollection.value.filter( item => item._id !== product._id);
     };
 
-    return { 
-        collection, 
-        page, 
-        hasMore, 
-        itemsPerPage, 
+    return {
+        productsImagesCollection,
+        productsImagesPage,
+        hasMoreProductsImages,
+        productsCollection,
+        productsPage, 
+        hasMoreProducts, 
+        itemsPerPage,
+        productsImagesReceived,
         productsReceived, 
-        doPaginate, 
+        paginateProducts,
+        paginateProductsImages,
+        productImageInserted,
         productInserted, 
         productUpdated, 
         productRemoved 

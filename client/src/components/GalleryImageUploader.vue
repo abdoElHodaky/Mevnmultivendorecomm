@@ -7,9 +7,12 @@ import FormInputFile from "./FormInputFile.vue";
 
 import APIClient from "../utils/apiClient";
 
+import useProductStore from "../stores/product.js";
+
 const apiClient = new APIClient('/products/images');
 
 const toast = useToast();
+const productStore = useProductStore();
 
 const tempObjectURL = ref('');
 const previewImgBox = ref(null);
@@ -39,7 +42,7 @@ const submitForm = async () => {
 
         form.append('product', imageFileInput.value);
 
-        await apiClient.post(form, {
+        const res = await apiClient.post(form, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             },
@@ -49,11 +52,13 @@ const submitForm = async () => {
                 const percentCompleted = Math.round((event.loaded * 100) / event.total);
                 console.log('onUploadProgress', percentCompleted);
             }
-        })
+        });
 
         toast.add({ severity: 'success', summary: 'success', detail: 'Image was uploaded', life: 3000});
         
         removeTempObject();
+
+        productStore.productImageInserted(res.data);
 
     } catch {
 
@@ -82,7 +87,7 @@ const submitForm = async () => {
                     focus:outline-none focus:ring-0 focus:border-white peer" placeholder=" " >
                 <label 
                     for="description"
-                    class="absolute top-3 -z-10
+                    class="absolute top-3
                     text-4xl text-secondary capitalize
                     duration-300 transform -translate-y-10 scale-75 origin-[0]
                     peer-focus:left-0 peer-focus:text-white peer-focus:scale-75 peer-focus:-translate-y-10

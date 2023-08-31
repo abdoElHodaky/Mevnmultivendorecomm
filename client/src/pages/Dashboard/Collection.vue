@@ -9,7 +9,7 @@ import CollectionSingleItem from "../../components/CollectionSingleItem.vue";
 const productStore = useProductStore();
 const { arrivedState } = useScroll(window, { offset: { bottom:200 } });
 
-const url = ref(`http://localhost:8400/api/v1/products/collection?page=${productStore.page}&limit=10`);
+const url = ref(`http://localhost:8400/api/v1/products/collection?page=${productStore.productsPage}&limit=10`);
 const fetch = useFetch(url, {
     immediate: false,
     beforeFetch: ({options}) => { options.credentials = 'include'; return { options }; },
@@ -17,23 +17,23 @@ const fetch = useFetch(url, {
 });
 
 watch(arrivedState, arrivedState => {
-    if(arrivedState.bottom && productStore.hasMore && !fetch.isFetching.value) {
-        productStore.doPaginate();
-        url.value = `http://localhost:8400/api/v1/products/collection?page=${productStore.page}&limit=${productStore.itemsPerPage}`;
+    if(arrivedState.bottom && productStore.hasMoreProducts && !fetch.isFetching.value) {
+        productStore.paginateProducts();
+        url.value = `http://localhost:8400/api/v1/products/collection?page=${productStore.productsPage}&limit=${productStore.itemsPerPage}`;
         fetch.get().json().execute();
     }
 });
 
 onBeforeMount(() => {
-    if(productStore.collection.length === 0) {
+    if(productStore.productsCollection.length === 0) {
         fetch.get().json().execute();
     }
 });
 </script>
 <template>
     <ul>
-        <CollectionSingleItem v-for="item in productStore.collection" :item="item" :key="item._id" />
-        <li v-if="productStore.hasMore" class="text-center py-4 overflow-hidden">
+        <CollectionSingleItem v-for="item in productStore.productsCollection" :item="item" :key="item._id" />
+        <li v-if="productStore.hasMoreProducts" class="text-center py-4 overflow-hidden">
             <ProgressSpinner :pt="{ circle: { class: '!stroke-secondary' } }" />
         </li>
     </ul>

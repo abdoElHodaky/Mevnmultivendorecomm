@@ -110,11 +110,11 @@ const submitting = handleSubmit((values) => {
 
                 try {
 
-                    await createProduct.post({
+                    const res = await createProduct.post({
                         ...values, price: parseFloat(values.price)
                     }, {withLoadingScreen:true});
                     toast.add({ severity: 'success', summary: 'success', detail: 'New Product was created', life: 3000});
-                    productStore.productInserted();
+                    productStore.productInserted(res.data);
 
                 } catch {
 
