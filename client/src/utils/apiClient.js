@@ -3,7 +3,7 @@ import axios from "axios";
 import { showLoadingScreen, toggleLoadingScreen } from "./togglers.js";
 
 const axiosIns = axios.create({
-    baseURL: 'http://localhost:8400/api/v1',
+    baseURL: import.meta.env.VITE_API,
     withCredentials: true,
 });
 

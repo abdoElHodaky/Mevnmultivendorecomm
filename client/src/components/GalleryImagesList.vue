@@ -9,7 +9,7 @@ import GalleryImagesItem from "./GalleryImagesItem.vue";
 const productStore = useProductStore();
 const { arrivedState } = useScroll(window, { offset: { bottom:200 } });
 
-const url = ref(`http://localhost:8400/api/v1/products/collection/images?page=${productStore.productsImagesPage}&limit=10`);
+const url = ref(`${import.meta.env.VITE_API}/products/collection/images?page=${productStore.productsImagesPage}&limit=10`);
 const fetch = useFetch(url, {
     immediate: false,
     beforeFetch: ({options}) => { options.credentials = 'include'; return { options }; },
@@ -19,7 +19,7 @@ const fetch = useFetch(url, {
 watch(arrivedState, arrivedState => {
     if(arrivedState.bottom && productStore.hasMoreProductsImages && !fetch.isFetching.value) {
         productStore.paginateProductsImages();
-        url.value = `http://localhost:8400/api/v1/products/collection/images?page=${productStore.productsImagesPage}&limit=${productStore.itemsPerPage}`;
+        url.value = `${import.meta.env.VITE_API}/products/collection/images?page=${productStore.productsImagesPage}&limit=${productStore.itemsPerPage}`;
         fetch.get().json().execute();
     }
 });
@@ -31,7 +31,7 @@ onBeforeMount(() => {
 });
 </script>
 <template>
-    <ul class="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] justify-items-center">
+    <ul class="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4 justify-items-center">
         <GalleryImagesItem v-for="item in productStore.productsImagesCollection" :item="item" :key="item._id" />
         <li v-if="productStore.hasMoreProductsImages" class="text-center py-4 overflow-hidden">
             <ProgressSpinner :pt="{ circle: { class: '!stroke-secondary' } }" />

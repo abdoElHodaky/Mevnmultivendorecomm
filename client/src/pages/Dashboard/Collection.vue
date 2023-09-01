@@ -9,7 +9,7 @@ import CollectionSingleItem from "../../components/CollectionSingleItem.vue";
 const productStore = useProductStore();
 const { arrivedState } = useScroll(window, { offset: { bottom:200 } });
 
-const url = ref(`http://localhost:8400/api/v1/products/collection?page=${productStore.productsPage}&limit=10`);
+const url = ref(`${import.meta.env.VITE_API}/products/collection?page=${productStore.productsPage}&limit=10`);
 const fetch = useFetch(url, {
     immediate: false,
     beforeFetch: ({options}) => { options.credentials = 'include'; return { options }; },
@@ -19,7 +19,7 @@ const fetch = useFetch(url, {
 watch(arrivedState, arrivedState => {
     if(arrivedState.bottom && productStore.hasMoreProducts && !fetch.isFetching.value) {
         productStore.paginateProducts();
-        url.value = `http://localhost:8400/api/v1/products/collection?page=${productStore.productsPage}&limit=${productStore.itemsPerPage}`;
+        url.value = `${import.meta.env.VITE_API}/products/collection?page=${productStore.productsPage}&limit=${productStore.itemsPerPage}`;
         fetch.get().json().execute();
     }
 });
