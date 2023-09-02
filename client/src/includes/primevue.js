@@ -11,6 +11,7 @@ import ToastService from 'primevue/toastservice';
 import Avatar from 'primevue/avatar';
 import Fieldset from 'primevue/fieldset';
 import Divider from 'primevue/divider';
+import Image from 'primevue/image';
 
 export default {
     install(app) {
@@ -26,6 +27,7 @@ export default {
         app.component('Fieldset', Fieldset);
         app.component('Divider', Divider);
         app.component('Dialog', Dialog);
+        app.component('Image', Image);
         
         app.use(ConfirmationService);
         app.use(ToastService);
