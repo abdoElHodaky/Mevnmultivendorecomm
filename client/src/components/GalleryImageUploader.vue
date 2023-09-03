@@ -4,6 +4,7 @@ import { useToast } from "primevue/usetoast";
 
 import SolidBtn from "./SolidBtn.vue";
 import FormInputFile from "./FormInputFile.vue";
+import InputText from "./InputText.vue";
 
 import APIClient from "../utils/apiClient";
 
@@ -41,6 +42,7 @@ const submitForm = async () => {
     try {
 
         form.append('product', imageFileInput.value);
+        form.append('description', descriptionTextInput.value);
 
         const res = await apiClient.post(form, {
             headers: {
@@ -73,26 +75,7 @@ const submitForm = async () => {
             <p>
                 <img class="mx-auto" ref="previewImgBox" src="" alt="">
             </p>
-            <p class="relative mt-12 mb-12">
-                <input 
-                    ref="descriptionTextInput" 
-                    type="text" 
-                    name="description" 
-                    id="description"
-                    class="appearance-none w-full block
-                    bg-transparent
-                    py-2.5 px-0 
-                    text-4xl text-white
-                    border-0 border-b-2 border-secondary
-                    focus:outline-none focus:ring-0 focus:border-white peer" placeholder=" " >
-                <label 
-                    for="description"
-                    class="absolute top-3
-                    text-4xl text-secondary capitalize
-                    duration-300 transform -translate-y-10 scale-75 origin-[0]
-                    peer-focus:left-0 peer-focus:text-white peer-focus:scale-75 peer-focus:-translate-y-10
-                    peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0">description</label>
-            </p>
+            <InputText name="description" id="description" label="description" @input-change="(e) => descriptionTextInput = e.target.value" />
             <SolidBtn type="button" @click="removeTempObject" label="cancel" size="small" />
             <SolidBtn class="mt-4" type="submit" label="ok" size="small" />
         </div>
