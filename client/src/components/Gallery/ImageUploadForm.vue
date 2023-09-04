@@ -2,13 +2,13 @@
 import { ref } from "vue";
 import { useToast } from "primevue/usetoast";
 
-import SolidBtn from "./SolidBtn.vue";
-import FormInputFile from "./FormInputFile.vue";
-import InputText from "./InputText.vue";
+import SolidBtn from "../SolidBtn.vue";
+import InputFile from "../InputFile.vue";
+import InputText from "../InputText.vue";
 
-import APIClient from "../utils/apiClient";
+import APIClient from "../../utils/apiClient";
 
-import useProductStore from "../stores/product.js";
+import useProductStore from "../../stores/product.js";
 
 const apiClient = new APIClient('/products/images');
 
@@ -80,7 +80,7 @@ const submitForm = async () => {
             <SolidBtn class="mt-4" type="submit" label="ok" size="small" />
         </div>
         <div v-if="tempObjectURL.length === 0">
-            <FormInputFile id="x" label="select image" @selected="preview" />
+            <InputFile id="x" label="select image" @selected="preview" />
         </div>
 
     </form>

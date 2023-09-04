@@ -1,5 +1,5 @@
 <script setup>
-const { type, name, id, label } = defineProps({
+const { type, name, id, label, value } = defineProps({
     type: {
         type: String,
         default: 'text'
@@ -13,6 +13,10 @@ const { type, name, id, label } = defineProps({
         default: ''
     },
     label: {
+        type: String,
+        default: ''
+    },
+    value: {
         type: String,
         default: ''
     }
@@ -32,7 +36,8 @@ const emits = defineEmits(['inputChange']);
             border-0 border-b-2 border-secondary
             focus:outline-none focus:ring-0 focus:border-white peer" 
             placeholder="" 
-            @change="emits('inputChange', $event)">
+            @change="emits('inputChange', $event)"
+            :value="value">
         <label 
             :for="name"
             class="absolute top-3

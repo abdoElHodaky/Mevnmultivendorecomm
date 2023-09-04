@@ -1,5 +1,7 @@
 <script setup>
-import useUserStore from "../stores/user.js";
+import ImagesItemDescription from "./ImagesItemDescription.vue";
+
+import useUserStore from "../../stores/user.js";
 
 const serverDomain = import.meta.env.VITE_SERVER_DOMAIN;
 const { item } = defineProps(['item']);
@@ -7,8 +9,8 @@ const { item } = defineProps(['item']);
 const userStore = useUserStore();
 </script>
 <template>
-    <li class="!h-[20rem] border-2 border-secondary overflow-hidden flex items-center justify-center">
-        <div>
+    <li>
+        <div class="mb-4 !h-[20rem] border-2 border-secondary overflow-hidden flex items-center justify-center">
             <Image alt="Image" preview>
                 <template #indicatoricon>
                     <i class="!text-6xl pi pi-eye"></i>
@@ -23,5 +25,6 @@ const userStore = useUserStore();
                 </template>
             </Image>
         </div>
+        <ImagesItemDescription :id="item._id" :description="item.description" />
     </li>
 </template>

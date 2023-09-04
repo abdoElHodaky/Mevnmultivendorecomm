@@ -2,9 +2,9 @@
 import { onBeforeMount, ref, watch } from "vue";
 import { useFetch, useScroll } from "@vueuse/core";
 
-import useProductStore from "../stores/product.js";
+import useProductStore from "../../stores/product.js";
 
-import GalleryImagesItem from "./GalleryImagesItem.vue";
+import GalleryImagesItem from "./ImagesItem.vue";
 
 const productStore = useProductStore();
 const { arrivedState } = useScroll(window, { offset: { bottom:200 } });
@@ -31,7 +31,7 @@ onBeforeMount(() => {
 });
 </script>
 <template>
-    <ul class="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4 justify-items-center">
+    <ul class="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4 justify-items-center pb-44">
         <GalleryImagesItem v-for="item in productStore.productsImagesCollection" :item="item" :key="item._id" />
         <li v-if="productStore.hasMoreProductsImages" class="text-center py-4 overflow-hidden">
             <ProgressSpinner :pt="{ circle: { class: '!stroke-secondary' } }" />

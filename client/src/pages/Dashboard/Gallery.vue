@@ -1,15 +1,15 @@
 <script setup>
 import { ref } from 'vue';
 
-import GalleryImageUploader from "../../components/GalleryImageUploader.vue";
+import ImagesList from '../../components/Gallery/ImagesList.vue';
+import ImageUploadForm from '../../components/Gallery/ImageUploadForm.vue';
 import IconBtn from "../../components/IconBtn.vue";
-import GalleryImagesList from "../../components/GalleryImagesList.vue";
 
 const showHide = ref(false);
 
 </script>
 <template>
-    <GalleryImagesList />
+    <ImagesList />
     <IconBtn class="self-end mb-10 !fixed bottom-0" size="big" icon="pi pi-plus" @click="showHide = true" />
     <Dialog 
         modal 
@@ -24,7 +24,7 @@ const showHide = ref(false);
 
         <div class="flex flex-col w-full max-w-screen-md mx-auto">
             <IconBtn class="self-end mb-8" size="small" icon="pi pi-times" @click="showHide = false" />
-            <GalleryImageUploader />
+            <ImageUploadForm />
         </div>
             
     </Dialog>

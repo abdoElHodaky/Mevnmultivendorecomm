@@ -63,6 +63,16 @@ const useProductStore = defineStore('product', () => {
         });
     };
 
+    const productImageUpdated = (image) => {
+
+        productsImagesCollection.value = productsImagesCollection.value.map( (item) => {
+
+            if(item._id === image._id) return image;
+
+            return item;
+        });
+    };
+
     const productRemoved = (product) => {
         productsCollection.value = productsCollection.value.filter( item => item._id !== product._id);
     };
@@ -75,12 +85,13 @@ const useProductStore = defineStore('product', () => {
         productsPage, 
         hasMoreProducts, 
         itemsPerPage,
+        productImageUpdated,
         productsImagesReceived,
-        productsReceived, 
-        paginateProducts,
         paginateProductsImages,
         productImageInserted,
-        productInserted, 
+        productsReceived, 
+        paginateProducts,
+        productInserted,
         productUpdated, 
         productRemoved 
     };
