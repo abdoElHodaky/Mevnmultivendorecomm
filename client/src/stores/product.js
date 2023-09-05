@@ -73,6 +73,10 @@ const useProductStore = defineStore('product', () => {
         });
     };
 
+    const productImageRemoved = (image) => {
+        productsImagesCollection.value = productsImagesCollection.value.filter( item => item._id !== image._id);
+    };
+
     const productRemoved = (product) => {
         productsCollection.value = productsCollection.value.filter( item => item._id !== product._id);
     };
@@ -89,6 +93,7 @@ const useProductStore = defineStore('product', () => {
         productsImagesReceived,
         paginateProductsImages,
         productImageInserted,
+        productImageRemoved,
         productsReceived, 
         paginateProducts,
         productInserted,

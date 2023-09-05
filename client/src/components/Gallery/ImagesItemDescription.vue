@@ -13,7 +13,7 @@ import useProductStore from "../../stores/product.js";
 const { id, description } = defineProps(['id', 'description']);
 
 const toast = useToast();
-const product = useProductStore();
+const productStore = useProductStore();
 
 const apiClient = new APIClient(`products/images/${id}`);
 
@@ -29,7 +29,7 @@ const submit = async () => {
 
     const res = await apiClient.patch({description: descriptionInput.value}, {withLoadingScreen: true});
     toast.add({ severity: 'success', summary: 'success', detail: 'Image was updated', life: 3000});
-    product.productImageUpdated(res.data);
+    productStore.productImageUpdated(res.data);
     toggle();
 };
 </script>

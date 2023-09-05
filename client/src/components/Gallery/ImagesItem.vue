@@ -1,7 +1,8 @@
 <script setup>
-import ImagesItemDescription from "./ImagesItemDescription.vue";
-
 import useUserStore from "../../stores/user.js";
+
+import ImagesItemDescription from "./ImagesItemDescription.vue";
+import ImagesItemRemove from "./ImagesItemRemove.vue";
 
 const serverDomain = import.meta.env.VITE_SERVER_DOMAIN;
 const { item } = defineProps(['item']);
@@ -25,6 +26,7 @@ const userStore = useUserStore();
                 </template>
             </Image>
         </div>
+        <ImagesItemRemove :id="item._id" />
         <ImagesItemDescription :id="item._id" :description="item.description" />
     </li>
 </template>
