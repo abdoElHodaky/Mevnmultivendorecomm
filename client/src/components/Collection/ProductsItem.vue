@@ -3,11 +3,11 @@ import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import { useRouter } from 'vue-router';
 
-import useProductStore from '../stores/product';
+import useProductStore from '../../stores/product.js';
 
-import APIClient from '../utils/apiClient.js';
+import APIClient from '../../utils/apiClient.js';
 
-import IconBtn from './IconBtn.vue';
+import IconBtn from '../IconBtn.vue';
 
 const { item } = defineProps(['item']);
 

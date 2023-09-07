@@ -36,7 +36,10 @@ const submit = async () => {
 <template>
     <div>
         <div v-show="!editMode" class="flex justify-between">
-            <p class="text-4xl">{{ description }}</p>
+            <p class="text-4xl">
+                <span v-show="description.length > 0">{{ description }}</span>
+                <span v-show="!description.length > 0" class="capitalize">image description ...</span>
+            </p>
             <p class="left-right-margin-1">
                 <IconBtn size="small" icon="pi pi-file-edit" @click="toggle" />
             </p>
