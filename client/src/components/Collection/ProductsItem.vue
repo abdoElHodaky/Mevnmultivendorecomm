@@ -7,6 +7,7 @@ import useProductStore from '../../stores/product.js';
 
 import APIClient from '../../utils/apiClient.js';
 
+import ProductsItemImage from "./ProductsItemImage.vue";
 import IconBtn from '../IconBtn.vue';
 
 const { item } = defineProps(['item']);
@@ -47,7 +48,7 @@ const deleteProduct = (id) => {
     <li class="pt-[1.25rem] px-2 hover:bg-primary-up">
         <div class="flex flex-col sm:flex-row items-center">
             <div class="mb-4 sm:mb-0">
-                <img :src="`/${item.thumbnail}`" alt="" class="w-[20rem] h-[20rem] sm:w-[10rem] sm:h-[10rem] right-left-margin-1" />
+                <ProductsItemImage :id="item._id" :thumbnail="item.thumbnail" />
             </div>
             <div>
                 <h1 class="text-6xl capitalize font-bold mb-4">

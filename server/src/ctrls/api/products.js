@@ -32,6 +32,7 @@ const updateProductSchema = object({
             text: string()
         })
     ).min(1),
+    thumbnail: string(),
     price: number()
 }).noUnknown(true).strict(true);
 
