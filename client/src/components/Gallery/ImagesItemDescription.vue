@@ -10,15 +10,15 @@ import InputText from "../InputText.vue";
 
 import useProductStore from "../../stores/product.js";
 
-const { id, description } = defineProps(['id', 'description']);
+const { item } = defineProps(['item']);
 
 const toast = useToast();
 const productStore = useProductStore();
 
-const apiClient = new APIClient(`products/images/${id}`);
+const apiClient = new APIClient(`products/images/${item._id}`);
 
 const editMode = ref(false);
-const descriptionInput = ref(description);
+const descriptionInput = ref(item.description);
 
 const toggle = () => {
 
@@ -37,15 +37,15 @@ const submit = async () => {
     <div>
         <div v-show="!editMode" class="flex justify-between">
             <p class="text-4xl">
-                <span v-show="description.length > 0">{{ description }}</span>
-                <span v-show="!description.length > 0" class="capitalize">image description ...</span>
+                <span v-show="item.description.length > 0">{{ item.description }}</span>
+                <span v-show="!item.description.length > 0" class="capitalize">image description ...</span>
             </p>
             <p class="left-right-margin-1">
                 <IconBtn size="small" icon="pi pi-file-edit" @click="toggle" />
             </p>
         </div>
         <div v-show="editMode">
-            <InputText name="description" id="description" label="description" :value="description" @input-change="(e) => descriptionInput = e.target.value" />
+            <InputText name="description" id="description" label="description" :value="item.description" @input-change="(e) => descriptionInput = e.target.value" />
             <p>
                 <SolidBtn type="button" label="update" size="small" @click="submit" class="mb-4" />
                 <SolidBtn type="button" label="cancel" size="small" @click="toggle" />

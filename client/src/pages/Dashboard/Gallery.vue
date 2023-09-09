@@ -4,12 +4,23 @@ import { ref } from 'vue';
 import ImagesList from '../../components/Gallery/ImagesList.vue';
 import ImageUploadForm from '../../components/Gallery/ImageUploadForm.vue';
 import IconBtn from "../../components/IconBtn.vue";
+import ImagesItemRemove from '../../components/Gallery/ImagesItemRemove.vue';
+import ImagesItemDescription from '../../components/Gallery/ImagesItemDescription.vue';
 
 const showHide = ref(false);
 
 </script>
 <template>
-    <ImagesList />
+
+    <ImagesList>
+        <template v-slot="{image}">
+            <div class="delete-edit-ctrls">
+                <ImagesItemRemove :item="image" />
+                <ImagesItemDescription :item="image" />
+            </div>
+        </template>
+    </ImagesList>
+
     <IconBtn class="self-end mb-10 !fixed bottom-0" size="big" icon="pi pi-plus" @click="showHide = true" />
     <Dialog 
         modal 

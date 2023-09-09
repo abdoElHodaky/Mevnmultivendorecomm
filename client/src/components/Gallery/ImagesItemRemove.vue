@@ -8,9 +8,9 @@ import LabelIconBtn from '../LabelIconBtn.vue';
 
 import APIClient from "../../utils/apiClient";
 
-const { id } = defineProps(['id']);
+const { item } = defineProps(['item']);
 
-const apiClient = new APIClient(`products/images/${id}`);
+const apiClient = new APIClient(`products/images/${item._id}`);
 
 const toast = useToast();
 const confirm = useConfirm();
