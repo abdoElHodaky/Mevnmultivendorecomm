@@ -21,6 +21,7 @@ const newProductSchema = object({
             text: string().required("feature_description_required")
         })
     ).min(1),
+    thumbnail: string(),
     price: number().required("product_price_required")
 }).noUnknown(true).strict(true);
 

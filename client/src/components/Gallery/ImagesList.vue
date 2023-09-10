@@ -6,8 +6,6 @@ import useProductStore from "../../stores/product.js";
 
 import GalleryImagesItem from "./ImagesItem.vue";
 import LabelIconBtn from "../LabelIconBtn.vue";
-import ImagesItemDescription from "./ImagesItemDescription.vue";
-import ImagesItemRemove from "./ImagesItemRemove.vue";
 
 const productStore = useProductStore();
 

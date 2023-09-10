@@ -10,10 +10,11 @@ import PageHeader from "../../components/PageHeader.vue";
 import FormInputText from "../../components/FormInputText.vue";
 import SolidBtn from "../../components/SolidBtn.vue";
 import IconBtn from "../../components/IconBtn.vue";
+import ChooseImage from "../../components/Product/ChooseImage.vue";
 
 import APIClient from "../../utils/apiClient.js";
 
-import useProductStore from "../../stores/product";
+import useProductStore from "../../stores/product.js";
 
 const productStore = useProductStore();
 
@@ -25,6 +26,7 @@ const validationSchema = object({
             text: string().required("* feature's description is required")
         })
     ).min(1),
+    thumbnail: string(),
     price: string().required("* product's price is required")
 });
 
@@ -32,10 +34,11 @@ const initialValues = {
     name: '',
     description: '',
     features: [{text: ''}],
+    thumbnail: '',
     price: ''
 };
 
-const { handleSubmit, errors, resetForm } = useForm({ initialValues , validationSchema });
+const { handleSubmit, errors, resetForm, setFieldValue } = useForm({ initialValues , validationSchema });
 const { remove, push, fields } = useFieldArray('features');
 const toast = useToast();
 const confirm = useConfirm();
@@ -126,9 +129,15 @@ const submitting = handleSubmit((values) => {
     }
 });
 
+const setThumbnailField = (imgUrl) => {
+
+    setFieldValue('thumbnail', imgUrl);
+};
+
 </script>
 <template>
     <PageHeader :title="productId ? 'edit' : 'create new product'" />
+    <ChooseImage @imageSelected="setThumbnailField" />
     <form class="py-4" @submit.prevent="submitting" action="#">
         <FormInputText name="name" label="name" />
         <FormInputText name="description" label="description" />

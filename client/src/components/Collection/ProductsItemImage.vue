@@ -29,7 +29,7 @@ const imageSelected = async (image) => {
 
     const apiClient = new APIClient(`products/${id}`);
 
-    const res = await apiClient.patch({thumbnail: `common/images/${encodeURIComponent(userStore.user.firstName)}/${image.name}`});
+    const res = await apiClient.patch({thumbnail: `common/images/${encodeURIComponent(userStore.user.firstName)}/${image.name}`}, {withLoadingScreen: true});
     productStore.productUpdated(res.data);
     toast.add({ severity: 'success', summary: 'success', detail: 'product image was updated', life: 3000});
     toggleImagesList();

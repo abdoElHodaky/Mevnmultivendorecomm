@@ -32,7 +32,7 @@ const productSchema = new mongoose.Schema({
         maxLength: 255,
         lowercase: true,
         trim: true,
-        default: '225x225.svg'
+        default: 'common/images/225x225.svg'
     },
     features: {
         type: [productFeatureSchema],
