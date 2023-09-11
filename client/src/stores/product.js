@@ -45,10 +45,14 @@ const useProductStore = defineStore('product', () => {
 
     const productImageInserted = (newImage) => {
 
+        if(productsImagesCollection.value.length === 0) return;
+
         productsImagesCollection.value = [newImage, ...productsImagesCollection.value];
     };
 
     const productInserted = (newProduct) => {
+
+        if(productsCollection.value.length === 0) return;
 
         productsCollection.value = [newProduct, ...productsCollection.value];
     };
