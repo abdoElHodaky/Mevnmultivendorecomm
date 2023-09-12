@@ -2,6 +2,7 @@
 import {ref} from "vue";
 
 import SolidBtn from "../SolidBtn.vue";
+import OutlineBtn from "../OutlineBtn.vue";
 import IconBtn from "../IconBtn.vue";
 import ImagesList from "../Gallery/ImagesList.vue";
 
@@ -30,7 +31,7 @@ const selectImage = (image) => {
 
         <div class="flex flex-col items-center">
             <img :src="`${serverDomain}/${imgUrl}`" class="w-[22.5rem] mb-4" />
-            <SolidBtn label="choose image" size="small" class="max-w-[20rem]" @click="toggling" />
+            <OutlineBtn label="choose image" size="small" @click="toggling" />
         </div>
         
         <Dialog 
