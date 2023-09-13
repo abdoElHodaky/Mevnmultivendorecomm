@@ -6,6 +6,7 @@ import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import { useRoute } from "vue-router";
 
+import UploadImage from "../../components/Product/UploadImage.vue";
 import PageHeader from "../../components/PageHeader.vue";
 import FormInputText from "../../components/FormInputText.vue";
 import SolidBtn from "../../components/SolidBtn.vue";
@@ -136,8 +137,13 @@ const setThumbnailField = (imgUrl) => {
 
 </script>
 <template>
-    <PageHeader :title="productId ? 'edit' : 'create new product'" />
-    <ChooseImage @imageSelected="setThumbnailField" />
+    <PageHeader :title="productId ? 'edit' : 'create new product'" class="mb-4" />
+
+    <div class="w-[22.5rem]">
+        <ChooseImage @imageSelected="setThumbnailField" />
+        <UploadImage />
+    </div>
+    
     <form class="py-4" @submit.prevent="submitting" action="#">
         <FormInputText name="name" label="name" />
         <FormInputText name="description" label="description" />
