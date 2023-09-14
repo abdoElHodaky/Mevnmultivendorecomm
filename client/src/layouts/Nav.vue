@@ -1,24 +1,46 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
+import { useWindowScroll } from "@vueuse/core";
 
 import IconBtn from "../components/IconBtn.vue";
 import LogoutBtn from "../components/LogoutBtn.vue";
 
 import useUserStore from "../stores/user.js";
 
+const { y } = useWindowScroll();
+
 const visible = ref(false);
+const nav = ref(null);
 
 const router = useRouter();
 const userStore = useUserStore();
 
 const navigateTo = (path) => {
+
     visible.value = false;
     router.push(path);
 };
+
+watch(y, (value)=> {
+
+    if(value > 0) nav.value.classList.add('scrolled'); 
+    else nav.value.classList.remove('scrolled');
+});
 </script>
+<style lang="scss">
+    nav {
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        &.scrolled {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 1rem;
+            border-radius: 25px;
+            transform: scale(0.75);
+        }
+    }
+</style>
 <template>
-    <nav class="mb-12">
+    <nav ref="nav" class="w-full mb-12 sticky top-0 z-10">
 
         <Sidebar :showCloseIcon="false" v-model:visible="visible">
             <div class="h-full grid items-center">

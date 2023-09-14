@@ -4,7 +4,7 @@ import LoadingScreen from "./components/LoadingScreen.vue";
 </script>
 <template>
     <div id="page" class="relative w-full h-full max-w-screen-md mx-auto grid items-center p-2">
-        <div id="page-box" class="flex flex-col">
+        <div id="page-box" class="flex flex-col relative">
 
             <Nav />
 
