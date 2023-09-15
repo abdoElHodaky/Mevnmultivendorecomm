@@ -16,12 +16,6 @@ const nav = ref(null);
 const router = useRouter();
 const userStore = useUserStore();
 
-const navigateTo = (path) => {
-
-    visible.value = false;
-    router.push(path);
-};
-
 watch(y, (value)=> {
 
     if(value > 0) nav.value.classList.add('scrolled'); 
@@ -31,12 +25,16 @@ watch(y, (value)=> {
 <style lang="scss">
     nav {
         transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
         &.scrolled {
             background-color: rgba(0, 0, 0, 0.5);
             padding: 1rem;
             border-radius: 25px;
             transform: scale(0.75);
         }
+    }
+    a.router-link-active {
+        @apply text-secondary;
     }
 </style>
 <template>
@@ -53,11 +51,21 @@ watch(y, (value)=> {
 
                     <div v-if="userStore.authed === 'authed'">
 
-                        <div class="mb-12">
-                            <a href="#" class="text-5xl hover:text-secondary font-bold capitalize block mb-4" @click="navigateTo('/dashboard')">dashboard</a>
+                        <div class="mb-4">
+                            <router-link
+                                @click="visible = false"
+                                :to="{name: 'links'}"
+                                class="text-5xl hover:text-secondary font-bold capitalize block mb-4">dashboard</router-link>
                         </div>
 
-                        <div class="mb-18">
+                        <div class="mb-4">
+                            <router-link 
+                                @click="visible = false"
+                                :to="{name: 'products'}"
+                                class="text-5xl hover:text-secondary font-bold capitalize block mb-4">products</router-link>
+                        </div>
+
+                        <div class="mt-16">
                             <LogoutBtn />
                         </div>
                     
@@ -66,19 +74,31 @@ watch(y, (value)=> {
                     <div v-else>
 
                         <div class="mb-12">
-                            <a href="#" class="text-5xl hover:text-secondary font-bold capitalize block mb-4" @click="navigateTo('/')">home</a>
+                            <router-link
+                                @click="visible = false"
+                                :to="{name: 'home'}"
+                                class="text-5xl hover:text-secondary font-bold capitalize block mb-4">home</router-link>
                         </div>
 
                         <div class="mb-12">
-                            <a href="#" class="text-5xl hover:text-secondary font-bold capitalize block mb-4" @click="navigateTo('/products')">products</a>
+                            <router-link
+                                @click="visible = false"
+                                :to="{name: 'products'}"
+                                class="text-5xl hover:text-secondary font-bold capitalize block mb-4">products</router-link>
                         </div>
 
                         <div class="mb-12">
                             <h2 class="text-3xl font-bold capitalize block mb-6">
                                 Account
                             </h2>
-                            <a href="#" class="text-5xl hover:text-secondary font-bold capitalize block ml-4 mb-4" @click="navigateTo('/signin')">sign in</a>
-                            <a href="#" class="text-5xl hover:text-secondary font-bold capitalize block ml-4 mb-4" @click="navigateTo('/signup')">sign up</a>
+                            <router-link
+                                @click="visible = false"
+                                :to="{name: 'sign-in'}"
+                                class="text-5xl hover:text-secondary font-bold capitalize block mb-4">sign in</router-link>
+                            <router-link
+                                @click="visible = false"
+                                :to="{name: 'sign-up'}"
+                                class="text-5xl hover:text-secondary font-bold capitalize block mb-4">sign up</router-link>
                         </div>
 
                     </div>
@@ -102,7 +122,5 @@ watch(y, (value)=> {
                 </div>
             </div>
         </div>
-
-        
     </nav>
 </template>
