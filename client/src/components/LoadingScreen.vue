@@ -8,7 +8,7 @@
 <template>
     <Teleport to="body">
         <div v-show="showLoadingScreen" class="bg-primary-dim
-            fixed z-50 inset-0
+            fixed z-[9999] inset-0
             flex flex-col justify-center items-center"
         >
             <ProgressSpinner :pt="{ circle: { class: '!stroke-secondary' } }" />

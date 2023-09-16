@@ -6,14 +6,24 @@ import useProductStore from "../../stores/product.js";
 
 import ProductsItem from "./ProductsItem.vue";
 import LabelIconBtn from "../../components/LabelIconBtn.vue";
+import { toggleLoadingScreen } from "../../utils/togglers.js";
 
 const productStore = useProductStore();
 
 const url = ref(`${import.meta.env.VITE_API}/products/collection?page=${productStore.productsPage}&limit=10`);
 const fetch = useFetch(url, {
     immediate: false,
-    beforeFetch: ({options}) => { options.credentials = 'include'; return { options }; },
-    afterFetch: (ctx) => productStore.productsReceived(ctx.data)
+    beforeFetch: ({options}) => {
+        
+        toggleLoadingScreen();
+        options.credentials = 'include'; 
+        return { options };
+    },
+    afterFetch: (ctx) => {
+        
+        productStore.productsReceived(ctx.data);
+        toggleLoadingScreen();
+    }
 });
 
 const loadMoreProducts = () => {
