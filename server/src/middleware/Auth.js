@@ -9,9 +9,9 @@ import AppError from '../parts/AppError.js';
 
 const isAuth = AsyncMiddleware(async (req, res, next) => {
     
-    if(req?.cookies?.access_token) {
+    if(req?.signedCookies?.access_token) {
 
-        const { userId } = jwt.verify(req.cookies.access_token, process.env.JWT_SECRET);
+        const { userId } = jwt.verify(req.signedCookies.access_token, process.env.JWT_SECRET);
 
         const user = await User.findById(userId).select('-password');
         if(!user) return next(new AppError({message: 'not_logged_in'}, 401));
@@ -21,9 +21,9 @@ const isAuth = AsyncMiddleware(async (req, res, next) => {
         return next();
     }
 
-    if(req?.cookies?.refresh_token) {
+    if(req?.signedCookies?.refresh_token) {
         
-        const { sessionToken } = jwt.verify(req.cookies.refresh_token, process.env.JWT_SECRET);
+        const { sessionToken } = jwt.verify(req.signedCookies.refresh_token, process.env.JWT_SECRET);
 
         const oldSession = await Session.findOne({token: sessionToken});
         

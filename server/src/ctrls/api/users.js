@@ -44,13 +44,15 @@ const signUp = AsyncMiddleware(async(req, res, next) => {
         'path': '/',
         'domain': 'localhost',
         'httpOnly': true,
-        'sameSite': 'Lax'
+        'sameSite': 'Lax',
+        'signed': true
     }).cookie('refresh_token', refreshtoken, {
         'path': '/',
         'domain': 'localhost',
         'httpOnly': true,
         'expires': refreshTokenExpireTime(),
-        'sameSite': 'Lax'
+        'sameSite': 'Lax',
+        'signed': true
     }).send({
         firstName: newUser.firstName,
         lastName: newUser.lastName,
@@ -84,13 +86,15 @@ const signIn = AsyncMiddleware(async(req, res, next) => {
         'path': '/',
         'domain': 'localhost',
         'httpOnly': true,
-        'sameSite': 'Lax'
+        'sameSite': 'Lax',
+        'signed': true
     }).cookie('refresh_token', refreshtoken, {
         'path': '/',
         'domain': 'localhost',
         'httpOnly': true,
         'expires': refreshTokenExpireTime(),
-        'sameSite': 'Lax'
+        'sameSite': 'Lax',
+        'signed': true
     }).send({
         firstName: user.firstName,
         lastName: user.lastName,
@@ -109,15 +113,15 @@ const profile = AsyncMiddleware(async(req, res) => authedResponse.withRefreshTok
 
 const logout = AsyncMiddleware(async(req, res, next) => {
 
-    if(req?.cookies?.access_token) {
+    if(req?.signedCookies?.access_token) {
 
-        const { sessionToken } = jwt.verify(req.cookies.access_token, process.env.JWT_SECRET);
+        const { sessionToken } = jwt.verify(req.signedCookies.access_token, process.env.JWT_SECRET);
 
         await Session.findOneAndDelete({token: sessionToken});
 
-    } else if(req?.cookies?.refresh_token) {
+    } else if(req?.signedCookies?.refresh_token) {
 
-        const { sessionToken } = jwt.verify(req.cookies.refresh_token, process.env.JWT_SECRET);
+        const { sessionToken } = jwt.verify(req.signedCookies.refresh_token, process.env.JWT_SECRET);
 
         await Session.findOneAndDelete({token: sessionToken});
 
