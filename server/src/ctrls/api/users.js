@@ -1,6 +1,8 @@
 import { object, string } from "yup";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { createTestAccount, createTransport, getTestMessageUrl } from "nodemailer";
+import { createHash } from 'crypto';
 
 import User from "../../models/user.js";
 import Session from "../../models/session.js";
@@ -11,6 +13,8 @@ import { createAccessToken, createRefreshToken } from "../../utils/jwtTokens.js"
 import { createSession } from "../../utils/sessionToken.js";
 import authedResponse from "../../utils/authedResponse.js";
 import { refreshTokenExpireTime } from "../../utils/cookieTimers.js";
+
+const { JWT_SECRET, ROOT_DOMAIN } = process.env;
 
 const signUpSchema = object({
     firstName: string().required('user_fname_required'),
@@ -64,7 +68,6 @@ const signUp = AsyncMiddleware(async(req, res, next) => {
         _id: newUser._id,
         createdAt: newUser.createdAt,
     });
-
 });
 
 const signIn = AsyncMiddleware(async(req, res, next) => {
@@ -106,7 +109,6 @@ const signIn = AsyncMiddleware(async(req, res, next) => {
         _id: user._id,
         createdAt: user.createdAt,
     });
-
 });
 
 const profile = AsyncMiddleware(async(req, res) => authedResponse.withRefreshToken(req, res, req.user));
@@ -115,13 +117,13 @@ const logout = AsyncMiddleware(async(req, res, next) => {
 
     if(req?.signedCookies?.access_token) {
 
-        const { sessionToken } = jwt.verify(req.signedCookies.access_token, process.env.JWT_SECRET);
+        const { sessionToken } = jwt.verify(req.signedCookies.access_token, JWT_SECRET);
 
         await Session.findOneAndDelete({token: sessionToken});
 
     } else if(req?.signedCookies?.refresh_token) {
 
-        const { sessionToken } = jwt.verify(req.signedCookies.refresh_token, process.env.JWT_SECRET);
+        const { sessionToken } = jwt.verify(req.signedCookies.refresh_token, JWT_SECRET);
 
         await Session.findOneAndDelete({token: sessionToken});
 
@@ -131,7 +133,48 @@ const logout = AsyncMiddleware(async(req, res, next) => {
     }
 
     res.clearCookie('access_token').clearCookie('refresh_token').status(200).send('logged_out');
-
 });
 
-export { signUp, signIn, profile, logout };
+const sendVerificationMail = AsyncMiddleware(async(req, res, next) => {
+
+    
+    //create verify email token
+    const stringToken = `${JWT_SECRET}:${req.user.email.address}`;
+    const hashedToken = createHash('sha256').update(stringToken).digest('hex');
+    
+    //create verify email link
+    const encodedEmail = encodeURIComponent(req.user.email.address);
+    const link = `${ROOT_DOMAIN}:4200/store/verify-email/${encodedEmail}/${hashedToken}`;
+
+    const testAccount = await createTestAccount();
+
+    const transporter = createTransport({
+        host: 'smtp.ethereal.email',
+        port: 587,
+        secure: false,
+        auth: {
+            user: testAccount.user,
+            pass: testAccount.pass
+        }
+    });
+
+    const info = await transporter.sendMail({
+        from: 'develop@server.com',
+        to: req.user.email.address,
+        subject: 'hello',
+        html: `<h1>hello</h1>
+        <p>
+            <a href="${link}">verify email</a>
+        </p>`
+    });
+
+    const viewUrl = getTestMessageUrl(info);
+
+    return authedResponse.withRefreshToken(req, res, { viewUrl, info });
+});
+
+export { signUp, 
+    signIn, 
+    profile, 
+    logout, 
+    sendVerificationMail };
