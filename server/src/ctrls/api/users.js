@@ -137,6 +137,8 @@ const logout = AsyncMiddleware(async(req, res, next) => {
 
 const sendVerificationMail = AsyncMiddleware(async(req, res, next) => {
 
+    //check if the email is already verified
+    if(req.user?.email?.verified) return authedResponse.withRefreshToken(req, res, 'email_already_verified');
     
     //create verify email token
     const stringToken = `${JWT_SECRET}:${req.user.email.address}`;
@@ -164,7 +166,7 @@ const sendVerificationMail = AsyncMiddleware(async(req, res, next) => {
         subject: 'hello',
         html: `<h1>hello</h1>
         <p>
-            <a href="${link}">verify email</a>
+            <a href="${link}">click to verify email</a>
         </p>`
     });
 
@@ -173,8 +175,29 @@ const sendVerificationMail = AsyncMiddleware(async(req, res, next) => {
     return authedResponse.withRefreshToken(req, res, { viewUrl, info });
 });
 
+const verifyEmail = AsyncMiddleware(async(req, res, next) => {
+
+    const { email, token } = req.body;
+
+    const user = await User.findOne({'email.address': email});
+    if(user?.email?.verified) return authedResponse.withRefreshToken(req, res, 'email_already_verified');
+
+    const testHash = createHash('sha256').update(`${JWT_SECRET}:${email}`).digest('hex');
+    if(testHash === token) {
+
+        user.email.verified = true;
+        await user.save();
+        return authedResponse.withRefreshToken(req, res, 'email_verified_successfully');
+
+    } else {
+
+        return authedResponse.withRefreshToken(req, res, 'can\'t_verify');
+    }
+});
+
 export { signUp, 
     signIn, 
     profile, 
     logout, 
-    sendVerificationMail };
+    sendVerificationMail, 
+    verifyEmail };
