@@ -170,9 +170,9 @@ const sendVerificationMail = AsyncMiddleware(async(req, res, next) => {
         </p>`
     });
 
-    const viewUrl = getTestMessageUrl(info);
+    // const viewUrl = getTestMessageUrl(info);
 
-    return authedResponse.withRefreshToken(req, res, { viewUrl, info });
+    return authedResponse.withRefreshToken(req, res, 'email_was_sent');
 });
 
 const verifyEmail = AsyncMiddleware(async(req, res, next) => {

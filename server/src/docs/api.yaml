@@ -621,4 +621,47 @@ paths:
                 type: object
                 allOf:
                   - $ref: '#/components/schemas/Returned user props'
-    
+  /api/v1/users/verify/email:
+    get:
+      description: send email-verification link to the user's email.
+      security:
+        - access_token: []
+        - refresh_token: []
+      tags:
+        - Users
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: string
+                default: "email_was_sent"
+    post:
+      description: verify the user's email by using the token.
+      security:
+        - access_token: []
+        - refresh_token: []
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: user's email
+                token:
+                  type: string
+                  description: the token that will be used to verify the user's email
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: string
+                default: "email_verified_successfully"
