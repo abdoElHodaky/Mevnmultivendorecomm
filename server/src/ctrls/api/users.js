@@ -3,6 +3,7 @@ import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { createTestAccount, createTransport, getTestMessageUrl } from "nodemailer";
 import { createHash } from 'crypto';
+import bcrypt from "bcryptjs";
 
 import User from "../../models/user.js";
 import Session from "../../models/session.js";
@@ -195,9 +196,25 @@ const verifyEmail = AsyncMiddleware(async(req, res, next) => {
     }
 });
 
+const changePassword = AsyncMiddleware(async(req, res, next) => {
+
+    const user = await User.findById(req.user._id);
+
+    const { oldPassword, newPassword } = req.body;
+
+    const result = await bcrypt.compare(oldPassword, user.password);
+    if(!result) return authedResponse.withRefreshToken(req, res, 'wrong_password');
+
+    user.password = newPassword;
+    await user.save();
+
+    return authedResponse.withRefreshToken(req, res, 'password_changed');
+});
+
 export { signUp, 
     signIn, 
     profile, 
     logout, 
     sendVerificationMail, 
-    verifyEmail };
+    verifyEmail, 
+    changePassword};
