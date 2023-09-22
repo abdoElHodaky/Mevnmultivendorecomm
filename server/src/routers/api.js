@@ -22,7 +22,8 @@ import { signUp,
     logout,
     sendVerificationMail,
     verifyEmail, 
-    changePassword } from "../ctrls/api/users.js";
+    changePassword, 
+    passwordForgot} from "../ctrls/api/users.js";
 
 import isAuth from "../middleware/Auth.js";
 
@@ -46,8 +47,9 @@ router.post('/users/signup', signUp);
 router.post('/users/signin', signIn);
 router.get('/users/logout', logout);
 router.get('/users/profile', isAuth, profile);
-router.get('/users/email/verify', isAuth, sendVerificationMail);
-router.post('/users/email/verify', verifyEmail);
-router.post('/users/password/change', isAuth, changePassword);
+router.get('/users/email-verify', isAuth, sendVerificationMail);
+router.post('/users/email-verify', verifyEmail);
+router.post('/users/password-change', isAuth, changePassword);
+router.post('/users/password-forgot', passwordForgot);
 
 export default router;

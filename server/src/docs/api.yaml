@@ -604,6 +604,22 @@ paths:
                 type: object
                 allOf:
                   - $ref: '#/components/schemas/Returned user props'
+  /api/v1/users/logout:
+    get:
+      description: logout authed user
+      security:
+        - access_token: []
+        - refresh_token: []
+      tags:
+        - Users
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: string
+                default: "logged_out"
   /api/v1/users/profile:
     get:
       description: get logged in user profile
@@ -621,7 +637,7 @@ paths:
                 type: object
                 allOf:
                   - $ref: '#/components/schemas/Returned user props'
-  /api/v1/users/email/verify:
+  /api/v1/users/email-verify:
     get:
       description: send email-verification link to the user's email.
       security:
@@ -665,7 +681,7 @@ paths:
               schema:
                 type: string
                 default: "email_verified_successfully"
-  /api/v1/users/password/change:
+  /api/v1/users/password-change:
     post:
       description: change authed user's password
       security:
@@ -694,14 +710,24 @@ paths:
               schema:
                 type: string
                 default: "password_changed"
-  /api/v1/users/logout:
-    get:
-      description: logout authed user
+  /api/v1/users/password-forgot:
+    post:
+      description: send a password-reset link to the user's email
       security:
         - access_token: []
         - refresh_token: []
       tags:
         - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: user's email that was used within registration
       responses:
         200:
           description: ok
@@ -709,4 +735,4 @@ paths:
             application/json:
               schema:
                 type: string
-                default: "logged_out"
+                default: "reset_password_mail_sent"

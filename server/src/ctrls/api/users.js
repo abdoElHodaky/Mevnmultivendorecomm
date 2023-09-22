@@ -1,19 +1,21 @@
 import { object, string } from "yup";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { createTestAccount, createTransport, getTestMessageUrl } from "nodemailer";
 import { createHash } from 'crypto';
 import bcrypt from "bcryptjs";
 
 import User from "../../models/user.js";
 import Session from "../../models/session.js";
 import AsyncMiddleware from "../../middleware/AsyncMiddleware.js";
+
 import AppError from "../../parts/AppError.js";
+
 import inputsValidation from "../../utils/inputsValidation.js";
 import { createAccessToken, createRefreshToken } from "../../utils/jwtTokens.js";
 import { createSession } from "../../utils/sessionToken.js";
 import authedResponse from "../../utils/authedResponse.js";
 import { refreshTokenExpireTime } from "../../utils/cookieTimers.js";
+import { createMailerTransporter, getTestMessageUrl } from "../../utils/mailer.js";
 
 const { JWT_SECRET, ROOT_DOMAIN } = process.env;
 
@@ -149,18 +151,7 @@ const sendVerificationMail = AsyncMiddleware(async(req, res, next) => {
     const encodedEmail = encodeURIComponent(req.user.email.address);
     const link = `${ROOT_DOMAIN}:4200/store/verify-email/${encodedEmail}/${hashedToken}`;
 
-    const testAccount = await createTestAccount();
-
-    const transporter = createTransport({
-        host: 'smtp.ethereal.email',
-        port: 587,
-        secure: false,
-        auth: {
-            user: testAccount.user,
-            pass: testAccount.pass
-        }
-    });
-
+    const transporter = await createMailerTransporter();
     const info = await transporter.sendMail({
         from: 'develop@server.com',
         to: req.user.email.address,
@@ -173,7 +164,7 @@ const sendVerificationMail = AsyncMiddleware(async(req, res, next) => {
 
     // const viewUrl = getTestMessageUrl(info);
 
-    return authedResponse.withRefreshToken(req, res, 'email_was_sent');
+    return authedResponse.withRefreshToken(req, res, viewUrl);
 });
 
 const verifyEmail = AsyncMiddleware(async(req, res, next) => {
@@ -211,10 +202,38 @@ const changePassword = AsyncMiddleware(async(req, res, next) => {
     return authedResponse.withRefreshToken(req, res, 'password_changed');
 });
 
+const passwordForgot = AsyncMiddleware(async(req, res, next) => {
+
+    const { email } = req.body;
+
+    const user = await User.findOne({'email.address': email});
+    if(!user) return authedResponse.withRefreshToken(req, res, 'wrong_email');
+
+    // create verify email link
+    const encodedEmail = encodeURIComponent(email);
+    const expTime = Date.now() + (1/60) * 60 * 60 * 1000;
+    const hashedToken = createHash('sha256').update(`${JWT_SECRET}:${email}:${expTime}`).digest('hex');
+    const link = `${ROOT_DOMAIN}:4200/store/reset-password/${encodedEmail}/${expTime}/${hashedToken}`;
+
+    const transporter = await createMailerTransporter();
+    const info = await transporter.sendMail({
+        from: 'develop@server.com',
+        to: email,
+        subject: 'reset-password',
+        html: `<h1>Reset Password</h1>
+        <p>
+            <a href="${link}">click to reset your password</a>
+        </p>`
+    });
+
+    return authedResponse.withRefreshToken(req, res, 'reset_password_mail_sent');
+});
+
 export { signUp, 
     signIn, 
     profile, 
     logout, 
     sendVerificationMail, 
     verifyEmail, 
-    changePassword};
+    changePassword, 
+    passwordForgot };
