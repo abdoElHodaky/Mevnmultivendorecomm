@@ -162,9 +162,9 @@ const sendVerificationMail = AsyncMiddleware(async(req, res, next) => {
         </p>`
     });
 
-    // const viewUrl = getTestMessageUrl(info);
+    //console.log(getTestMessageUrl(info));
 
-    return authedResponse.withRefreshToken(req, res, viewUrl);
+    return authedResponse.withRefreshToken(req, res, 'email_was_sent');
 });
 
 const verifyEmail = AsyncMiddleware(async(req, res, next) => {
@@ -211,7 +211,7 @@ const passwordForgot = AsyncMiddleware(async(req, res, next) => {
 
     // create verify email link
     const encodedEmail = encodeURIComponent(email);
-    const expTime = Date.now() + (1/60) * 60 * 60 * 1000;
+    const expTime = Date.now() + (5/60) * 60 * 60 * 1000;
     const hashedToken = createHash('sha256').update(`${JWT_SECRET}:${email}:${expTime}`).digest('hex');
     const link = `${ROOT_DOMAIN}:4200/store/reset-password/${encodedEmail}/${expTime}/${hashedToken}`;
 
@@ -226,7 +226,29 @@ const passwordForgot = AsyncMiddleware(async(req, res, next) => {
         </p>`
     });
 
+    //console.log(getTestMessageUrl(info));
+
     return authedResponse.withRefreshToken(req, res, 'reset_password_mail_sent');
+});
+
+const passwordReset = AsyncMiddleware(async(req, res, next) => {
+
+    const { email, expTime, hashedToken, newPassword } = req.body;
+
+    const user = await User.findOne({'email.address': email});
+    if(!user) return authedResponse.withRefreshToken(req, res, 'wrong_email');
+
+    if( (expTime - Date.now()) < 0 )
+    return authedResponse.withRefreshToken(req, res, 'link_expired');
+
+    const testToken = createHash('sha256').update(`${JWT_SECRET}:${email}:${expTime}`).digest('hex'); 
+    if(hashedToken !== testToken)
+    return authedResponse.withRefreshToken(req, res, 'link_not_valid');
+
+    user.password = newPassword;
+    await user.save();
+
+    return authedResponse.withRefreshToken(req, res, 'password_reset_successfully');
 });
 
 export { signUp, 
@@ -236,4 +258,5 @@ export { signUp,
     sendVerificationMail, 
     verifyEmail, 
     changePassword, 
-    passwordForgot };
+    passwordForgot, 
+    passwordReset };

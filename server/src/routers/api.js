@@ -23,7 +23,8 @@ import { signUp,
     sendVerificationMail,
     verifyEmail, 
     changePassword, 
-    passwordForgot} from "../ctrls/api/users.js";
+    passwordForgot, 
+    passwordReset } from "../ctrls/api/users.js";
 
 import isAuth from "../middleware/Auth.js";
 
@@ -51,5 +52,6 @@ router.get('/users/email-verify', isAuth, sendVerificationMail);
 router.post('/users/email-verify', verifyEmail);
 router.post('/users/password-change', isAuth, changePassword);
 router.post('/users/password-forgot', passwordForgot);
+router.post('/users/password-reset', passwordReset);
 
 export default router;
