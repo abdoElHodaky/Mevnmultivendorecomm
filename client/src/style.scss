@@ -19,7 +19,7 @@ html, body, #app { height: 100%; }
 
 // LTR-RTL padding
 .right-left-padding-1 {
-    @include withRtl(padding, 0 1rem 0 0, 0 0 0 1rem);
+  @include withRtl(padding, 0 1rem 0 0, 0 0 0 1rem);
 }
 .left-right-padding-1 {
   @include withRtl(padding, 0 0 0 1rem, 0 1rem 0 0);
@@ -30,5 +30,5 @@ html, body, #app { height: 100%; }
   @include withRtl(margin, 0 1rem 0 0, 0 0 0 1rem);
 }
 .left-right-margin-1 {
-@include withRtl(margin, 0 0 0 1rem, 0 1rem 0 0);
+  @include withRtl(margin, 0 0 0 1rem, 0 1rem 0 0);
 }

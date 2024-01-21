@@ -1,18 +1,18 @@
 # Multi Vendor Ecommerce
-The purpose of this project is to learn more about Nodejs and MongoDB, dive deeper into web technologies and hit the core through **MEVN** stack web apps.
+MERN stack web template implements common Ecommerce features.
 
-Breaking the project into three major parts will make it easier to focus on each task individually:
-
+Breaking the project into three parts:
 - ### Client
-    A single-page web application built with Vue.js that allows users (sellers) to manage their products through a dashboard.
-- ### Website
-    Using handlebars to render products on web pages for users and visitors, also to offer a shopping cart for users (buyers).
+    A single-page web application built with Vue.js that allows users (sellers/customers) to manage their products through a dashboard.
 - ### Server
-    Express.js web server that operates both SPA and the website also will store data within a MongoDB database.
+    Expressjs web server that operates both SPA and the website using a MongoDB database.
+- ### website
+    Using handlebars.js to server-render web pages (for SEO).
 ## .env
-- MODE=
-- JWT_SECRET=
-- COOKIE_SIGNATURE=
+- MODE
+- ROOT_DOMAIN
+- JWT_SECRET
+- COOKIE_SIGNATURE
 ## Technical Details
 - vuejs - vue-router - vee-validate - primevue - vueuse - yup
 - expressjs - handlebars - mongoose - swagger-ui-express
