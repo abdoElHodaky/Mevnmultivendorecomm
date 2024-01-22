@@ -1,11 +1,11 @@
 {
   "name": "multi-vendor-ecommerce",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "private": true,
   "keywords": [
     "nodejs",
     "expressjs",
-    "handlebars",
+    "nuxt",
     "vuejs",
     "tailwind",
     "mongodb",
@@ -16,15 +16,20 @@
     "install-server": "npm install --prefix server",
     "install-client": "npm install --prefix client",
     "install-website": "npm install --prefix website",
+    "install-nuxt": "npm install --prefix nuxt",
     "install": "npm run install-server && npm run install-client && npm run install-website",
+    "install-x": "npm run install-nuxt && npm run install-server",
     "dev-server": "npm run dev --prefix server",
     "dev-client": "npm run dev --prefix client",
     "dev-website": "npm run dev --prefix website",
+    "dev-nuxt": "npm run dev --prefix nuxt",
     "dev": "npm run dev-server & npm run dev-client & npm run dev-website",
     "start-server": "npm run start --prefix server",
     "build-client": "npm run build --prefix client",
     "build-website": "npm run build --prefix website",
-    "deploy": "npm run build-website & npm run build-client & npm run start-server"
+    "build-nuxt": "npm run generate --prefix nuxt",
+    "deploy": "npm run build-website & npm run build-client & npm run start-server",
+    "deploy-x": "npm run build-nuxt && npm run start-server"
   },
   "author": "andrew zachary",
   "license": "MIT"
