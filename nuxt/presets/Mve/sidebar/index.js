@@ -2,7 +2,8 @@ export default {
     root: ({props:e})=>({
         class:["flex flex-col","relative",
         {"!transition-none !transform-none !w-screen !h-screen !max-h-full !top-0 !left-0":e.position=="full"},
-        {"h-full w-full max-w-[28rem]":e.position=="left"||e.position=="right","h-auto w-full":e.position=="top"||e.position=="bottom"},
+        {"h-full w-full max-w-screen-xs":e.position=="left"||e.position=="right"},
+        {"h-auto w-full":e.position=="top"||e.position=="bottom"},
         "border-0 dark:border","shadow-xl","bg-surface-0 dark:bg-surface-800","text-surface-700 dark:text-white/80","dark:border-surface-700","transition-transform","duration-300","pointer-events-auto"]
     }),
     header: {

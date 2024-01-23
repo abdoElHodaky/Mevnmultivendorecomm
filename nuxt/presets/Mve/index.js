@@ -1,7 +1,9 @@
-import sidebar from "./sidebar";
-import global from "./global";
+import sidebar from "./sidebar"
+import button from "./button"
+import global from "./global"
 
 export default {
     global,
     sidebar,
-};
+    button
+}

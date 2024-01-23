@@ -5,13 +5,13 @@ definePageMeta({
 })
 
 useHead({
-  title: 'welcome',
+  title: 'feedback',
   meta: [
-    { name: 'description', content: 'home page' }
+    { name: 'description', content: 'feedback page' }
   ]
 })
 
 </script>
 <template>
-    <h1 class="text-4xl">home page</h1>
+    <h1>feedback</h1>
 </template>

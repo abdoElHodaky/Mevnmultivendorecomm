@@ -31,6 +31,14 @@ module.exports = {
         white: 'rgb(var(--white))',
         transparent: 'var(--transparent)',
       }
+    },
+    screens: {
+      xs: '320px',
+      sm: '475px',
+      md: '768px',
+      lg: '992px',
+      xlg: '1200px',
+      '2xl': '1440px'
     }
   },
   plugins: [],

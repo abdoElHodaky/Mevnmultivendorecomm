@@ -8,8 +8,8 @@
 }
 
 :root {
-  --primary: #E2D1F9;
-  --secondary: #317773;
+  --primary: #e87e27;
+  --secondary: #ffe1c7;
   --red-100: #fee2e2;
   --red-500: #ef4444;
   --red-700: #b91c1c;
@@ -23,17 +23,16 @@
   --white: 255, 255, 240;
   --transparent: transparent;
 
-  --primary-50: 236 253 245;
-  --primary-100: 209 250 229;
-  --primary-200: 167 243 208;
-  --primary-300: 110 231 183;
-  --primary-400: 52 211 153;
-  --primary-500: 16 185 129;
-  --primary-600: 5 150 105;
-  --primary-700: 4 120 87;
-  --primary-800: 6 95 70;
-  --primary-900: 4 78 56;
-  --primary-950: 2 44 34;
+  --orange-50: 255 248 243;
+  --orange-100: 254 221 199;
+  --orange-200: 252 195 155;
+  --orange-300: 251 168 111;
+  --orange-400: 250 142 66;
+  --orange-500: 249 115 22;
+  --orange-600: 212 98 19;
+  --orange-700: 174 81 15;
+  --orange-800: 137 63 12;
+  --orange-900: 100 46 9;
   --surface-0: 255 255 255;
   --surface-50: 248 250 252;
   --surface-100: 241 245 249;
@@ -48,33 +47,46 @@
   --surface-950: 3 6 23;
 }
 
-body {
-  background-color: yellow;
+// mixins
+@mixin withRtl($property, $ltr-value, $rtl-value) {
+  & {
+    #{$property}: $ltr-value !important;
+  }
+
+  .is-rtl & {
+    #{$property}: $rtl-value !important;
+  }
 }
 
-[data-pc-section="mask"] {
-  animation: p-component-overlay-enter-animation 0.3s linear forwards;
+body {
+  background-color: var(--secondary);
+  color: rgb(var(--black))
+}
+
+// LTR-RTL padding
+.right-left-padding-1 {
+  @include withRtl(padding, 0 1rem 0 0, 0 0 0 1rem);
+}
+.left-right-padding-1 {
+  @include withRtl(padding, 0 0 0 1rem, 0 1rem 0 0);
+}
+
+// LTR-RTL margin
+.right-left-margin-1 {
+  @include withRtl(margin, 0 1rem 0 0, 0 0 0 1rem);
+}
+.left-right-margin-1 {
+  @include withRtl(margin, 0 0 0 1rem, 0 1rem 0 0);
 }
 
 // animate overlay
+.p-component-overlay-enter { animation: p-component-overlay-enter-animation 0.3s linear forwards; }
 @keyframes p-component-overlay-enter-animation {
-  0% {
-    background-color: transparent;
-  }
-  100% {
-    background-color: rgba(var(--black), 0.4);
-  }
+  0% { background-color: transparent; }
+  100% { background-color: rgba(var(--black), 0.4); }
 }
-
-.p-component-overlay-leave {
-  animation: p-component-overlay-leave-animation 0.3s linear forwards;
-}
-
+.p-component-overlay-leave { animation: p-component-overlay-leave-animation 0.3s linear forwards; }
 @keyframes p-component-overlay-leave-animation {
-  0% {
-    background-color: rgba(var(--black), 0.4);
-  }
-  100% {
-    background-color: transparent;
-  }
+  0% { background-color: rgba(var(--black), 0.4); }
+  100% { background-color: transparent; }
 }

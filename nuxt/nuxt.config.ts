@@ -14,7 +14,7 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  css: ['~/assets/scss/main.scss'],
+  css: ['primeicons/primeicons.css', '~/assets/scss/main.scss'],
   modules: [
     'nuxt-primevue',
     '@nuxtjs/tailwindcss'
@@ -37,6 +37,16 @@ export default defineNuxtConfig({
       theme: {
         extend: {
           colors: {
+            "orange-50":"rgb(var(--orange-50))",
+            "orange-100":"rgb(var(--orange-100))",
+            "orange-200":"rgb(var(--orange-200))",
+            "orange-300":"rgb(var(--orange-300))",
+            "orange-400":"rgb(var(--orange-400))",
+            "orange-500":"rgb(var(--orange-500))",
+            "orange-600":"rgb(var(--orange-600))",
+            "orange-700":"rgb(var(--orange-700))",
+            "orange-800":"rgb(var(--orange-800))",
+            "orange-900":"rgb(var(--orange-900))",
             "primary-50": "rgb(var(--primary-50))",
             "primary-100": "rgb(var(--primary-100))",
             "primary-200": "rgb(var(--primary-200))",
