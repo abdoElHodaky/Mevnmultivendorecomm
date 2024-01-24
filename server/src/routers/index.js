@@ -1,11 +1,14 @@
 import apiRouter from "./api.js";
-import websiteRouter from "./website.js";
 
 const routersLoader = (app) => {
     // api
     app.use('/api/v1', apiRouter);
-    // website
-    app.use('/', websiteRouter);
+    // handle 404
+    app.all('*', (_, res)=>{
+        return res.render('404', {
+            layout: 'main'
+        });
+    });
 };
 
 export default routersLoader;

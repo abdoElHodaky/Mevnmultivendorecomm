@@ -1,30 +1,27 @@
 {
-  "name": "multi-vendor-ecommerce-client",
-  "version": "1.0.0",
+  "name": "nuxt-app",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@vueuse/core": "^10.2.1",
-    "axios": "^1.5.0",
-    "pinia": "^2.1.6",
-    "primeicons": "^6.0.1",
-    "primevue": "^3.30.0",
-    "vee-validate": "^4.10.6",
-    "vue": "^3.2.47",
-    "vue-router": "^4.2.4",
-    "yup": "^1.2.0"
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.1.0",
-    "autoprefixer": "^10.4.14",
-    "postcss": "^8.4.24",
-    "sass": "^1.63.6",
-    "tailwindcss": "^3.3.2",
-    "vite": "^4.3.9"
+    "@nuxtjs/tailwindcss": "^6.11.0",
+    "autoprefixer": "^10.4.17",
+    "nuxt": "^3.9.3",
+    "nuxt-primevue": "^0.2.2",
+    "postcss": "^8.4.33",
+    "tailwindcss": "^3.4.1",
+    "vue": "^3.4.14",
+    "vue-router": "^4.2.5"
+  },
+  "dependencies": {
+    "primeicons": "^6.0.1",
+    "primevue": "^3.46.0",
+    "sass": "^1.70.0"
   }
 }

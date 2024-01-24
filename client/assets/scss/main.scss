@@ -1,0 +1,84 @@
+@layer tailwind-base {
+  @tailwind base;
+}
+
+@layer tailwind-utilities {
+  @tailwind components;
+  @tailwind utilities;
+}
+
+:root {
+  --primary-100: 240 146 53;
+  --primary-200: 237 118 47;
+  --primary-300: 236 100 43;
+  --secondary: #aeac95;
+  --red-100: #fee2e2;
+  --red-500: #ef4444;
+  --red-700: #b91c1c;
+  --orange-100: #ffedd5;
+  --orange-700: #c2410c;
+  --green-100: #dcfce7;
+  --green-700: #15803d;
+  --blue-100: #dbeafe;
+  --blue-700: #1d4ed8;
+  --black: 30, 30, 29; // #1e1e1d
+  --white: 231, 231, 216;
+  --transparent: transparent;
+
+  --surface-0: 255 255 255;
+  --surface-50: 248 250 252;
+  --surface-100: 241 245 249;
+  --surface-200: 226 232 240;
+  --surface-300: 203 213 225;
+  --surface-400: 148 163 184;
+  --surface-500: 100 116 139;
+  --surface-600: 71 85 105;
+  --surface-700: 45 55 72;
+  --surface-800: 30 41 59;
+  --surface-900: 15 23 42;
+  --surface-950: 3 6 23;
+}
+
+// mixins
+@mixin withRtl($property, $ltr-value, $rtl-value) {
+  & {
+    #{$property}: $ltr-value !important;
+  }
+
+  .is-rtl & {
+    #{$property}: $rtl-value !important;
+  }
+}
+
+body {
+  background-color: rgb(var(--white));
+  color: rgb(var(--black))
+}
+
+// LTR-RTL padding
+.right-left-padding-1 {
+  @include withRtl(padding, 0 1rem 0 0, 0 0 0 1rem);
+}
+.left-right-padding-1 {
+  @include withRtl(padding, 0 0 0 1rem, 0 1rem 0 0);
+}
+
+// LTR-RTL margin
+.right-left-margin-1 {
+  @include withRtl(margin, 0 1rem 0 0, 0 0 0 1rem);
+}
+.left-right-margin-1 {
+  @include withRtl(margin, 0 0 0 1rem, 0 1rem 0 0);
+}
+
+// animate overlay
+.p-component-overlay-enter { animation: p-component-overlay-enter-animation 0.3s linear forwards; }
+@keyframes p-component-overlay-enter-animation {
+  0% { background-color: transparent; }
+  100% { background-color: rgba(var(--black), 0.4); }
+}
+.p-component-overlay-leave { animation: p-component-overlay-leave-animation 0.3s linear forwards; }
+@keyframes p-component-overlay-leave-animation {
+  0% { background-color: rgba(var(--black), 0.4); }
+  100% { background-color: transparent; }
+}
