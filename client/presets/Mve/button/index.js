@@ -1,5 +1,6 @@
 export default {
     root: ({props:e,context:r,parent:t})=>({class:[
+        {"w-full": e.label!==null},
         "shadow-btn",
         "relative",
         "items-center inline-flex text-center align-bottom justify-center",
@@ -64,7 +65,7 @@ export default {
         {"opacity-60 pointer-events-none cursor-default":r.disabled},
         "transition duration-200 ease-in-out","cursor-pointer overflow-hidden select-none"]
     }),
-    label: ({props:e})=>({class:["duration-200","font-bold",{"hover:underline":e.link},{"flex-1":e.label!==null,"invisible w-0":e.label==null}]}),
+    label: ({props:e})=>({class:["capitalize duration-200","font-bold",{"hover:underline":e.link},{"flex-1":e.label!==null,"invisible w-0":e.label==null}]}),
     icon: ({props:e})=>({class:["mx-0",{"mr-2":e.iconPos=="left"&&e.label!=null,"ml-2 order-1":e.iconPos=="right"&&e.label!=null,"mb-2":e.iconPos=="top"&&e.label!=null,"mt-2":e.iconPos=="bottom"&&e.label!=null}]}),
     loadingicon: ({props:e})=>({class:["h-4 w-4","mx-0",{"mr-2":e.iconPos=="left"&&e.label!=null,"ml-2 order-1":e.iconPos=="right"&&e.label!=null,"mb-2":e.iconPos=="top"&&e.label!=null,"mt-2":e.iconPos=="bottom"&&e.label!=null},"animate-spin"]}),
     badge: ({props:e})=>({class:[{"ml-2 w-4 h-4 leading-none flex items-center justify-center":e.badge}]})

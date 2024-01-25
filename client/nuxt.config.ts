@@ -1,6 +1,11 @@
 import path from 'path';
 
 export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      serverUrl: 'http://localhost:8400'
+    }
+  },
   devtools: { enabled: true },
   nitro: {
     output: {
@@ -17,7 +22,8 @@ export default defineNuxtConfig({
   css: ['primeicons/primeicons.css', '~/assets/scss/main.scss'],
   modules: [
     'nuxt-primevue',
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    '@vee-validate/nuxt'
   ],
   primevue: {
     components: {

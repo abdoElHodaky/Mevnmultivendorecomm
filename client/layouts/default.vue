@@ -1,3 +1,9 @@
+<script setup>
+
+    const { public: { serverUrl } } = useRuntimeConfig()
+
+</script>
+
 <template>
 
     <div 
@@ -17,8 +23,11 @@
                 <li class="right-left-margin-1">
                     <NuxtLink to="/">home</NuxtLink>
                 </li>
-                <li>
+                <li class="right-left-margin-1">
                     <NuxtLink to="/feedback">feedback</NuxtLink>
+                </li>
+                <li>
+                    <NuxtLink :to="`${serverUrl}/docs/api`">API</NuxtLink>
                 </li>
             </ul>
         </nav>

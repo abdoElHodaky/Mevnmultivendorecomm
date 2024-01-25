@@ -14,11 +14,14 @@ useHead({
 </script>
 <template>
 
-  <NuxtLayout name="default">
+  <div class="page">
 
-    <div class="h-full flex items-center">
-      
-      <Logo />
-    </div>
-  </NuxtLayout>
+    <NuxtLayout name="default">
+  
+      <div class="h-full flex items-center">
+        
+        <Logo />
+      </div>
+    </NuxtLayout>
+  </div>
 </template>
