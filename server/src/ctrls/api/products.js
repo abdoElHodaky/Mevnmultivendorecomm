@@ -42,6 +42,15 @@ const updateProductImageSchema = object({
     description: string()
 });
 
+const browse = AsyncMiddleware( async(req, res, next) => {
+
+    const { skip, limit } = doPagination(req.query.page, req.query.limit);
+
+    const products = await Product.find().skip(skip).limit(limit).sort({_id: -1});
+
+    return res.status(200).send(products)
+})
+
 const collection = AsyncMiddleware(async(req, res, next) => {
 
     const { skip, limit } = doPagination(req.query.page, req.query.limit);
@@ -170,4 +179,5 @@ export { createNewProduct,
     productsImagesCollection,
     uploadProductImage,
     updateProductImage,
-    deleteProductImage };
+    deleteProductImage, 
+    browse };

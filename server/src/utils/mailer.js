@@ -1,20 +1,27 @@
-import { createTestAccount, createTransport, getTestMessageUrl } from "nodemailer";
+import { TransactionalEmailsApi, SendSmtpEmail } from "@getbrevo/brevo"
 
-const createMailerTransporter = async () => {
+class MAILCLIENT {
 
-    const testAccount = await createTestAccount();
+    sendSmtpEmail = null
+    apiInstance = null
 
-    const transporter = createTransport({
-        host: 'smtp.ethereal.email',
-        port: 587,
-        secure: false,
-        auth: {
-            user: testAccount.user,
-            pass: testAccount.pass
-        }
-    });
+    constructor(subject, sender) {
 
-    return transporter;
-};
+        this.sendSmtpEmail = new SendSmtpEmail()
+        this.sendSmtpEmail.subject = subject
+        this.sendSmtpEmail.sender = sender
+        
+        this.apiInstance = new TransactionalEmailsApi()
+        this.apiInstance.authentications['apiKey'].apiKey = process.env.BREVO_API_KEY
+    }
+    
+    async send(htmlContent, to) {
+        
+        this.sendSmtpEmail.htmlContent = htmlContent
+        this.sendSmtpEmail.to = to
 
-export { createMailerTransporter, getTestMessageUrl };
+        await this.apiInstance.sendTransacEmail(this.sendSmtpEmail)
+    }
+}
+
+export default MAILCLIENT

@@ -110,6 +110,58 @@ components:
           description: the product language
 paths:
   /api/v1/products:
+    get:
+      description: browse all the products
+      tags:
+        - Products
+      parameters:
+        - name: page
+          in: query
+          description: page number
+          schema:
+            type: number
+            default: 1
+        - name: limit
+          in: query
+          description: limit number of products to show per page
+          schema:
+            type: number
+            default: 5
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - type: object
+                      properties:
+                        _id:
+                          type: string
+                          description: product id
+                        slug:
+                          type: string
+                          description: product slug
+                        avgRating:
+                          type: object
+                          properties:
+                            amount:
+                              type: number
+                              default: 4.5
+                              description: product avg rating
+                            numOfRating:
+                              type: number
+                              default: 0
+                              description: product's number of ratings
+                        price:
+                          type: object
+                          properties:
+                            $numberDecimal:
+                              type: number
+                              description: product price(toFixed(2))
+                    - $ref: "#/components/schemas/Common product props"
     post:
       description: create new product
       security:
@@ -194,6 +246,23 @@ paths:
                   allOf:
                     - type: object
                       properties:
+                        _id:
+                          type: string
+                          description: product id
+                        slug:
+                          type: string
+                          description: product slug
+                        avgRating:
+                          type: object
+                          properties:
+                            amount:
+                              type: number
+                              default: 4.5
+                              description: product avg rating
+                            numOfRating:
+                              type: number
+                              default: 0
+                              description: product's number of ratings
                         price:
                           type: object
                           properties:
@@ -768,3 +837,32 @@ paths:
               schema:
                 type: string
                 default: "password_reset_successfully"
+  /api/v1/users/feedback:
+    post:
+      description: send feedback about the application
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: a user name
+                email:
+                  type: string
+                  description: a user email
+                msg:
+                  type: string
+                  description: the feedback message
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: string
+                default: "feedback_sent"

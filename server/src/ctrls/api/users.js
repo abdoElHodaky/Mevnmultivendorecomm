@@ -15,9 +15,20 @@ import { createAccessToken, createRefreshToken } from "../../utils/jwtTokens.js"
 import { createSession } from "../../utils/sessionToken.js";
 import authedResponse from "../../utils/authedResponse.js";
 import { refreshTokenExpireTime } from "../../utils/cookieTimers.js";
-import { createMailerTransporter, getTestMessageUrl } from "../../utils/mailer.js";
+
+import MAILCLIENT from "../../utils/mailer.js";
+
+const subject = "Feedback - Big Deals"
+const sender = {"email":"noreply@big-deals.vercel.app", "name":"big-deals.vercel.app"}
+const mailClient = new MAILCLIENT(subject, sender)
 
 const { JWT_SECRET, ROOT_DOMAIN } = process.env;
+
+const feedbackSchema = object({
+    name: string().required(),
+    email: string().email().required(),
+    msg: string().required()
+})
 
 const signUpSchema = object({
     firstName: string().required('user_fname_required'),
@@ -149,20 +160,26 @@ const sendVerificationMail = AsyncMiddleware(async(req, res, next) => {
     
     //create verify email link
     const encodedEmail = encodeURIComponent(req.user.email.address);
-    const link = `${ROOT_DOMAIN}:4200/store/verify-email/${encodedEmail}/${hashedToken}`;
+    const link = `${ROOT_DOMAIN}/verify-email/${encodedEmail}/${hashedToken}`;
 
-    const transporter = await createMailerTransporter();
-    const info = await transporter.sendMail({
-        from: 'develop@server.com',
-        to: req.user.email.address,
-        subject: 'hello',
-        html: `<h1>hello</h1>
-        <p>
-            <a href="${link}">click to verify email</a>
-        </p>`
-    });
-
-    //console.log(getTestMessageUrl(info));
+    //create verify email link
+    const htmlContent = `<html>
+    <body>
+    <h1
+        style="font-size:28px;font-weight:bold;text-transform:capitalize;"
+    >
+        hello, ${req.user.firstName}
+    </h1>
+    <a 
+        style="font-size:20px;" 
+        href='${link}'
+    >
+        click here to verify your email
+    </a>
+    </body>
+    </html>`;
+    const to = [{"email": req.user.email.address, "name": req.user.firstName}];
+    await mailClient.send(htmlContent, to);
 
     return authedResponse.withRefreshToken(req, res, 'email_was_sent');
 });
@@ -213,20 +230,26 @@ const passwordForgot = AsyncMiddleware(async(req, res, next) => {
     const encodedEmail = encodeURIComponent(email);
     const expTime = Date.now() + (5/60) * 60 * 60 * 1000;
     const hashedToken = createHash('sha256').update(`${JWT_SECRET}:${email}:${expTime}`).digest('hex');
-    const link = `${ROOT_DOMAIN}:4200/store/reset-password/${encodedEmail}/${expTime}/${hashedToken}`;
+    const link = `${ROOT_DOMAIN}/reset-password/${encodedEmail}/${expTime}/${hashedToken}`;
 
-    const transporter = await createMailerTransporter();
-    const info = await transporter.sendMail({
-        from: 'develop@server.com',
-        to: email,
-        subject: 'reset-password',
-        html: `<h1>Reset Password</h1>
-        <p>
-            <a href="${link}">click to reset your password</a>
-        </p>`
-    });
-
-    //console.log(getTestMessageUrl(info));
+    //create verify email link
+    const htmlContent = `<html>
+    <body>
+    <h1
+        style="font-size:28px;font-weight:bold;text-transform:capitalize;"
+    >
+        hello, ${user.firstName}
+    </h1>
+    <a 
+        style="font-size:20px;" 
+        href='${link}'
+    >
+        click to reset your password
+    </a>
+    </body>
+    </html>`;
+    const to = [{"email": email, "name": user.firstName}];
+    await mailClient.send(htmlContent, to);
 
     return authedResponse.withRefreshToken(req, res, 'reset_password_mail_sent');
 });
@@ -251,6 +274,38 @@ const passwordReset = AsyncMiddleware(async(req, res, next) => {
     return authedResponse.withRefreshToken(req, res, 'password_reset_successfully');
 });
 
+const sendFeedback = AsyncMiddleware( async(req, res, next) => {
+
+    const valid = await inputsValidation(feedbackSchema, req.body, next);
+    if(!valid) return;
+
+    const { name, email, msg } = req.body;
+
+    const htmlContent = `<html>
+    <body>
+    <h1
+        style="font-size:28px;font-weight:bold;text-transform:capitalize;"
+    >
+        hello, andrew
+    </h1>
+    <h2
+        style="font-size:22px;font-weight:bold;text-transform:capitalize;"
+    >
+        message from, ${name} - ${email}
+    </h2>
+    <p
+        style="font-size:18px;text-transform:capitalize;"
+    >
+        ${msg}
+    </p>
+    </body>
+    </html>`
+    const to = [{"email": 'andrew.saeed.zachary@gmail.com', "name": 'andrew'}]
+    await mailClient.send(htmlContent, to)
+
+    return res.status(200).send('msg_sent');
+});
+
 export { signUp, 
     signIn, 
     profile, 
@@ -259,4 +314,5 @@ export { signUp,
     verifyEmail, 
     changePassword, 
     passwordForgot, 
-    passwordReset };
+    passwordReset, 
+    sendFeedback };

@@ -14,7 +14,8 @@ import { collection,
     productsImagesCollection,
     uploadProductImage,
     updateProductImage,
-    deleteProductImage } from "../ctrls/api/products.js";
+    deleteProductImage,
+    browse } from "../ctrls/api/products.js";
     
 import { signUp, 
     signIn, 
@@ -24,7 +25,8 @@ import { signUp,
     verifyEmail, 
     changePassword, 
     passwordForgot, 
-    passwordReset } from "../ctrls/api/users.js";
+    passwordReset, 
+    sendFeedback } from "../ctrls/api/users.js";
 
 import isAuth from "../middleware/Auth.js";
 
@@ -33,6 +35,7 @@ import { productImageUploader } from "../utils/imageUpload.js";
 const router = Router();
 
 // products
+router.get('/products', browse);
 router.get('/products/collection', isAuth, collection);
 router.post('/products', isAuth, createNewProduct);
 router.get('/products/:id', isAuth, getProduct);
@@ -53,5 +56,6 @@ router.post('/users/email-verify', verifyEmail);
 router.post('/users/password-change', isAuth, changePassword);
 router.post('/users/password-forgot', passwordForgot);
 router.post('/users/password-reset', passwordReset);
+router.post('/users/feedback', sendFeedback);
 
 export default router;
