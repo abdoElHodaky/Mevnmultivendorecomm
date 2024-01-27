@@ -26,7 +26,7 @@ const { value, errorMessage } = useField( () => props.name )
                 relative z-20 
                 block w-full 
                 bg-transparent appearance-none
-                text-[1.4rem] font-lato
+                text-[1.2rem] text-black font-lato
                 focus:outline-none"
             />
             <label 
@@ -34,16 +34,16 @@ const { value, errorMessage } = useField( () => props.name )
                 :class="[{'text-[1rem]': props.labelTextSize === 'small'},
                 {'text-[1.6rem]': props.labelTextSize === 'medium'},
                 'font-lato font-bold capitalize',
-                'absolute top-[.1rem] z-10',
+                'absolute -top-[.4rem] z-10',
                 'transform',
                 {'scale-[0.9]': props.labelTextSize === 'small'},
                 {'scale-75': props.labelTextSize === 'medium'},
-                {'-translate-y-6': props.labelTextSize === 'small'},
+                {'-translate-y-4': props.labelTextSize === 'small'},
                 {'-translate-y-8': props.labelTextSize === 'medium'},
                 'duration-300 origin-left',
                 'peer-focus:text-primary-300',
                 'peer-placeholder-shown:scale-100',
-                {'peer-focus:-translate-y-6 peer-focus:scale-[0.9] peer-placeholder-shown:translate-y-2': props.labelTextSize === 'small'},
+                {'peer-focus:-translate-y-4 peer-focus:scale-[0.9] peer-placeholder-shown:translate-y-2': props.labelTextSize === 'small'},
                 {'peer-focus:-translate-y-8 peer-focus:scale-75 peer-placeholder-shown:-translate-y-1': props.labelTextSize === 'medium'}]"
             >
                 {{ props.name.replace(/([A-Z])/g, ' $1') }}

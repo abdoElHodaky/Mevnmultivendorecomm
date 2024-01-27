@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@vee-validate/nuxt": "^4.12.4",
+    "axios": "^1.6.7",
     "primeicons": "^6.0.1",
     "primevue": "^3.46.0",
     "sass": "^1.70.0",

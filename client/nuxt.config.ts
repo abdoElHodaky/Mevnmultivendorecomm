@@ -3,7 +3,7 @@ import path from 'path';
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
-      serverUrl: 'http://localhost:8400'
+      serverUrl: process.env.NODE_ENV === 'development' ? 'http://localhost:8400' : 'https://big-deals.vercel.app'
     }
   },
   devtools: { enabled: true },
@@ -23,13 +23,16 @@ export default defineNuxtConfig({
   modules: [
     'nuxt-primevue',
     '@nuxtjs/tailwindcss',
-    '@vee-validate/nuxt'
+    '@vee-validate/nuxt',
   ],
+  imports: {
+    dirs: ['lib']
+  },
   primevue: {
     components: {
       include: ['Button', 'Sidebar']
     },
-    importPT: { as: 'Mve', from: path.resolve(__dirname, './presets/Mve/') },
+    importPT: { as: 'Bd', from: path.resolve(__dirname, './presets/Bd/') },
     cssLayerOrder: 'tailwind-base, primevue, tailwind-utilities',
     options: {
       unstyled: true

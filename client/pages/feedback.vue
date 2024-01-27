@@ -14,20 +14,23 @@ useHead({
 import { useForm } from "vee-validate"
 import { object, string } from "yup"
 
+import useSendFeedback from "@/lib/composables/useSendFeedback"
+
 const schema = object({
   name: string().required(),
   email: string().email().required(),
   msg: string().required()
 })
 
-const { errors, handleSubmit } = useForm({
+const { fetch, loading } = useSendFeedback()
+const { errors, handleSubmit,  } = useForm({
   validationSchema: schema,
 })
 
-const submitFeedback = handleSubmit((values) => {
+const submitFeedback = handleSubmit(async (values) => {
 
-  console.log(errors.value)
-  console.log(values)
+  const result = await fetch(values)
+  console.log(result)
 })
 
 </script>
@@ -41,10 +44,15 @@ const submitFeedback = handleSubmit((values) => {
   
         <form @submit.prevent="submitFeedback" action="#" class="w-full max-w-screen-sm space-y-12">
   
-          <UiInputField name="name" type="text" labelTextSize="medium" />
-          <UiInputField name="email" type="text" labelTextSize="medium" />
-          <UiInputField name="msg" type="text" labelTextSize="medium" />
-          <Button label="submit" type="submit" size="large" />
+          <UiInputField name="name" type="text" labelTextSize="small" />
+          <UiInputField name="email" type="text" labelTextSize="small" />
+          <UiInputField name="msg" type="text" labelTextSize="small" />
+          <Button 
+            label="submit" 
+            type="submit" 
+            size="small"
+            :loading="loading"
+            :disabled="Object.keys(errors).length" />
         </form>
       </div>
     </NuxtLayout>
