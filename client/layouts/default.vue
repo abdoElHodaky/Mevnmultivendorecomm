@@ -64,5 +64,9 @@
                 </li>
             </ul>
         </footer>
+
+        <div class="w-full">
+            <Toast position="bottom-right" />
+        </div>
     </div>
 </template>

@@ -30,7 +30,7 @@ export default defineNuxtConfig({
   },
   primevue: {
     components: {
-      include: ['Button', 'Sidebar']
+      include: ['Button', 'Sidebar', 'Toast']
     },
     importPT: { as: 'Bd', from: path.resolve(__dirname, './presets/Bd/') },
     cssLayerOrder: 'tailwind-base, primevue, tailwind-utilities',
