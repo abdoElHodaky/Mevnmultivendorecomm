@@ -90,10 +90,10 @@ const signIn = AsyncMiddleware(async(req, res, next) => {
     if(!valid) return;
 
     const user = await User.findOne({'email.address': req.body.email});
-    if(!user) return next(new AppError({message: 'wrong_email_password'}, 400));
+    if(!user) return next(new AppError({message: 'wrong_email_password'}, 401));
 
     const compareResult = await bcryptjs.compare(req.body.password, user.password);
-    if(!compareResult) return next(new AppError({message: 'wrong_email_password'}, 400));
+    if(!compareResult) return next(new AppError({message: 'wrong_email_password'}, 401));
 
     const sessionToken = await createSession(user._id, req.ip, req.headers['user-agent']);
     const accesstoken = createAccessToken(sessionToken, user._id);

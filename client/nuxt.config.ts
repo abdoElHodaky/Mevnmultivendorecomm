@@ -24,6 +24,7 @@ export default defineNuxtConfig({
     'nuxt-primevue',
     '@nuxtjs/tailwindcss',
     '@vee-validate/nuxt',
+    'nuxt-swiper'
   ],
   imports: {
     dirs: ['lib']

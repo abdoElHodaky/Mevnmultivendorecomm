@@ -22,7 +22,7 @@ export default {
         class: ["inline-block", "w-3", "h-3"]
     },
     content: {
-        class: ["px-6 pb-6", "mt-6", "h-full", "w-full", "grow", "overflow-y-auto"]
+        class: ["flex items-center px-6 pb-6", "mt-6", "h-full", "w-full", "grow", "overflow-y-auto"]
     },
     transition: ({props:e})=>
         e.position==="top" ? {enterFromClass:"translate-x-0 -translate-y-full translate-z-0",

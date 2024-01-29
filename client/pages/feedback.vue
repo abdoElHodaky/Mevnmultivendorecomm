@@ -18,7 +18,7 @@ import { useToast } from "primevue/usetoast"
 
 import useSendFeedback from "@/lib/composables/useSendFeedback"
 
-const schema = object({
+const validationSchema = object({
   name: string().required(),
   email: string().email().required(),
   msg: string().required()
@@ -26,9 +26,8 @@ const schema = object({
 
 const toast = useToast()
 const { fetch, loading } = useSendFeedback()
-const { errors, handleSubmit,  } = useForm({
-  validationSchema: schema,
-})
+const { errors, handleSubmit } = useForm({ validationSchema })
+
 const apiError = ref(null)
 
 const submitFeedback = handleSubmit(async (values) => {
