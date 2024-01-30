@@ -11,15 +11,16 @@ import Sidebar from 'primevue/sidebar'
         <Sidebar 
             :pt="{ mask: { class: [{'p-component-overlay-enter': visible}, {'p-component-overlay-leave': !visible}] } }" 
             v-model:visible="visible" 
-            header="Sidebar"
+            header="Account"
             position="left"
         >
             <Swiper
                 :slides-per-view="1"
                 :space-between="50"
-                slide
+                :initial-slide="1"
+                :allow-touch-move="false"
             >
-                <SwiperSlide>test</SwiperSlide>
+                <SwiperSlide><FormsForgotPassword /></SwiperSlide>
                 <SwiperSlide><FormsSignin /></SwiperSlide>
                 <SwiperSlide><FormsSignup /></SwiperSlide>
             </Swiper>

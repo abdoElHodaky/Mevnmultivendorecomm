@@ -18,9 +18,8 @@ import { refreshTokenExpireTime } from "../../utils/cookieTimers.js";
 
 import MAILCLIENT from "../../utils/mailer.js";
 
-const subject = "Feedback - Big Deals"
 const sender = {"email":"noreply@big-deals.vercel.app", "name":"big-deals.vercel.app"}
-const mailClient = new MAILCLIENT(subject, sender)
+const mailClient = new MAILCLIENT(sender)
 
 const { JWT_SECRET, ROOT_DOMAIN } = process.env;
 
@@ -179,7 +178,7 @@ const sendVerificationMail = AsyncMiddleware(async(req, res, next) => {
     </body>
     </html>`;
     const to = [{"email": req.user.email.address, "name": req.user.firstName}];
-    await mailClient.send(htmlContent, to);
+    await mailClient.send(htmlContent, to, 'Verify Your Email - Big Deals');
 
     return authedResponse.withRefreshToken(req, res, 'email_was_sent');
 });
@@ -224,7 +223,7 @@ const passwordForgot = AsyncMiddleware(async(req, res, next) => {
     const { email } = req.body;
 
     const user = await User.findOne({'email.address': email});
-    if(!user) return authedResponse.withRefreshToken(req, res, 'wrong_email');
+    if(!user) return res.status(400).send('wrong_email');
 
     // create verify email link
     const encodedEmail = encodeURIComponent(email);
@@ -249,7 +248,7 @@ const passwordForgot = AsyncMiddleware(async(req, res, next) => {
     </body>
     </html>`;
     const to = [{"email": email, "name": user.firstName}];
-    await mailClient.send(htmlContent, to);
+    await mailClient.send(htmlContent, to, 'Password Resetting - Big Deals');
 
     return authedResponse.withRefreshToken(req, res, 'reset_password_mail_sent');
 });
@@ -301,7 +300,7 @@ const sendFeedback = AsyncMiddleware( async(req, res, next) => {
     </body>
     </html>`
     const to = [{"email": 'andrew.saeed.zachary@gmail.com', "name": 'andrew'}]
-    await mailClient.send(htmlContent, to)
+    await mailClient.send(htmlContent, to, 'Feedback - Big Deals')
 
     return res.status(200).send('msg_sent');
 });

@@ -82,3 +82,8 @@ body {
   0% { background-color: rgba(var(--black), 0.4); }
   100% { background-color: transparent; }
 }
+
+// swiper slide
+.swiper-wrapper {
+  align-items: center;
+}

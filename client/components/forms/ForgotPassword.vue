@@ -1,22 +1,19 @@
 <script setup>
 
-import { ref } from "vue"
+import { ref } from "vue";
 import { useForm } from "vee-validate"
 import { object, string } from "yup"
 import { useToast } from "primevue/usetoast"
 import { useSwiper } from "swiper/vue"
 
-import useSignup from "@/lib/composables/useSignup"
+import useForgotPassword from "@/lib/composables/useForgotPassword"
 
 const validationSchema = object({
-    firstName: string().required(),
-    lastName: string().required(),
-    email: string().email().required(),
-    password: string().required()
+  email: string().email().required()
 })
 
 const toast = useToast()
-const { fetch, loading } = useSignup()
+const { fetch, loading } = useForgotPassword()
 const { errors, handleSubmit } = useForm({ validationSchema })
 const swiper = useSwiper()
 
@@ -27,8 +24,8 @@ const submit = handleSubmit(async (values) => {
   apiError.value = null
 
   const result = await fetch(values)
-  if(result.status === 200) toast.add({ severity: 'success', summary: `Welcome!`, detail: `${result.data.firstName}`, position: 'left' })
-  else if(result.response.status === 400) apiError.value = result.response.data.errMsg
+  if(result.status === 200) toast.add({ severity: 'success', summary: 'OK :)', detail: 'Mail Sent', position: 'left' })
+  else if(result.response.status === 400) apiError.value = result.response.data
 
 })
 
@@ -39,12 +36,9 @@ const submit = handleSubmit(async (values) => {
 
         <form @submit.prevent="submit" action="#" class="w-full max-w-screen-sm space-y-8 px-2">
         
-            <UiInputField name="firstName" type="text" labelTextSize="small" />
-            <UiInputField name="lastName" type="text" labelTextSize="small" />
             <UiInputField name="email" type="text" labelTextSize="small" />
-            <UiInputField name="password" type="password" labelTextSize="small" />
             <Button 
-                label="sign up" 
+                label="send password reset mail" 
                 type="submit" 
                 size="small"
                 :loading="loading"
@@ -54,7 +48,6 @@ const submit = handleSubmit(async (values) => {
         <div class="text-[1rem] text-red-500 font-bold capitalize flex items-center justify-center" v-if="apiError">
             <i class="pi pi-exclamation-triangle px-2"></i> <pre>{{ apiError }}</pre>
         </div>
-
 
         <div :class="['text-[1rem] font-lato font-bold capitalize flex flex-col space-y-2', {'opacity-60': loading}]">
             <a 
