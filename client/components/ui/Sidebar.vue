@@ -19,9 +19,9 @@ import Sidebar from 'primevue/sidebar'
                 :space-between="50"
                 slide
             >
+                <SwiperSlide>test</SwiperSlide>
                 <SwiperSlide><FormsSignin /></SwiperSlide>
-                <SwiperSlide>Slide 2</SwiperSlide>
-                <SwiperSlide>Slide 3</SwiperSlide>
+                <SwiperSlide><FormsSignup /></SwiperSlide>
             </Swiper>
         </Sidebar>
         <Button @click="visible = !visible" icon="pi pi-bars" aria-label="Filter" size="large" icon-class="text-[24px]" rounded />
