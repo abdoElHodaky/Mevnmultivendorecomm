@@ -229,7 +229,7 @@ const passwordForgot = AsyncMiddleware(async(req, res, next) => {
     const encodedEmail = encodeURIComponent(email);
     const expTime = Date.now() + (5/60) * 60 * 60 * 1000;
     const hashedToken = createHash('sha256').update(`${JWT_SECRET}:${email}:${expTime}`).digest('hex');
-    const link = `${ROOT_DOMAIN}/reset-password/${encodedEmail}/${expTime}/${hashedToken}`;
+    const link = `${ROOT_DOMAIN}/reset-password/?email=${encodedEmail}&exp=${expTime}&token=${hashedToken}`;
 
     //create verify email link
     const htmlContent = `<html>
@@ -261,11 +261,11 @@ const passwordReset = AsyncMiddleware(async(req, res, next) => {
     if(!user) return authedResponse.withRefreshToken(req, res, 'wrong_email');
 
     if( (expTime - Date.now()) < 0 )
-    return authedResponse.withRefreshToken(req, res, 'link_expired');
+    return res.status(400).send('link_expired')
 
     const testToken = createHash('sha256').update(`${JWT_SECRET}:${email}:${expTime}`).digest('hex'); 
     if(hashedToken !== testToken)
-    return authedResponse.withRefreshToken(req, res, 'link_not_valid');
+    return res.status(400).send('link_not_valid')
 
     user.password = newPassword;
     await user.save();

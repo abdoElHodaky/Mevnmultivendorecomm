@@ -29,7 +29,6 @@ const submit = handleSubmit(async (values) => {
   const result = await fetch(values)
   if(result.status === 200) toast.add({ severity: 'success', summary: `Welcome!`, detail: `${result.data.firstName}`, position: 'left' })
   else if(result.response.status === 400) apiError.value = result.response.data.errMsg
-
 })
 
 </script>
@@ -55,13 +54,13 @@ const submit = handleSubmit(async (values) => {
             <i class="pi pi-exclamation-triangle px-2"></i> <pre>{{ apiError }}</pre>
         </div>
 
+        <div :class="['text-[1rem] font-lato font-bold text-center', {'opacity-60': loading}]">
 
-        <div :class="['text-[1rem] font-lato font-bold capitalize flex flex-col space-y-2', {'opacity-60': loading}]">
             <a 
-                :class="['text-center', {'cursor-default': loading}]"
+                :class="['inline-block border-b border-transparent [&:not(.cursor-default):hover]:border-black pb-2', {'cursor-default': loading}]"
                 href="#" 
                 @click="() => { if(loading) return; swiper.slideTo(1); }"
-            >sign in</a>
+            >already have account - sign in</a>
         </div>
     </div>
 </template>
