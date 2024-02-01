@@ -1,8 +1,23 @@
 <script setup>
+
 definePageMeta({
-    layout: 'dashboard'
+    layout: false,
+    middleware: ['auth']
 })
+
+const usersStore = useUsersStore()
+
 </script>
 <template>
-    <h1>dashboard-home</h1>
+    <div class="page">
+
+        <NuxtLayout name="dashboard">
+
+            <div class="h-full flex items-center">
+                <h1>dashboard-home</h1>
+                <NuxtLink to="/dashboard/products">products</NuxtLink>
+                <pre>{{ usersStore.profile }}</pre>
+            </div>
+        </NuxtLayout>
+    </div>
 </template>

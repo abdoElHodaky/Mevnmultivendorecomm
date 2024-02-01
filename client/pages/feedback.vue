@@ -52,7 +52,7 @@ const submitFeedback = handleSubmit(async (values) => {
   
           <UiInputField name="name" type="text" labelTextSize="small" />
           <UiInputField name="email" type="text" labelTextSize="small" />
-          <UiInputField name="msg" type="text" labelTextSize="small" />
+          <UiTextAreaField name="msg" labelTextSize="small" />
           <Button 
             label="submit" 
             type="submit" 

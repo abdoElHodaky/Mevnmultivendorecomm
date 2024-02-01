@@ -39,6 +39,14 @@
   --surface-950: 3 6 23;
 }
 
+*{
+  outline: none!important;
+}
+
+*:focus {
+  box-shadow: none!important;
+}
+
 // mixins
 @mixin withRtl($property, $ltr-value, $rtl-value) {
   & {

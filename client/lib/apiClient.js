@@ -3,7 +3,8 @@ import axios from "axios"
 const { public: { serverUrl } } = useRuntimeConfig()
 
 const axiosIns = axios.create({
-    baseURL: `${serverUrl}/api/v1/`
+    baseURL: `${serverUrl}/api/v1/`,
+    withCredentials: true
 })
 
 class APICLIENT {

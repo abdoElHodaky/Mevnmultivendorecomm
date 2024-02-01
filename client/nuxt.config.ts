@@ -24,8 +24,12 @@ export default defineNuxtConfig({
     'nuxt-primevue',
     '@nuxtjs/tailwindcss',
     '@vee-validate/nuxt',
-    'nuxt-swiper'
+    'nuxt-swiper',
+    '@pinia/nuxt'
   ],
+  pinia: {
+    storesDirs: ['./stores/**'],
+  },
   imports: {
     dirs: ['lib']
   },
