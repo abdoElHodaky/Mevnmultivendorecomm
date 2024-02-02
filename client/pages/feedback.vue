@@ -16,8 +16,6 @@ import { useForm } from "vee-validate"
 import { object, string } from "yup"
 import { useToast } from "primevue/usetoast"
 
-import useSendFeedback from "@/lib/composables/useSendFeedback"
-
 const validationSchema = object({
   name: string().required(),
   email: string().email().required(),

@@ -1,17 +1,17 @@
 import {ref} from "vue"
 
-import usersService from "../services/usersServices"
+import usersService from "@/lib/services/usersServices"
 
-export default function useGetProfile() {
+export default function useForgotPassword() {
 
     const loading = ref(false)
 
-    const fetch = async() => {
+    const fetch = async(credentials) => {
 
         try {
 
             loading.value = true
-            const result = await usersService('profile').get()
+            const result = await usersService('password-forgot').post(credentials)
             loading.value = false
             return result
 

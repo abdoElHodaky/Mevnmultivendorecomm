@@ -1,7 +1,7 @@
 export default {
     root: ({props:e,context:r,parent:t})=>({class:[
         {"w-full": e.label!==null},
-        "shadow-btn",
+        {"shadow-btn": !e.text},
         "relative",
         "items-center inline-flex text-center align-bottom justify-center",
         "leading-[normal]",

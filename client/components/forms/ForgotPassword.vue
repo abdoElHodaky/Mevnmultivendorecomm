@@ -6,8 +6,6 @@ import { object, string } from "yup"
 import { useToast } from "primevue/usetoast"
 import { useSwiper } from "swiper/vue"
 
-import useForgotPassword from "@/lib/composables/useForgotPassword"
-
 const validationSchema = object({
   email: string().email().required()
 })

@@ -1,8 +1,8 @@
 import {ref} from "vue"
 
-import usersService from "../services/usersServices"
+import usersService from "@/lib/services/usersServices"
 
-export default function usePasswordReset() {
+export default function useSignup() {
 
     const loading = ref(false)
 
@@ -11,7 +11,7 @@ export default function usePasswordReset() {
         try {
 
             loading.value = true
-            const result = await usersService('password-reset').post(credentials)
+            const result = await usersService('signup').post(credentials)
             loading.value = false
             return result
 

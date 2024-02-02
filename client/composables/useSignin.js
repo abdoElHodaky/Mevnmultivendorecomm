@@ -1,8 +1,8 @@
 import {ref} from "vue"
 
-import usersService from "../services/usersServices"
+import usersService from "@/lib/services/usersServices"
 
-export default function useSendFeedback() {
+export default function useSignin() {
 
     const loading = ref(false)
 
@@ -11,7 +11,7 @@ export default function useSendFeedback() {
         try {
 
             loading.value = true
-            const result = await usersService('feedback').post(credentials)
+            const result = await usersService('signin').post(credentials)
             loading.value = false
             return result
 

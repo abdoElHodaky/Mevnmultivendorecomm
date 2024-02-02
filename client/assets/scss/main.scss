@@ -95,3 +95,15 @@ body {
 .swiper-wrapper {
   align-items: center;
 }
+
+// page animation
+.rotate-enter-active, .rotate-leave-active { transition: all 0.4s; }
+.rotate-enter-from, .rotate-leave-to { opacity: 0; }
+.rotate-enter-to, .rotate-leave-from { opacity: 1; }
+
+// text-shadow for active and hover links
+ul li a {
+  &:hover, &.router-link-active {
+    text-shadow: 1px 0px 0px rgb(var(--black));
+  }
+}

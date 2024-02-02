@@ -16,8 +16,6 @@ import { useForm } from "vee-validate"
 import { object, string, ref } from "yup"
 import { useToast } from "primevue/usetoast"
 
-import usePasswordReset from "@/lib/composables/usePasswordReset"
-
 const { query: {email, exp, token} } = useRoute()
 
 const validationSchema = object({

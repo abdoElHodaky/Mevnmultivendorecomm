@@ -17,8 +17,7 @@
                 class="flex items-center
                 [&_a]:text-[18px] [&_a]:text-black [&_a]:font-bold [&_a]:capitalize
                 [&_a]:pb-2
-                [&_a:hover]:text-primary-300
-                [&_a.router-link-active]:text-primary-300 [&_a.router-link-active]:border-b [&_a.router-link-active]:border-primary-300"
+                [&_a.router-link-active]:border-b-2 [&_a.router-link-active]:border-black"
             >
                 <li class="right-left-margin-1">
                     <NuxtLink to="/">home</NuxtLink>

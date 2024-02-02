@@ -2,10 +2,19 @@
 
 definePageMeta({
     layout: false,
-    middleware: ['auth']
+    middleware: ['auth'],
+    pageTransition: {
+        name: 'rotate',
+        mode: 'out-in'
+    }
 })
 
-const usersStore = useUsersStore()
+useHead({
+  title: 'dashboard',
+  meta: [
+    { name: 'description', content: 'dashboard' }
+  ]
+})
 
 </script>
 <template>
@@ -13,10 +22,9 @@ const usersStore = useUsersStore()
 
         <NuxtLayout name="dashboard">
 
-            <div class="h-full flex items-center">
-                <h1>dashboard-home</h1>
-                <NuxtLink to="/dashboard/products">products</NuxtLink>
-                <pre>{{ usersStore.profile }}</pre>
+            <div class="h-full flex items-center justify-center">
+                <i class="pi pi-spin pi-cog" style="font-size: 2rem"></i>
+                <span className="animate-bounce px-4 font-lato font-bold capitalize">working ...</span>
             </div>
         </NuxtLayout>
     </div>

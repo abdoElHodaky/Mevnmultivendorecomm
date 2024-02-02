@@ -6,8 +6,6 @@ import { object, string } from "yup"
 import { useToast } from "primevue/usetoast"
 import { useSwiper } from "swiper/vue"
 
-import useSignup from "@/lib/composables/useSignup"
-
 const validationSchema = object({
     firstName: string().required(),
     lastName: string().required(),

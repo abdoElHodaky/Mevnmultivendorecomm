@@ -16,10 +16,10 @@ export default {
         class: ["flex items-center"]
     },
     closeButton: {
-        class: ["relative", "flex items-center justify-center", "mr-2", "last:mr-0", "w-6 h-6", "border-0", "rounded-full", "text-surface-500", "bg-transparent", "transition duration-200 ease-in-out", "hover:text-surface-700 dark:hover:text-white/80", "hover:bg-surface-100 dark:hover:bg-surface-800/80", "focus:outline-none focus:outline-offset-0 focus:ring-1 focus:ring-inset", "focus:ring-primary-500 dark:focus:ring-primary-400", "overflow-hidden"]
+        class: ["relative", "flex items-center justify-center", "mr-2", "last:mr-0", "w-9 h-9", "border-0", "rounded-full", "text-black", "bg-transparent", "transition duration-200 ease-in-out", "hover:text-surface-700 dark:hover:text-white/80", "hover:bg-surface-100 dark:hover:bg-surface-800/80", "focus:outline-none focus:outline-offset-0 focus:ring-1 focus:ring-inset", "focus:ring-primary-500 dark:focus:ring-primary-400", "overflow-hidden"]
     },
     closeicon: {
-        class: ["inline-block", "w-3", "h-3"]
+        class: ["inline-block", "w-5", "h-5"]
     },
     content: {
         class: ["flex items-center px-6 pb-6", "mt-6", "h-full", "w-full", "grow", "overflow-y-auto"]

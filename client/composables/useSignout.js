@@ -1,17 +1,17 @@
 import {ref} from "vue"
 
-import usersService from "../services/usersServices"
+import usersService from "@/lib/services/usersServices"
 
-export default function useSignin() {
+export default function useSignout() {
 
     const loading = ref(false)
 
-    const fetch = async(credentials) => {
+    const fetch = async() => {
 
         try {
 
             loading.value = true
-            const result = await usersService('signin').post(credentials)
+            const result = await usersService('logout').get()
             loading.value = false
             return result
 

@@ -6,8 +6,6 @@ import { object, string } from "yup"
 import { useToast } from "primevue/usetoast"
 import { useSwiper } from "swiper/vue"
 
-import useSignin from "@/lib/composables/useSignin"
-
 const validationSchema = object({
   email: string().email().required(),
   password: string().required()
@@ -25,7 +23,11 @@ const submit = handleSubmit(async (values) => {
   apiError.value = null
 
   const result = await fetch(values)
-  if(result.status === 200) toast.add({ severity: 'success', summary: `Welcome!`, detail: `${result.data.firstName}`, position: 'left' })
+  if(result.status === 200) {
+
+    toast.add({ severity: 'success', summary: `Welcome!`, detail: `${result.data.firstName}`, position: 'left' })
+    navigateTo('/dashboard')
+  }
   else if(result.response.status === 401) apiError.value = result.response.data.errMsg
 })
 
