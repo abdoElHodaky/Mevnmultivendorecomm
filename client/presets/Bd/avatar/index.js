@@ -1,7 +1,7 @@
 export default {
     root: ({props:e,parent:r})=>{
         var t,o,i;return{class:[
-            "text-white font-bold",
+            "text-white font-montserrat font-bold",
             {"text-[2.2rem]":e.size=="large","text-2xl":e.size=="xlarge"},
             "inline-flex items-center justify-center","relative",
             {"h-8 w-8":e.size==null||e.size=="normal","w-12 h-12":e.size=="large","w-16 h-16":e.size=="xlarge"},

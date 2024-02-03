@@ -1,7 +1,8 @@
 <script setup>
 
 definePageMeta({
-  layout: false
+  layout: false,
+  middleware: ['auth']
 })
 
 useHead({

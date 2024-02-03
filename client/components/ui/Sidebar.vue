@@ -23,7 +23,7 @@ const usersStore = useUsersStore()
                         :label="usersStore.profile.firstName[0].toUpperCase()"
                         size="large"
                         shape="circle" />
-                    <span class="text-[1.2rem] text-black font-bold">{{ usersStore.profile.firstName }}</span>
+                    <span class="text-[1.2rem] text-black font-montserrat font-bold">{{ usersStore.profile.firstName }}</span>
                 </div>
             </template>
 
@@ -32,19 +32,20 @@ const usersStore = useUsersStore()
                 <ul 
                     class="flex flex-col items-center justify-center
                     mt-12
-                    [&_li]:w-full [&_a]:block [&_a]:w-full
-                    [&_li]:mb-6 
-                    [&_a]:p-2 [&_a]:border [&_a]:border-black
+                    [&_li]:w-full
+                    [&_li]:mb-2 
                     [&_li]:text-center
-                    [&_a]:text-[1.4rem] [&_a]:text-black [&_a]:capitalize
+                    [&_a]:block [&_a]:w-full
+                    [&_a]:text-[1.2rem] [&_a]:text-black [&_a]:capitalize
+                    [&_a]:p-2 [&_a]:border [&_a]:border-black
                     [&_a]:pb-2
                     [&_a.router-link-active]:border-4 [&_a.router-link-active]:border-black"
                 >
                     <li>
-                        <NuxtLink to="/dashboard">account</NuxtLink>
+                        <NuxtLink class="font-openSans" to="/dashboard">account</NuxtLink>
                     </li>
                     <li>
-                        <NuxtLink to="/dashboard/products">products</NuxtLink>
+                        <NuxtLink class="font-openSans" to="/dashboard/products">products</NuxtLink>
                     </li>
                 </ul>
 
@@ -63,6 +64,6 @@ const usersStore = useUsersStore()
             </Swiper>
         </Sidebar>
 
-        <Button @click="visible = !visible" icon="pi pi-bars" aria-label="Filter" size="large" icon-class="text-[24px]" rounded />
+        <Button @click="visible = !visible" icon="pi pi-bars" aria-label="Filter" size="large" icon-class="text-[28px]" rounded />
     </div>
 </template>

@@ -4,7 +4,7 @@ definePageMeta({
     layout: false,
     middleware: ['auth'],
     pageTransition: {
-        name: 'rotate',
+        name: 'fade',
         mode: 'out-in'
     }
 })

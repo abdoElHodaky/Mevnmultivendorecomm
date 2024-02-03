@@ -52,7 +52,7 @@ const submit = handleSubmit(async (values) => {
             <i class="pi pi-exclamation-triangle px-2"></i> <pre>{{ apiError }}</pre>
         </div>
 
-        <div :class="['text-[1rem] font-lato font-bold text-center', {'opacity-60': loading}]">
+        <div :class="['text-[1rem] font-montserrat font-bold text-center', {'opacity-60': loading}]">
 
             <a 
                 :class="['inline-block border-b border-transparent [&:not(.cursor-default):hover]:border-black pb-2', {'cursor-default': loading}]"

@@ -3,16 +3,17 @@ MERN stack web template implements common Ecommerce features.
 
 Breaking the project into three parts:
 - ### Client
-    A single-page web application built with Vue.js that allows users (sellers/customers) to manage their products through a dashboard.
+    A Nuxtjs web app (single-page application and other static pages) that allows users (sellers/customers) to manage their products through a dashboard.
 - ### Server
     Expressjs web server that operates both SPA and the website using a MongoDB database.
-- ### website
-    Using handlebars.js to server-render web pages (for SEO).
-## .env
+## .env - client
+- NODE_ENV
+## .env - server
 - MODE
 - ROOT_DOMAIN
 - JWT_SECRET
 - COOKIE_SIGNATURE
+- BREVO_API_KEY
 ## Technical Details
 - vuejs - vue-router - vee-validate - primevue - vueuse - yup
 - expressjs - handlebars - mongoose - swagger-ui-express

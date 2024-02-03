@@ -26,7 +26,7 @@
             <UiSidebar />
             <ul 
                 class="flex items-center
-                [&_a]:text-[18px] [&_a]:text-black [&_a]:font-bold [&_a]:capitalize
+                [&_a]:text-[18px] [&_a]:text-black [&_a]:font-openSans [&_a]:font-regular [&_a]:capitalize
                 [&_a]:pb-2
                 [&_a.router-link-active]:border-b-2 [&_a.router-link-active]:border-black"
             >

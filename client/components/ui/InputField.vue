@@ -26,14 +26,14 @@ const { value, errorMessage } = useField( () => props.name )
                 relative z-20 
                 block w-full 
                 bg-transparent appearance-none
-                text-[1.2rem] text-black font-lato
+                text-[1.2rem] text-black font-openSans font-regular
                 focus:outline-none"
             />
             <label 
                 :for="props.name"
                 :class="[{'text-[1rem]': props.labelTextSize === 'small'},
                 {'text-[1.6rem]': props.labelTextSize === 'medium'},
-                'font-lato font-bold capitalize',
+                'font-montserrat font-bold capitalize',
                 'absolute -top-[.4rem] z-10',
                 'transform',
                 {'scale-[0.9]': props.labelTextSize === 'small'},
@@ -49,7 +49,7 @@ const { value, errorMessage } = useField( () => props.name )
                 {{ props.name.replace(/([A-Z])/g, ' $1') }}
             </label>
         </div>
-        <p v-if="errorMessage" className="text-[1rem] text-red-600">* {{ errorMessage }}</p>
+        <p v-if="errorMessage" className="text-[1rem] text-red-600 font-montserrat font-bold">* {{ errorMessage }}</p>
     </div>
 
 </template>
