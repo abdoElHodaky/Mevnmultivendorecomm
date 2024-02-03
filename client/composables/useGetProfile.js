@@ -1,6 +1,6 @@
 import {ref} from "vue"
 
-import usersService from "@/lib/services/usersServices"
+import usersService from "@/lib/services/usersService"
 
 export default function useGetProfile() {
 

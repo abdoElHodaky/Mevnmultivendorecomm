@@ -32,10 +32,13 @@ const usersStore = useUsersStore()
                 <ul 
                     class="flex flex-col items-center justify-center
                     mt-12
-                    [&_li]:mb-6
-                    [&_a]:text-[1.4rem] [&_a]:text-black [&_a]:font-bold [&_a]:capitalize
+                    [&_li]:w-full [&_a]:block [&_a]:w-full
+                    [&_li]:mb-6 
+                    [&_a]:p-2 [&_a]:border [&_a]:border-black
+                    [&_li]:text-center
+                    [&_a]:text-[1.4rem] [&_a]:text-black [&_a]:capitalize
                     [&_a]:pb-2
-                    [&_a.router-link-active]:border-b-4 [&_a.router-link-active]:border-black"
+                    [&_a.router-link-active]:border-4 [&_a.router-link-active]:border-black"
                 >
                     <li>
                         <NuxtLink to="/dashboard">account</NuxtLink>
