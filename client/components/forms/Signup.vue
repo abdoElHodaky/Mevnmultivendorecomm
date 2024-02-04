@@ -17,16 +17,21 @@ const toast = useToast()
 const { fetch, loading } = useSignup()
 const { errors, handleSubmit } = useForm({ validationSchema })
 const swiper = useSwiper()
+const usersStore = useUsersStore()
 
 const apiError = ref(null)
 
 const submit = handleSubmit(async (values) => {
 
-  apiError.value = null
+    apiError.value = null
 
-  const result = await fetch(values)
-  if(result.status === 200) toast.add({ severity: 'success', summary: `Welcome!`, detail: `${result.data.firstName}`, position: 'left' })
-  else if(result.response.status === 400) apiError.value = result.response.data.errMsg
+    const result = await fetch(values)
+    if(result.status === 200) { 
+
+        toast.add({ severity: 'success', summary: `Welcome!`, detail: `${result.data.firstName}`, position: 'left' }) 
+        usersStore.setProfile(result.data)
+        navigateTo('/dashboard')
+    } else if(result.response.status === 400) apiError.value = result.response.data.errMsg
 })
 
 </script>

@@ -1,7 +1,7 @@
 # Multi Vendor Ecommerce
-MERN stack web template implements common Ecommerce features.
+MEVN stack web template implements common Ecommerce features.
 
-Breaking the project into three parts:
+Breaking the project into two parts:
 - ### Client
     A Nuxtjs web app (single-page application and other static pages) that allows users (sellers/customers) to manage their products through a dashboard.
 - ### Server

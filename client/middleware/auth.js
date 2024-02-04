@@ -1,11 +1,18 @@
 export default defineNuxtRouteMiddleware(async (to, from) => {
     
     const usersStore = useUsersStore()
-    if(usersStore.profile) return true
 
-    const { fetch } = useGetProfile()
-    const { data } = await fetch()
+    if(!usersStore.profile) {
 
-    if(data) return usersStore.setProfile(data)
-    else if(!data && to.path !== '/') return navigateTo('/')
+        const { fetch } = useGetProfile()
+        const { data } = await fetch()
+
+        usersStore.setProfile(data ?? 'visitor')
+    }
+
+    if(usersStore.profile === 'visitor' &&
+    to.meta.authRequired && 
+    to.path !== '/') return navigateTo('/')
+
+    return true
 })

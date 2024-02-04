@@ -6,7 +6,8 @@ definePageMeta({
     pageTransition: {
         name: 'fade',
         mode: 'out-in'
-    }
+    },
+    authRequired: true
 })
 
 useHead({

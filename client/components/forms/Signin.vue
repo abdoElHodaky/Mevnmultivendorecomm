@@ -15,6 +15,7 @@ const toast = useToast()
 const { fetch, loading } = useSignin()
 const { errors, handleSubmit } = useForm({ validationSchema })
 const swiper = useSwiper()
+const usersStore = useUsersStore()
 
 const apiError = ref(null)
 
@@ -26,9 +27,9 @@ const submit = handleSubmit(async (values) => {
   if(result.status === 200) {
 
     toast.add({ severity: 'success', summary: `Welcome!`, detail: `${result.data.firstName}`, position: 'left' })
+    usersStore.setProfile(result.data)
     navigateTo('/dashboard')
-  }
-  else if(result.response.status === 401) apiError.value = result.response.data.errMsg
+  } else if(result.response.status === 401) apiError.value = result.response.data.errMsg
 })
 
 </script>

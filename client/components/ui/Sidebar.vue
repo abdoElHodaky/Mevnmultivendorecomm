@@ -18,7 +18,7 @@ const usersStore = useUsersStore()
 
             <template #header>
 
-                <div v-if="usersStore.profile" class="flex items-center gap-2">
+                <div v-if="usersStore.profile?._id" class="flex items-center gap-2">
                     <Avatar 
                         :label="usersStore.profile.firstName[0].toUpperCase()"
                         size="large"
@@ -27,7 +27,7 @@ const usersStore = useUsersStore()
                 </div>
             </template>
 
-            <div class="w-full h-full" v-if="usersStore.profile">
+            <div class="w-full h-full" v-if="usersStore.profile?._id">
 
                 <ul 
                     class="flex flex-col items-center justify-center

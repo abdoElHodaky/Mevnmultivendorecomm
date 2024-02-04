@@ -12,8 +12,8 @@ const logoutUser = async () => {
     if(result.status === 200) {
 
         toast.add({ severity: 'success', summary: 'Bye :)', detail: 'logged out', position: 'left' })
+        usersStore.setProfile('visitor')
         navigateTo('/')
-        usersStore.setProfile(null)
     } else error.value = "server error"
 }
 
